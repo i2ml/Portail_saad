@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .card {
+        background-color: theme('colors.grey-recherche');
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .link {
+        @apply no-underline hover:underline text-blue-500;
+    }
+}
