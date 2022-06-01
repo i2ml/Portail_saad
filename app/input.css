@@ -14,12 +14,12 @@
   }
 
   .half-a-border-on-top {
-    border-top:4px solid theme('colors.blue-header-btn');
-    border-image: linear-gradient(to right, theme('colors.blue-header-btn') 45%, #FFF 45%) 100% 1;
+    border-top: 4px solid theme('colors.blue-header-btn');
+    border-image: linear-gradient(to right, theme('colors.blue-header-btn') 45%, #fff 45%) 100% 1;
   }
 
   .half-a-border-on-bottom {
-    border-bottom:4px solid theme('colors.blue-header-btn');
-    border-image: linear-gradient(to left, theme('colors.blue-header-btn') 40%, #FFF 40%) 100% 1;
+    border-bottom: 4px solid theme('colors.blue-header-btn');
+    border-image: linear-gradient(to left, theme('colors.blue-header-btn') 40%, #fff 40%) 100% 1;
   }
 }
