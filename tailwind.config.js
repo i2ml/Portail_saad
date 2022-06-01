@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "image-header": "url('/headerbg.png')"
+        "image-header": "url('images/headerbg.png')"
       },
       colors: {
         "blue-header-btn": "#006f78",
