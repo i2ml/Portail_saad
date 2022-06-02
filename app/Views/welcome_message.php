@@ -1,5 +1,5 @@
 <div class="half-a-border-on-top">
-    <form class=" bg-grey-recherche pt-16 half-a-border-on-bottom">
+    <form action="<?php echo site_url('saads') ?>" class=" bg-grey-recherche pt-16 half-a-border-on-bottom">
         <div class="flex items-center justify-center">
             <select class="form-select p-3 m-5 bg-white border">
                 <option> Qui êtes vous ?</option>
@@ -19,9 +19,9 @@
             </div>
         </div>
         <div class="text-center h-32">
-                <button class="bg-blue-header-btn text-white font-bold py-2 px-4 rounded">
-                    Lancer la recherche
-                </button>
+            <button class="bg-blue-header-btn text-white font-bold py-2 px-4 rounded">
+                Lancer la recherche
+            </button>
         </div>
     </form>
 </div>
