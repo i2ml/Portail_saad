@@ -17,3 +17,7 @@ Nous utilisons tailwind, pour mettre a jour le css il faut faire la commande sui
 ```
 (Et normalement c'est bon)
 
+##Config
+
+Modifiez le fichier `env` avec vos informations et faites en une copie que vous nommez `.env`
+
