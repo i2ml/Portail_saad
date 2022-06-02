@@ -32,11 +32,11 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => '$_ENV["database.default.hostname"]',
-        'username' => '$_ENV["database.default.username"]',
-        'password' => '$_ENV["database.default.password"]',
-        'database' => '$_ENV["database.default.database"]',
-        'DBDriver' => '$_ENV["database.default.DBDriver"]',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => '',
+        'DBDriver' => '',
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
