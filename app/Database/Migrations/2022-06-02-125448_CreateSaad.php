@@ -100,11 +100,16 @@ class CreateSaad extends Migration
         $this->forge->addForeignKey('idSecteur', 'secteur', 'id');
         $this->forge->addKey(['idSaad', 'idSecteur'], true);
         $this->forge->createTable('agir');
-        $this->forge->addField(['id' => [
-            'type' => 'INT',
-            'constraint' => 11,
-            'unsigned' => true,
-        ],
+        $this->forge->addField([
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+            ],
+            'nom' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+            ],
             'idSecteur' => [
                 'type' => 'INT',
                 'constraint' => 11,
