@@ -4,8 +4,15 @@ namespace App\Controllers;
 
 use App\Models\PersonneModel;
 
+/**
+ * Class NouvelleConnexionController
+ * @package App\Controllers
+ */
 class NouvelleConnexionController extends \CodeIgniter\Controller
 {
+    /**
+     * Chargeuse de la page de connexion
+     */
     public function index()
     {
         $data['title'] = "Connexion";
@@ -15,6 +22,9 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
         echo view('footer');
     }
 
+    /*
+     * chargeuse de la page de connexion reussie
+     */
     public function succes()
     {
         $data['title'] = "Succes";
@@ -23,6 +33,9 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
         echo view('footer');
     }
 
+    /*
+     * Vérifie si le mail et le mot de passe sont corrects
+     */
     public function loginAuth()
     {
         $session = session();
@@ -44,7 +57,7 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
                     'id' => $data['id'],
                     'nom' => $data['nom'],
                     'mail' => $data['mail'],
-                    'idSaad'=> $data['idSaad'],
+                    'idSaad' => $data['idSaad'],
                     'isLoggedIn' => TRUE
                 ];
 
