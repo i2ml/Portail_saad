@@ -50,13 +50,12 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
 
                 $session->set($ses_data);
                 return redirect()->to('/connexionReussie');
-            } else {
-                $session->setFlashdata('msg', $messageErrorConnexion);
-                return redirect()->to('/connexion');
             }
-        } else {
             $session->setFlashdata('msg', $messageErrorConnexion);
             return redirect()->to('/connexion');
         }
+        $session->setFlashdata('msg', $messageErrorConnexion);
+        return redirect()->to('/connexion');
+
     }
 }
