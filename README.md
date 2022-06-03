@@ -20,3 +20,16 @@ Nous utilisons tailwind, pour mettre a jour le css il faut faire la commande sui
 ##Config
 
 Modifiez le fichier `env` avec vos informations et faites en une copie que vous nommez `.env`
+
+##BDD
+
+Pour obtenir une base de donnée à jour, deux commandes sont importantes : 
+
+Effectuer toutes les migrations :
+php spark migrate:refresh
+
+Doc sur les migrations :
+https://codeigniter4.github.io/userguide/dbmgmt/migration.html
+
+Importer un jeu de test :
+php spark db:seed SaadsSeeder
