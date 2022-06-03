@@ -1,6 +1,5 @@
 <?php namespace App\Controllers;
 
-use App\Models\ActualitesModel;
 use App\Models\SaadModel;
 use CodeIgniter\Controller;
 
