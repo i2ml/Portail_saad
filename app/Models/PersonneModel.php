@@ -10,7 +10,7 @@ class PersonneModel extends Model
 {
     protected $table = 'personne';
 
-    protected $allowedFields = ['id', 'nom', 'prenom', 'mail', 'motdepasse', 'idSaadList', 'account_type'];
+    protected $allowedFields = ['id', 'nom', 'prenom', 'mail', 'motdepasse', 'idSaadList', 'accountType'];
 
     /**
      * Cette fonction permet de récupérer une personne ou l'ensemble des personnes présentent en bdd
@@ -34,5 +34,25 @@ class PersonneModel extends Model
 
         $this->where("id",$id)
             ->delete();
+    }
+
+    /**
+     * Cette fonction permet de passer un gérant de saad administrateur
+     * @param $id du gérant que l'on veut upgrade
+     * @throws \ReflectionException
+     */
+    public function upgrade($id)
+    {
+        $this->update($id,['accountType' => 1]);
+    }
+
+    /**
+     * Cette fonction permet de passer un admin en gérant de saad
+     * @param $id de l'admin que l'on veut downgrade
+     * @throws \ReflectionException
+     */
+    public function downgrade($id)
+    {
+        $this->update($id,['accountType' => 2]);
     }
 }

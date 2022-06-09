@@ -97,4 +97,33 @@ class AdminController extends \CodeIgniter\Controller
         unset($data);
         return redirect()->to('userList');
     }
+
+    /**
+     * Cette fonction permet de transformer l'utilisateut dont l'identifiant est passé en parametre en admin
+     * @param $id l'id de l'utilisateur a transformer
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
+    public function userUpgrade($id)
+    {
+
+        $model = new PersonneModel();
+
+        $model->upgrade($id);
+        unset($data);
+        return redirect()->to('userList');
+    }
+
+    /**
+     * Cette fonction permet de transformer l'utilisateut dont l'identifiant est passé en parametre en gerant de saad
+     * @param $id l'id de l'utilisateur a transformer
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
+    public function userDowngrade($id)
+    {
+
+        $model = new PersonneModel();
+        $model->downgrade($id);
+        unset($data);
+        return redirect()->to('userList');
+    }
 }
