@@ -5,8 +5,14 @@ namespace App\Controllers;
 use App\Models\PersonneModel;
 use Faker\Provider\Person;
 
+/**
+ * Cette classe est le controller de la partie admin
+ */
 class AdminController extends \CodeIgniter\Controller
 {
+    /**
+     * Charge les composants de la page création de gérant de saad
+     */
     public function createUser()
     {
         helper(['form']);
@@ -19,6 +25,11 @@ class AdminController extends \CodeIgniter\Controller
         echo view('footer');
     }
 
+    /**
+     * Test la connexion
+     * @return \CodeIgniter\HTTP\RedirectResponse|void
+     * @throws \ReflectionException
+     */
     public function store()
     {
         helper(['form']);
@@ -54,6 +65,9 @@ class AdminController extends \CodeIgniter\Controller
         }
     }
 
+    /**
+     * Charge les composants de la page lister les personnes
+     */
     public function userList()
     {
         $model = new PersonneModel();
@@ -69,6 +83,11 @@ class AdminController extends \CodeIgniter\Controller
         echo view('footer');
     }
 
+    /**
+     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en parametre
+     * @param $id l'id de l'utilisateur a supprimer
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
     public function userDelete($id)
     {
 
