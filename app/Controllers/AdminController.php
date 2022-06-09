@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PersonneModel;
+use App\Models\SaadModel;
 use Faker\Provider\Person;
 
 /**
@@ -26,7 +27,7 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Test la connexion
+     * Méthode appelé lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
      * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */
@@ -125,5 +126,70 @@ class AdminController extends \CodeIgniter\Controller
         $model->downgrade($id);
         unset($data);
         return redirect()->to('userList');
+    }
+
+    /**
+     * Charge les composants de la page création de gérant de saad
+     */
+    public function createSaad()
+    {
+        helper(['form']);
+        $data = [];
+        $session = session();
+        $data['profil'] = $session->get('nom');
+        $data['title'] = 'Admin';
+        echo view('header');
+        echo view('createSaad', $data);
+        echo view('footer');
+    }
+
+    /**
+     * Méthode appelé lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
+     * @return \CodeIgniter\HTTP\RedirectResponse|void
+     * @throws \ReflectionException
+     */
+    public function storeSaad()
+    {
+        helper(['form']);
+        $rules = [
+            'nom'               => 'required|min_length[2]|max_length[100]',
+            'tel'               => 'required|min_length[2]|max_length[100]',
+            'mail'              => 'required|min_length[4]|max_length[100]|valid_email|is_unique[saads.mail]',
+            'site'              => 'required|min_length[4]|max_length[150]',
+            'siret_siren'       => 'required|min_length[4]|max_length[100]',
+            'adresse'           => 'min_length[4]|max_length[300]',
+            'idCategorie'       => 'required'
+        ];
+
+        if ($this->validate($rules)) {
+            $userModel = new SaadModel();
+
+            $data = [
+                'nom'           => $this->request->getVar('nom'),
+                'tel'           => $this->request->getVar('tel'),
+                'mail'          => $this->request->getVar('mail'),
+                'site'          => $this->request->getVar('site'),
+                'image'         => $this->request->getFile('image')->getName(),
+                'siret_siren'   => $this->request->getVar('siret_siren'),
+                'adresse'       => $this->request->getVar('adresse'),
+                'idCategorie'   => $this->request->getVar('idCategorie'),
+            ];
+
+            $userModel->save($data);
+            $file = $this->request->getFile('image');
+            var_dump($this->request->getFile('image')->getName());
+            $file->store('../../public/images', $file->getName());
+
+
+            return redirect()->to('/connexionReussie');
+        } else {
+            $session = session();
+            $data['profil'] = $session->get('nom');
+            $data['validation'] = $this->validator;
+            $data['title'] = 'Admin';
+            echo view('header');
+            echo view('createSaad', $data);
+            echo view('footer');
+        }
     }
 }
