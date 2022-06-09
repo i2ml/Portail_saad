@@ -57,7 +57,6 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
                     'id' => $data['id'],
                     'nom' => $data['nom'],
                     'mail' => $data['mail'],
-                    'idSaad' => $data['idSaad'],
                     'isLoggedIn' => TRUE
                 ];
 

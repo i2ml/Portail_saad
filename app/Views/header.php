@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Portail SAAD</title>
-    <link rel = "StyleSheet" href = "style.css" type = "text/css" />
+    <link rel = "StyleSheet" href = "<?php echo site_url('/') ?>style.css" type = "text/css" />
 
 </head>
 
 <body>
 
 <div class="bg-image-header bg-center bg-no-repeat bg-cover">
-    <img class="w-1/12 float-left ml-8" src="images/logo-gard.jpg">
+    <img class="w-1/12 float-left ml-8" src="<?php echo site_url('/images/') ?>logo-gard.jpg">
     <ul class="text-white flex text-center w-1/3 float-right mr-20 text-sm">
         <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2">Qui sommes-nous ?</li>
         <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2">Comment être aidé ?</li>

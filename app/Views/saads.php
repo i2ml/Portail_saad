@@ -1,5 +1,5 @@
 <main class="main prose p-10 max-w-none">
-    <h1 class="text-yellow-header-title text-3xl mb-12 font-semibold text-center">Les services d'aides à domicile dans votre secteur</h1>
+    <h1 class="title">Les services d'aides à domicile dans votre secteur</h1>
     <div class="grid grid-cols-1">
         <section class="all-saads">
 

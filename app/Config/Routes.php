@@ -35,6 +35,7 @@ $routes->get('/', 'Home::index');
 $routes->get('saads', 'SaadController::index');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::succes', ['filter' => 'authGuard']);
+$routes->get('createUser', 'AdminController::createUser', ['filter' => 'authGuard']);
 
 /*
  * --------------------------------------------------------------------
