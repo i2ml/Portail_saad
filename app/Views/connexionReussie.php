@@ -6,9 +6,11 @@
         Créer un gérant de Saad
     </div>
 </a>
-<div class="blue-button m-5">
-    Supprimer un gérant de Saad
-</div>
+<a href="userList">
+    <div class="blue-button m-5">
+        Supprimer un gérant de Saad
+    </div>
+</a>
 <div class="blue-button m-5">
     Promouvoir un gérant de Saad au rang d'administrateur
 </div>

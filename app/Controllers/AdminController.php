@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PersonneModel;
+use Faker\Provider\Person;
 
 class AdminController extends \CodeIgniter\Controller
 {
@@ -51,5 +52,30 @@ class AdminController extends \CodeIgniter\Controller
             echo view('createUser', $data);
             echo view('footer');
         }
+    }
+
+    public function userList()
+    {
+        $model = new PersonneModel();
+
+        $data = [
+            'users' => $model->getPersonnes(),
+        ];
+
+        $session = session();
+
+        echo view('header');
+        echo view('userList', $data);
+        echo view('footer');
+    }
+
+    public function userDelete($id)
+    {
+
+        $model = new PersonneModel();
+
+        $model->delete_line($id);
+        unset($data);
+        return redirect()->to('userList');
     }
 }
