@@ -22,4 +22,12 @@
     border-bottom: 4px solid theme('colors.blue-header-btn');
     border-image: linear-gradient(to left, theme('colors.blue-header-btn') 40%, #fff 40%) 100% 1;
   }
+
+  .title {
+    @apply text-yellow-header-title text-3xl mb-12 font-semibold text-center;
+  }
+
+  .blue-button {
+    @apply bg-blue-header-btn text-white font-bold py-2 px-4 rounded
+  }
 }

@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="text-center h-32">
-            <button class="bg-blue-header-btn text-white font-bold py-2 px-4 rounded">
+            <button class="blue-button">
                 Lancer la recherche
             </button>
         </div>
