@@ -12,4 +12,18 @@ class PersonneModel extends Model
 
     protected $allowedFields = ['id', 'nom', 'prenom', 'mail', 'motdepasse', 'idSaadList', 'account_type'];
 
+    public function getPersonnes($id = false)
+    {
+        if ($id) {
+            return $this->where('id', $id)->first();
+        }
+        return $this->findAll();
+    }
+
+    public function delete_line($id)
+    {
+
+        $this->where("id",$id)
+            ->delete();
+    }
 }
