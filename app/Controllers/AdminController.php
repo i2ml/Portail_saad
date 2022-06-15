@@ -55,15 +55,16 @@ class AdminController extends \CodeIgniter\Controller
             $userModel->save($data);
 
             return redirect()->to('/connexionReussie');
-        } else {
-            $session = session();
-            $data['profil'] = $session->get('nom');
-            $data['validation'] = $this->validator;
-            $data['title'] = 'Admin';
-            echo view('header');
-            echo view('createUser', $data);
-            echo view('footer');
         }
+        
+        $session = session();
+        $data['profil'] = $session->get('nom');
+        $data['validation'] = $this->validator;
+        $data['title'] = 'Admin';
+        echo view('header');
+        echo view('createUser', $data);
+        echo view('footer');
+
     }
 
     /**
