@@ -177,7 +177,6 @@ class AdminController extends \CodeIgniter\Controller
 
             $userModel->save($data);
             $file = $this->request->getFile('image');
-            var_dump($this->request->getFile('image')->getName());
             $file->store('../../public/images', $file->getName());
 
 
