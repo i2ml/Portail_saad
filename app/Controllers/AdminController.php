@@ -94,7 +94,7 @@ class AdminController extends \CodeIgniter\Controller
 
         $model = new PersonneModel();
 
-        $model->delete_line($id);
+        $model->deleteLine($id);
         unset($data);
         return redirect()->to('userList');
     }
