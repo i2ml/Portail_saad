@@ -56,7 +56,7 @@ class AdminController extends \CodeIgniter\Controller
 
             return redirect()->to('/connexionReussie');
         }
-        
+
         $session = session();
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
@@ -182,14 +182,14 @@ class AdminController extends \CodeIgniter\Controller
 
 
             return redirect()->to('/connexionReussie');
-        } else {
-            $session = session();
-            $data['profil'] = $session->get('nom');
-            $data['validation'] = $this->validator;
-            $data['title'] = 'Admin';
-            echo view('header');
-            echo view('createSaad', $data);
-            echo view('footer');
         }
+        
+        $session = session();
+        $data['profil'] = $session->get('nom');
+        $data['validation'] = $this->validator;
+        $data['title'] = 'Admin';
+        echo view('header');
+        echo view('createSaad', $data);
+        echo view('footer');
     }
 }
