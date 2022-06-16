@@ -55,15 +55,16 @@ class AdminController extends \CodeIgniter\Controller
             $userModel->save($data);
 
             return redirect()->to('/connexionReussie');
-        } else {
-            $session = session();
-            $data['profil'] = $session->get('nom');
-            $data['validation'] = $this->validator;
-            $data['title'] = 'Admin';
-            echo view('header');
-            echo view('createUser', $data);
-            echo view('footer');
         }
+
+        $session = session();
+        $data['profil'] = $session->get('nom');
+        $data['validation'] = $this->validator;
+        $data['title'] = 'Admin';
+        echo view('header');
+        echo view('createUser', $data);
+        echo view('footer');
+
     }
 
     /**
@@ -94,7 +95,7 @@ class AdminController extends \CodeIgniter\Controller
 
         $model = new PersonneModel();
 
-        $model->delete_line($id);
+        $model->deleteLine($id);
         unset($data);
         return redirect()->to('userList');
     }
@@ -177,19 +178,18 @@ class AdminController extends \CodeIgniter\Controller
 
             $userModel->save($data);
             $file = $this->request->getFile('image');
-            var_dump($this->request->getFile('image')->getName());
             $file->store('../../public/images', $file->getName());
 
 
             return redirect()->to('/connexionReussie');
-        } else {
-            $session = session();
-            $data['profil'] = $session->get('nom');
-            $data['validation'] = $this->validator;
-            $data['title'] = 'Admin';
-            echo view('header');
-            echo view('createSaad', $data);
-            echo view('footer');
         }
+        
+        $session = session();
+        $data['profil'] = $session->get('nom');
+        $data['validation'] = $this->validator;
+        $data['title'] = 'Admin';
+        echo view('header');
+        echo view('createSaad', $data);
+        echo view('footer');
     }
 }

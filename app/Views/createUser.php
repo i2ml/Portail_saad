@@ -15,6 +15,8 @@
                     <div class="flex border-2 rounded mr-10">
                         <input type="email" name="mail" placeholder="Mail" value="<?= set_value('mail') ?>" class="px-4 py-2 w-80">
                     </div>
+                </div>
+                <div class="flex items-center justify-center mt-10">
                     <div class="flex border-2 rounded mr-10">
                         <input type="password" name="password" placeholder="Mot de passe" class="px-4 py-2 w-80">
                     </div>

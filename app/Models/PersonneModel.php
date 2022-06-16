@@ -29,7 +29,7 @@ class PersonneModel extends Model
      * Cette fonction permet de supprimer la personne dont l'id est passé en param
      * @param $id l'id de la personne à supprimer
      */
-    public function delete_line($id)
+    public function deleteLine($id)
     {
 
         $this->where("id",$id)
