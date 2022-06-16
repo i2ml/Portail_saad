@@ -130,3 +130,9 @@ node_modules
 
 #tailwind
 public/style.css
+
+#Logo saads
+public/images/logosaads/*.jpg
+public/images/logosaads/*.png
+public/images/logosaads/*.webp
+public/images/logosaads/*.svg

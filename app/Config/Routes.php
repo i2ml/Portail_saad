@@ -38,6 +38,7 @@ $routes->get('connexionReussie', 'NouvelleConnexionController::succes', ['filter
 $routes->get('createUser', 'AdminController::createUser', ['filter' => 'authGuard']);
 $routes->get('userList', 'AdminController::userList', ['filter' => 'authGuard']);
 $routes->get('createSaad', 'AdminController::createSaad', ['filter' => 'authGuard']);
+$routes->get('saadsList', 'AdminController::saadsList', ['filter' => 'authGuard']);
 
 /*
  * --------------------------------------------------------------------

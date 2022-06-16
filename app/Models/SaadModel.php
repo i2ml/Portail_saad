@@ -25,4 +25,25 @@ class SaadModel extends Model
         }
         return $this->findAll();
     }
+
+    /**
+     * Cette fonction permet de modifier le saad dont l'id est passé en parametre avec les données passées elles aussi en parametres
+     * @param $id id de la saad à modifier
+     * @param $data
+     * @throws \ReflectionException
+     */
+    public function modifSaads($id, $data){
+        $this->update($id, $data);
+    }
+
+    /**
+     * Cette fonction permet de supprimer le saad dont l'id est passé en param
+     * @param $id l'id du saad à supprimer
+     */
+    public function deleteLine($id)
+    {
+
+        $this->where("id",$id)
+            ->delete();
+    }
 }

@@ -86,6 +86,22 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
+     * Charge les composants de la page lister les saads
+     */
+    public function saadsList()
+    {
+        $model = new SaadModel();
+
+        $data = [
+            'saads' => $model->getSaads(),
+        ];
+
+        echo view('header');
+        echo view('saadsList', $data);
+        echo view('footer');
+    }
+
+    /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en parametre
      * @param $id l'id de l'utilisateur a supprimer
      * @return \CodeIgniter\HTTP\RedirectResponse
@@ -98,6 +114,21 @@ class AdminController extends \CodeIgniter\Controller
         $model->deleteLine($id);
         unset($data);
         return redirect()->to('userList');
+    }
+
+    /**
+     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en parametre
+     * @param $id l'id de l'utilisateur a supprimer
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
+    public function saadDelete($id)
+    {
+
+        $model = new SaadModel();
+
+        $model->deleteLine($id);
+        unset($data);
+        return redirect()->to('saadsList');
     }
 
     /**
@@ -132,13 +163,20 @@ class AdminController extends \CodeIgniter\Controller
     /**
      * Charge les composants de la page création de gérant de saad
      */
-    public function createSaad()
+    public function createSaad($id = false)
     {
         helper(['form']);
         $data = [];
         $session = session();
         $data['profil'] = $session->get('nom');
         $data['title'] = 'Admin';
+        $model = new SaadModel();
+        $data['saad'] = $id;
+
+        if($id){
+            $data['saad'] = $model->getSaads($id);
+        }
+
         echo view('header');
         echo view('createSaad', $data);
         echo view('footer');
@@ -149,37 +187,43 @@ class AdminController extends \CodeIgniter\Controller
      * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */
-    public function storeSaad()
+    public function storeSaad($id = false)
     {
         helper(['form']);
         $rules = [
             'nom'               => 'required|min_length[2]|max_length[100]',
             'tel'               => 'required|min_length[2]|max_length[100]',
-            'mail'              => 'required|min_length[4]|max_length[100]|valid_email|is_unique[saads.mail]',
+            'mail'              => 'required|min_length[4]|max_length[100]|valid_email',
             'site'              => 'required|min_length[4]|max_length[150]',
             'siret_siren'       => 'required|min_length[4]|max_length[100]',
             'adresse'           => 'min_length[4]|max_length[300]',
             'idCategorie'       => 'required'
         ];
 
+        $model = new SaadModel();
         if ($this->validate($rules)) {
-            $userModel = new SaadModel();
 
             $data = [
                 'nom'           => $this->request->getVar('nom'),
                 'tel'           => $this->request->getVar('tel'),
                 'mail'          => $this->request->getVar('mail'),
                 'site'          => $this->request->getVar('site'),
-                'image'         => $this->request->getFile('image')->getName(),
                 'siret_siren'   => $this->request->getVar('siret_siren'),
                 'adresse'       => $this->request->getVar('adresse'),
                 'idCategorie'   => $this->request->getVar('idCategorie'),
             ];
 
-            $userModel->save($data);
-            $file = $this->request->getFile('image');
-            $file->store('../../public/images', $file->getName());
+            if($this->request->getFile('image')->getName() != ""){
+                $data = $data + ['image'         => $this->request->getFile('image')->getName()];
+                $file = $this->request->getFile('image');
+                $file->store('../../public/images/logosaads', $file->getName());
+            }
 
+            if($id){
+                $model->modifSaads($id, $data);
+            } else {
+                $model->save($data);
+            }
 
             return redirect()->to('/connexionReussie');
         }
@@ -188,6 +232,12 @@ class AdminController extends \CodeIgniter\Controller
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
+        if($id) {
+            $data['saad'] = $model->getSaads($id);
+        }
+        else {
+            $data['saad'] = $id;
+        }
         echo view('header');
         echo view('createSaad', $data);
         echo view('footer');
