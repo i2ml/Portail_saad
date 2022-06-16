@@ -44,10 +44,9 @@ class SaadsSeeder extends Seeder
         $this->db->table('saads')->insert($saad);
         $personne = [
             'nom' => 'gregoire',
-            'prenom' => 'ballade dure',
+            'prenom' => 'admin de test',
             'mail' => 'bonjour@mail.com',
-            'motdepasse' => '123456789',
-            'idSaad' => 1,
+            'motdepasse' => '$2y$10$769wC8oc5oKksX4kjOV9aOqArpNip0AI6cKmS9IQY3CUQoyOYyTZG', // 'test'
         ];
         $this->db->table('personne')->insert($personne);
         $agir = [
@@ -61,5 +60,10 @@ class SaadsSeeder extends Seeder
             'idSecteur' => 1,
         ];
         $this->db->table('code_postal')->insert($codepostal);
+        $listesaad = [
+            'idSaad' => 1,
+            'idPersonne' => 1,
+            ];
+        $this->db->table('saad_list')->insert($listesaad);
     }
 }
