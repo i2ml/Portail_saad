@@ -22,6 +22,7 @@ class Filters extends BaseConfig
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
         'authGuard' => \App\Filters\AuthGuard::class,
+        'superAdminGuard' => \App\Filters\SuperAdminGuard::class,
     ];
 
     /**

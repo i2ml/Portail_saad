@@ -35,9 +35,9 @@ $routes->get('/', 'Home::index');
 $routes->get('saads', 'SaadController::index');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
-$routes->get('createUser', 'AdminController::createUser', ['filter' => 'authGuard']);
-$routes->get('userList', 'AdminController::userList', ['filter' => 'authGuard']);
-$routes->get('createSaad', 'AdminController::createSaad', ['filter' => 'authGuard']);
+$routes->get('createUser', 'AdminController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->get('userList', 'AdminController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->get('createSaad', 'AdminController::createSaad', ['filter' => ['authGuard','superAdminGuard']]);
 $routes->get('saadsList', 'AdminController::saadsList', ['filter' => 'authGuard']);
 $routes->get('disconnect', 'AdminController::disconnect', ['filter' => 'authGuard']);
 
