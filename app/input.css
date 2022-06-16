@@ -3,32 +3,36 @@
 @tailwind utilities;
 
 @layer components {
-  .card {
-    background-color: theme('colors.grey-recherche');
-    border-radius: 10px;
-    padding: 10px;
-  }
+    .card {
+        background-color: theme('colors.grey-recherche');
+        border-radius: 10px;
+        padding: 10px;
+    }
 
-  .link {
-    @apply no-underline hover:underline text-blue-500;
-  }
+    .link {
+        @apply no-underline hover:underline text-blue-500;
+    }
 
-  .half-a-border-on-top {
-    border-top: 4px solid theme('colors.blue-header-btn');
-    border-image: linear-gradient(to right, theme('colors.blue-header-btn') 45%, #fff 45%) 100% 1;
-  }
+    .half-a-border-on-top {
+        border-top: 4px solid theme('colors.blue-header-btn');
+        border-image: linear-gradient(to right, theme('colors.blue-header-btn') 45%, #fff 45%) 100% 1;
+    }
 
-  .half-a-border-on-bottom {
-    border-bottom: 4px solid theme('colors.blue-header-btn');
-    border-image: linear-gradient(to left, theme('colors.blue-header-btn') 40%, #fff 40%) 100% 1;
-  }
+    .half-a-border-on-bottom {
+        border-bottom: 4px solid theme('colors.blue-header-btn');
+        border-image: linear-gradient(to left, theme('colors.blue-header-btn') 40%, #fff 40%) 100% 1;
+    }
 
-  .title {
-    @apply text-yellow-header-title text-3xl mb-12 font-semibold text-center;
-  }
+    .title {
+        @apply text-yellow-header-title text-3xl mb-12 font-semibold text-center;
+    }
 
-  .blue-button {
-    @apply bg-blue-header-btn text-white font-bold py-2 px-4 rounded;
-  }
+    .blue-button {
+        @apply bg-blue-header-btn text-white font-bold py-2 px-4 rounded;
+    }
+
+    .menu-card {
+        @apply rounded-lg shadow-lg h-full text-center py-10;
+    }
 
 }
