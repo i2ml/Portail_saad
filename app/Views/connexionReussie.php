@@ -26,9 +26,16 @@
         Créer un SAAD
     </div>
 </a>
-<div class="blue-button m-5">
-    Supprimer un SAAD
-</div>
+<a href="saadsList">
+    <div class="blue-button m-5">
+        Modifier un SAAD
+    </div>
+</a>
+<a href="saadsList">
+    <div class="blue-button m-5">
+        Supprimer un SAAD
+    </div>
+</a>
 <div class="blue-button m-5">
     Attribuer un SAAD
 </div>
