@@ -171,12 +171,12 @@ class AdminController extends \CodeIgniter\Controller
         $data['profil'] = $session->get('nom');
         $data['title'] = 'Admin';
         $model = new SaadModel();
+        $data['saad'] = $id;
+
         if($id){
             $data['saad'] = $model->getSaads($id);
         }
-        else {
-            $data['saad'] = $id;
-        }
+
         echo view('header');
         echo view('createSaad', $data);
         echo view('footer');
@@ -216,7 +216,7 @@ class AdminController extends \CodeIgniter\Controller
             if($this->request->getFile('image')->getName() != ""){
                 $data = $data + ['image'         => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
-                $file->store('../../public/images', $file->getName());
+                $file->store('../../public/images/logosaads', $file->getName());
             }
 
             if($id){

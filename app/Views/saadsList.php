@@ -6,7 +6,7 @@
             <?php foreach ($saads as $saad) { ?>
                 <article class="card border grid grid-cols-6 mt-5">
                     <img
-                        class="col" src="<?php echo site_url('/images/').$saad['image']; ?>">
+                        class="col" src="<?php echo site_url('/images/logosaads/').$saad['image']; ?>">
                     <div class="col">
                         <h3 class="text-blue-header-btn text-2xl m-5">
                             <?php echo $saad['nom'] ?>
