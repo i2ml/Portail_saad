@@ -27,7 +27,7 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Méthode appelé lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
+     * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
      * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */
@@ -147,8 +147,8 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Cette fonction permet de transformer l'utilisateut dont l'identifiant est passé en parametre en gerant de saad
-     * @param $id l'id de l'utilisateur a transformer
+     * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en gerant de saad
+     * @param $id l'id de l'utilisateur à transformer
      * @return \CodeIgniter\HTTP\RedirectResponse
      */
     public function userDowngrade($id)
@@ -183,7 +183,7 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Méthode appelé lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
+     * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
      * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */

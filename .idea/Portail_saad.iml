@@ -53,5 +53,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="edd20ff6c4" level="application" />
   </component>
 </module>

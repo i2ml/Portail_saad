@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\PersonneModel;
 
 /**
- * Class NouvelleConnexionController
+ * Classe NouvelleConnexionController
  * @package App\Controllers
  */
 class NouvelleConnexionController extends \CodeIgniter\Controller
@@ -23,11 +23,11 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
     }
 
     /*
-     * chargeuse de la page de connexion reussie
+     * chargeuse de la page de connexion réussie
      */
-    public function succes()
+    public function success()
     {
-        $data['title'] = "Succes";
+        $data['title'] = "Succès";
         echo view('header', $data);
         echo view('connexionReussie');
         echo view('footer');
