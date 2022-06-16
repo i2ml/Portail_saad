@@ -117,6 +117,17 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
+     * Cette fonction permet de se déconnecter
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
+    public function disconnect()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('connexionReussie');
+    }
+
+    /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
      * @param $id l'id de l'utilisateur à supprimer
      * @return \CodeIgniter\HTTP\RedirectResponse
