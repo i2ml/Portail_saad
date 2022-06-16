@@ -35,20 +35,20 @@ class AdminController extends \CodeIgniter\Controller
     {
         helper(['form']);
         $rules = [
-            'nom'          => 'required|min_length[2]|max_length[50]',
-            'prenom'          => 'required|min_length[2]|max_length[50]',
-            'mail'         => 'required|min_length[4]|max_length[100]|valid_email|is_unique[personne.mail]',
-            'password'      => 'required|min_length[4]|max_length[50]',
-            'confirmpassword'  => 'matches[password]'
+            'nom' => 'required|min_length[2]|max_length[50]',
+            'prenom' => 'required|min_length[2]|max_length[50]',
+            'mail' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[personne.mail]',
+            'password' => 'required|min_length[4]|max_length[50]',
+            'confirmpassword' => 'matches[password]'
         ];
 
         if ($this->validate($rules)) {
             $userModel = new PersonneModel();
 
             $data = [
-                'nom'     => $this->request->getVar('nom'),
-                'prenom'     => $this->request->getVar('prenom'),
-                'mail'    => $this->request->getVar('mail'),
+                'nom' => $this->request->getVar('nom'),
+                'prenom' => $this->request->getVar('prenom'),
+                'mail' => $this->request->getVar('mail'),
                 'motdepasse' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
             ];
 
@@ -102,8 +102,8 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en parametre
-     * @param $id l'id de l'utilisateur a supprimer
+     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
+     * @param $id l'id de l'utilisateur à supprimer
      * @return \CodeIgniter\HTTP\RedirectResponse
      */
     public function userDelete($id)
@@ -117,8 +117,8 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en parametre
-     * @param $id l'id de l'utilisateur a supprimer
+     * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
+     * @param $id l'id de l'utilisateur à supprimer
      * @return \CodeIgniter\HTTP\RedirectResponse
      */
     public function saadDelete($id)
@@ -132,8 +132,8 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
-     * Cette fonction permet de transformer l'utilisateut dont l'identifiant est passé en parametre en admin
-     * @param $id l'id de l'utilisateur a transformer
+     * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en admin
+     * @param $id l'id de l'utilisateur à transformer
      * @return \CodeIgniter\HTTP\RedirectResponse
      */
     public function userUpgrade($id)
@@ -173,7 +173,7 @@ class AdminController extends \CodeIgniter\Controller
         $model = new SaadModel();
         $data['saad'] = $id;
 
-        if($id){
+        if ($id) {
             $data['saad'] = $model->getSaads($id);
         }
 
@@ -191,35 +191,35 @@ class AdminController extends \CodeIgniter\Controller
     {
         helper(['form']);
         $rules = [
-            'nom'               => 'required|min_length[2]|max_length[100]',
-            'tel'               => 'required|min_length[2]|max_length[100]',
-            'mail'              => 'required|min_length[4]|max_length[100]|valid_email',
-            'site'              => 'required|min_length[4]|max_length[150]',
-            'siret_siren'       => 'required|min_length[4]|max_length[100]',
-            'adresse'           => 'min_length[4]|max_length[300]',
-            'idCategorie'       => 'required'
+            'nom' => 'required|min_length[2]|max_length[100]',
+            'tel' => 'required|min_length[2]|max_length[100]',
+            'mail' => 'required|min_length[4]|max_length[100]|valid_email',
+            'site' => 'required|min_length[4]|max_length[150]',
+            'siret_siren' => 'required|min_length[4]|max_length[100]',
+            'adresse' => 'min_length[4]|max_length[300]',
+            'idCategorie' => 'required'
         ];
 
         $model = new SaadModel();
         if ($this->validate($rules)) {
 
             $data = [
-                'nom'           => $this->request->getVar('nom'),
-                'tel'           => $this->request->getVar('tel'),
-                'mail'          => $this->request->getVar('mail'),
-                'site'          => $this->request->getVar('site'),
-                'siret_siren'   => $this->request->getVar('siret_siren'),
-                'adresse'       => $this->request->getVar('adresse'),
-                'idCategorie'   => $this->request->getVar('idCategorie'),
+                'nom' => $this->request->getVar('nom'),
+                'tel' => $this->request->getVar('tel'),
+                'mail' => $this->request->getVar('mail'),
+                'site' => $this->request->getVar('site'),
+                'siret_siren' => $this->request->getVar('siret_siren'),
+                'adresse' => $this->request->getVar('adresse'),
+                'idCategorie' => $this->request->getVar('idCategorie'),
             ];
 
-            if($this->request->getFile('image')->getName() != ""){
-                $data = $data + ['image'         => $this->request->getFile('image')->getName()];
+            if ($this->request->getFile('image')->getName() != "") {
+                $data = $data + ['image' => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
                 $file->store('../../public/images/logosaads', $file->getName());
             }
 
-            if($id){
+            if ($id) {
                 $model->modifSaads($id, $data);
             } else {
                 $model->save($data);
@@ -227,15 +227,14 @@ class AdminController extends \CodeIgniter\Controller
 
             return redirect()->to('/connexionReussie');
         }
-        
+
         $session = session();
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
-        if($id) {
+        if ($id) {
             $data['saad'] = $model->getSaads($id);
-        }
-        else {
+        } else {
             $data['saad'] = $id;
         }
         echo view('header');
