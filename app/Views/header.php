@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Portail SAAD</title>
     <link rel = "StyleSheet" href = "<?php echo site_url('/') ?>style.css" type = "text/css" />
-
+    <script src="https://kit.fontawesome.com/edd20ff6c4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
