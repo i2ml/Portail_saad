@@ -57,7 +57,8 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
                     'id' => $data['id'],
                     'nom' => $data['nom'],
                     'mail' => $data['mail'],
-                    'isLoggedIn' => TRUE
+                    'isLoggedIn' => TRUE,
+                    'accountType'=>$data['accountType']
                 ];
 
                 $session->set($ses_data);

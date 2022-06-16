@@ -2,6 +2,12 @@
     Espace administrateur
 </h2>
 <div class="container mx-auto">
+    <?php
+    //check if the user is a super admin
+    var_dump(session()->get('accountType'));
+    if(session()->get('accountType') === SUPER_ADMIN) {
+    ?>
+
     <h3 class="my-10 text-xl font-semibold">
         <i class="fa-solid fa-user fa-xl"></i> Gestion des utilisateurs :
     </h3>
@@ -37,6 +43,9 @@
             </div>
         </a>
     </div>
+
+    <?php } ?>
+
     <h3 class="my-10 text-xl font-semibold">
         <i class="fa-solid fa-home fa-xl"></i> Gestions des saads :
     </h3>
@@ -70,7 +79,7 @@
                 <p class="mt-5">Changer de mot de passe</p>
             </div>
         </a>
-        <a href="TODO">
+        <a href="disconnect" onclick="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
             <div class="menu-card">
                 <i class="fa-solid fa-arrow-right-from-bracket fa-2xl text-blue-header-btn"></i>
                 <p class="mt-5">Déconnexion</p>
