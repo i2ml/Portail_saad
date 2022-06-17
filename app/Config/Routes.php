@@ -35,11 +35,30 @@ $routes->get('/', 'Home::index');
 $routes->get('saads', 'SaadController::index');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
-$routes->get('createUser', 'AdminController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->get('userList', 'AdminController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->get('createSaad', 'AdminController::createSaad', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->get('saadsList', 'AdminController::saadsList', ['filter' => 'authGuard']);
-$routes->get('disconnect', 'AdminController::disconnect', ['filter' => 'authGuard']);
+$routes->match(['get', 'post'],'userList', 'AdminController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'],'disconnect', 'AdminController::disconnect', ['filter' => 'authGuard']);
+
+//Supprimer saad
+$routes->match(['get', 'post'],'AdminController/saadDelete/(:segment)', 'AdminController::saadDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
+
+//Créer saad
+$routes->match(['get', 'post'],'AdminController/storeSaad/', 'AdminController::storeSaad', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get, post'],'createSaad', 'AdminController::createSaad', ['filter' => ['authGuard','superAdminGuard']]);
+
+//Modifier saad
+$routes->match(['get', 'post'],'AdminController/storeSaad/(:segment)', 'AdminController::storeSaad/$1', ['filter' => ['authGuard']]);
+$routes->match(['get, post'],'createSaad/(:segment)', 'AdminController::createSaad', ['filter' => ['authGuard']]);
+
+//Supprimer user
+$routes->match(['get', 'post'],'AdminController/userDelete/(:segment)', 'AdminController::userDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
+
+//Créer user
+$routes->match(['get', 'post'],'AdminController/store/', 'AdminController::store', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get, post'],'createUser', 'AdminController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
+
+//Modifier user
+$routes->match(['get, post'],'AdminController/upgradeUser/(:segment)', 'AdminController::userDowngrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get, post'],'AdminController/downgradeUser/(:segment)', 'AdminController::userUpgrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
 
 /*
  * --------------------------------------------------------------------
