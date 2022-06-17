@@ -6,7 +6,7 @@
         echo "gestionnaire de saad";
     } ?>
 </h2>
-<div class="container mx-auto">
+<div class="container mx-auto px-10">
     <?php
     //check if the user is a super admin
     if (session()->get('accountType') === SUPER_ADMIN) {
