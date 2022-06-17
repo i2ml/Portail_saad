@@ -13,7 +13,7 @@
                 2022
             </p>
             <p class="text-white mt-10"><a class="no-underline hover:underline text-blue-500"
-                                     href="connexionReussie">
+                                     href="<?php echo site_url('/') ?>connexionReussie">
                     Accéder à votre espace sécurisé </a></p>
         </div>
     </div>

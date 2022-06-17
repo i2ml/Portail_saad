@@ -102,6 +102,22 @@ class AdminController extends \CodeIgniter\Controller
     }
 
     /**
+     * Charge les composants de la page permettant de lier les saads
+     */
+    public function saadLink()
+    {
+        $model = new SaadModel();
+
+        $data = [
+            'saads' => $model->getSaads(),
+        ];
+
+        echo view('header');
+        echo view('saadLink', $data);
+        echo view('footer');
+    }
+
+    /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
      * @param $id l'id de l'utilisateur à supprimer
      * @return \CodeIgniter\HTTP\RedirectResponse
