@@ -30,7 +30,7 @@ class Adminupdate extends Migration
             'accountType' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'default' => 2,
+                'default' => SAAD_MANAGER,
                 'unsigned' => true,
             ],
         ]);

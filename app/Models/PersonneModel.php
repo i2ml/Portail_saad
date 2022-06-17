@@ -14,7 +14,7 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de récupérer une personne ou l'ensemble des personnes présentent en bdd
-     * @param false $id l'id de la personne que l'on chercher
+     * @param false $id l'id de la personne que l'on cherche
      * @return array|object|null soit toutes les personnes de la bdd soit la personne avec l'id passer en param
      */
     public function getPersonnes($id = false)
@@ -43,7 +43,7 @@ class PersonneModel extends Model
      */
     public function upgrade($id)
     {
-        $this->update($id,['accountType' => 1]);
+        $this->update($id,['accountType' => SUPER_ADMIN]);
     }
 
     /**
@@ -53,6 +53,6 @@ class PersonneModel extends Model
      */
     public function downgrade($id)
     {
-        $this->update($id,['accountType' => 2]);
+        $this->update($id,['accountType' => SAAD_MANAGER]);
     }
 }
