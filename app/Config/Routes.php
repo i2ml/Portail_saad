@@ -38,6 +38,8 @@ $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filte
 $routes->match(['get', 'post'],'userList', 'AdminController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
 $routes->match(['get', 'post'],'disconnect', 'AdminController::disconnect', ['filter' => 'authGuard']);
 
+$routes->match(['get', 'post'],'saadsList', 'AdminController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
+
 //Supprimer saad
 $routes->match(['get', 'post'],'AdminController/saadDelete/(:segment)', 'AdminController::saadDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
 
