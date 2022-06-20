@@ -10,7 +10,7 @@
     }
 
     .link {
-        @apply no-underline hover:underline text-blue-500;
+        @apply no-underline hover:underline text-yellow-header-title;
     }
 
     .half-a-border-on-top {
@@ -34,5 +34,4 @@
     .menu-card {
         @apply rounded-lg shadow-lg h-full text-center py-10;
     }
-
 }

@@ -15,7 +15,7 @@ class SaadModel extends Model
 
     /**
      * Récupère toutes les saads si aucun id n'est passé en paramètre, sinon récupère la saad correspondant à l'id passée en paramètre
-     * @param false $id id de la saad à récupérer
+     * @param false $id - id de la saad à récupérer
      * @return array|object|null - Retourne un tableau contenant les saads si aucun id n'est passé en paramètre, sinon retourne la saad correspondant à l'id passée en paramètre
      */
     public function getSaads($id = false)
@@ -27,8 +27,8 @@ class SaadModel extends Model
     }
 
     /**
-     * Cette fonction permet de modifier le saad dont l'id est passé en parametre avec les données passées elles aussi en parametres
-     * @param $id id de la saad à modifier
+     * Cette fonction permet de modifier le saad dont l'id est passé en paramètre avec les données passées, elles aussi, en paramètre
+     * @param $id - id de la saad à modifier
      * @param $data
      * @throws \ReflectionException
      */
