@@ -249,7 +249,7 @@ class AdminController extends \CodeIgniter\Controller
             if ($this->request->getFile('image')->getName() != "") {
                 $data = $data + ['image' => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
-                $file->store('images/logosaads', $file->getName());
+                $file->store('../../public/images/logosaads', $file->getName());
             }
 
             if ($id) {
