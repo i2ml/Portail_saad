@@ -218,13 +218,19 @@ class AdminController extends \CodeIgniter\Controller
     {
         helper(['form']);
         $rules = [
-            'nom' => 'required|min_length[2]|max_length[100]',
-            'tel' => 'required|min_length[2]|max_length[100]',
-            'mail' => 'required|min_length[4]|max_length[100]|valid_email',
-            'site' => 'required|min_length[4]|max_length[150]',
-            'siret_siren' => 'required|min_length[4]|max_length[100]',
-            'adresse' => 'min_length[4]|max_length[300]',
-            'idCategorie' => 'required'
+            'nom' => 'required|max_length[100]',
+            'tel' => 'max_length[100]',
+            'mail' => 'max_length[100]|valid_email',
+            'site' => 'max_length[150]',
+            'adresse' => 'max_length[300]',
+            'idCategorie' => 'required',
+            'image' => [
+                'rules' => 'uploaded[image]'
+                    . '|is_image[image]'
+                    . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                    . '|max_size[image,100]'
+                    . '|max_dims[image,1024,768]',
+            ]
         ];
 
         $model = new SaadModel();
@@ -243,7 +249,7 @@ class AdminController extends \CodeIgniter\Controller
             if ($this->request->getFile('image')->getName() != "") {
                 $data = $data + ['image' => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
-                $file->store('../../public/images/logosaads', $file->getName());
+                $file->store('images/logosaads', $file->getName());
             }
 
             if ($id) {
