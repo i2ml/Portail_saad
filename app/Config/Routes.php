@@ -36,6 +36,7 @@ $routes->get('saads', 'SaadController::index');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
 $routes->match(['get', 'post'],'userList', 'AdminController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'],'saadsList', 'AdminController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
 $routes->match(['get', 'post'],'disconnect', 'AdminController::disconnect', ['filter' => 'authGuard']);
 
 //Supprimer saad
