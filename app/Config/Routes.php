@@ -44,9 +44,9 @@ $routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filte
 //Supprimer saad
 $routes->match(['get', 'post'],'SaadController/saadDelete/(:segment)', 'SaadController::saadDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
 
-//lier des saads à des manager
-$routes->match(['get', 'post'],'SaadController/saadLink/', 'SaadController::saadLink', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'SaadController/saadLink/(:segment)', 'PersonController::saadLink/$1', ['filter' =>  ['authGuard','superAdminGuard']]);
+//lier des saads à des managers
+$routes->match(['get', 'post'],'SaadListController/saadLink/', 'SaadListController::saadLink', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'],'SaadController/saadLink/(:segment)', 'SaadListController::saadLink/$1', ['filter' =>  ['authGuard','superAdminGuard']]);
 
 //Créer saad
 $routes->match(['get', 'post'],'SaadController/storeSaad/', 'SaadController::storeSaad', ['filter' => ['authGuard','superAdminGuard']]);

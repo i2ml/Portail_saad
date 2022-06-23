@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
+use ReflectionException;
 
 /**
  * PersonneModel
@@ -26,33 +27,53 @@ class PersonneModel extends Model
     }
 
     /**
+     * Transforme un tableau d'id de personne en un tableau de nom et prénom
+     * @param $idPersonnes array tableau d'id de personne
+     * @return array de nom et prénom
+     */
+    public function getPersonnesNameFromId(array $idPersonnes): array
+    {
+        // check if $idPersonnes is an array and not empty
+        if (!is_array($idPersonnes) || empty($idPersonnes)) {
+            return [];
+        }
+        // get all personnes that are in the array
+        $personnes = $this->whereIn('id', $idPersonnes)->get()->getResultArray();
+        $names = [];
+        foreach ($personnes as $personne) {
+            $names[] = $personne['nom'] . ' ' . $personne['prenom'];
+        }
+        return $names;
+    }
+
+    /**
      * Cette fonction permet de supprimer la personne dont l'id est passé en param
      * @param $id l'id de la personne à supprimer
      */
     public function deleteLine($id)
     {
 
-        $this->where("id",$id)
+        $this->where("id", $id)
             ->delete();
     }
 
     /**
      * Cette fonction permet de passer un gérant de saad administrateur
-     * @param $id du gérant que l'on veut upgrade
-     * @throws \ReflectionException
+     * @param $id number id du gérant que l'on veut upgrade
+     * @throws ReflectionException
      */
     public function upgrade($id)
     {
-        $this->update($id,['accountType' => SUPER_ADMIN]);
+        $this->update($id, ['accountType' => SUPER_ADMIN]);
     }
 
     /**
      * Cette fonction permet de passer un admin en gérant de saad
-     * @param $id de l'admin que l'on veut downgrade
-     * @throws \ReflectionException
+     * @param $id number l'admin que l'on veut downgrade
+     * @throws ReflectionException
      */
     public function downgrade($id)
     {
-        $this->update($id,['accountType' => SAAD_MANAGER]);
+        $this->update($id, ['accountType' => SAAD_MANAGER]);
     }
 }

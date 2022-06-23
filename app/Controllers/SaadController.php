@@ -4,6 +4,9 @@ namespace App\Controllers;
 use App\Models\SaadModel;
 use CodeIgniter\Controller;
 
+/**
+ * SaadController
+ */
 class SaadController extends Controller
 {
 
@@ -40,23 +43,6 @@ class SaadController extends Controller
         echo view('saadsList', $data);
         echo view('footer');
     }
-
-    /**
-     * Charge les composants de la page permettant de lier les saads
-     */
-    public function saadLink()
-    {
-        $model = new SaadModel();
-
-        $data = [
-            'saads' => $model->getSaads(),
-        ];
-
-        echo view('header');
-        echo view('saadLink', $data);
-        echo view('footer');
-    }
-
 
     /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre

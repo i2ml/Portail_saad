@@ -6,7 +6,7 @@ use App\Models\PersonneModel;
 use Faker\Provider\Person;
 
 /**
- * Cette classe est le controller de la partie admin
+ * Cette classe est le controller des utilisateurs
  */
 class PersonController extends \CodeIgniter\Controller
 {
