@@ -27,10 +27,27 @@ class SaadsSeeder extends Seeder
         ];
         $this->db->table('categorie')->insert($categorie);
         $secteur = [
+            'id' => 2,
             'nom' => 'Nîmes centre',
         ];
         $this->db->table('secteur')->insert($secteur);
+        $secteur = [
+            'id' => 0,
+            'nom' => 'Le Vigan',
+        ];
+        $this->db->table('secteur')->insert($secteur);
+        $secteur = [
+            'id' => 1,
+            'nom' => 'Banane sur mer',
+        ];
+        $this->db->table('secteur')->insert($secteur);
+        $secteur = [
+            'id' => 3,
+            'nom' => 'Ailleurs',
+        ];
+        $this->db->table('secteur')->insert($secteur);
         $saad = [
+            'id' => 2,
             'nom' => 'Saad 1',
             'tel' => '6969696969',
             'mail' => 'saad1@saad1.fr',
@@ -40,6 +57,32 @@ class SaadsSeeder extends Seeder
             'finess' => 3290903,
             'image' => 'img.png',
             'idCategorie' => 1,
+        ];
+        $this->db->table('saads')->insert($saad);
+        $saad = [
+            'id' => 0,
+            'nom' => 'Saad 2',
+            'tel' => '69696dzdez96969',
+            'mail' => 'saad1dzdze@saad1.fr',
+            'site' => 'saaddzedze1.fr',
+            'adresse' => 'pas la',
+            'siret_siren' => 333893894893,
+            'finess' => 3290903,
+            'image' => 'img.png',
+            'idCategorie' => 1,
+        ];
+        $this->db->table('saads')->insert($saad);
+        $saad = [
+            'id' => 1,
+            'nom' => 'Saad 1',
+            'tel' => '0555313822',
+            'mail' => 'banane@saad1.fr',
+            'site' => 'draftbot.com',
+            'adresse' => 'au bord de la mer',
+            'siret_siren' => 333893894893,
+            'finess' => 3290903,
+            'image' => 'img.png',
+            'idCategorie' => 2,
         ];
         $this->db->table('saads')->insert($saad);
         $personne = [
@@ -52,6 +95,16 @@ class SaadsSeeder extends Seeder
         $agir = [
             'idSaad' => 1,
             'idSecteur' => 1,
+        ];
+        $this->db->table('agir')->insert($agir);
+        $agir = [
+            'idSaad' => 0,
+            'idSecteur' => 2,
+        ];
+        $this->db->table('agir')->insert($agir);
+        $agir = [
+            'idSaad' => 2,
+            'idSecteur' => 3,
         ];
         $this->db->table('agir')->insert($agir);
         $codepostal = [
