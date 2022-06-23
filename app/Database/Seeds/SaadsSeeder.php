@@ -90,6 +90,7 @@ class SaadsSeeder extends Seeder
             'prenom' => 'admin de test',
             'mail' => 'bonjour@mail.com',
             'motdepasse' => '$2y$10$769wC8oc5oKksX4kjOV9aOqArpNip0AI6cKmS9IQY3CUQoyOYyTZG', // 'test'
+            'accountType' => 2,
         ];
         $this->db->table('personne')->insert($personne);
         $agir = [

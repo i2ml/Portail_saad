@@ -1,6 +1,6 @@
 <div class="bg-grey-recherche text-center half-a-border-on-bottom">
 
-            <form action="<?php echo base_url(); ?>/AdminController/store" class="half-a-border-on-top" method="post">
+            <form action="<?php echo base_url(); ?>/PersonController/store" class="half-a-border-on-top" method="post">
                 <h2 class="title pt-5">Créer un gérant de Saad</h2>
 
                 <div class="flex items-center justify-center">
