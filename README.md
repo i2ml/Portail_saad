@@ -8,6 +8,11 @@ Après avoir cloné le repo lancer :
     composer install
 ```
 
+Il faut également installer tailwind (étape innutile pour le déploiement) :
+```
+    npm install
+```
+
 Normalement tout devrait s'installer.
 
 ##Tailwind
