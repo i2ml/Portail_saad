@@ -20,10 +20,20 @@ class SaadModel extends Model
      */
     public function getSaads($id = false)
     {
-        if ($id) {
-            return $this->where('id', $id)->first();
-        }
-        return $this->findAll();
+        $db = db_connect();
+        $builder = $db->table('saads');
+        $query = $id ? $builder
+            ->select('*')
+            ->where('id', $id)
+            ->join('agir', 'agir.idSaad = saads.id')
+            ->join('secteur', 'agir.idSecteur = secteur.id')
+            ->get() : $builder
+            ->select('*')
+            ->join('agir', 'agir.idSaad = saads.id')
+            ->join('secteur', 'agir.idSecteur = secteur.id')
+            ->get();
+        $result = $query->getResultArray();
+        return $result;
     }
 
     /**
@@ -32,7 +42,8 @@ class SaadModel extends Model
      * @param $data
      * @throws \ReflectionException
      */
-    public function modifSaads($id, $data){
+    public function modifSaads($id, $data)
+    {
         $this->update($id, $data);
     }
 
@@ -43,7 +54,7 @@ class SaadModel extends Model
     public function deleteLine($id)
     {
 
-        $this->where("id",$id)
+        $this->where("id", $id)
             ->delete();
     }
 }
