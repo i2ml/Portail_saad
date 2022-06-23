@@ -25,12 +25,8 @@ class SaadModel extends Model
         $query = $id ? $builder
             ->select('*')
             ->where('id', $id)
-            ->join('agir', 'agir.idSaad = saads.id')
-            ->join('secteur', 'agir.idSecteur = secteur.id')
             ->get() : $builder
             ->select('*')
-            ->join('agir', 'agir.idSaad = saads.id')
-            ->join('secteur', 'agir.idSecteur = secteur.id')
             ->get();
         $result = $query->getResultArray();
         return $result;

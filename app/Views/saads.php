@@ -62,17 +62,6 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if ($saad['idSecteur']) { ?>
-                                <div>
-                                    <div class="mx-2 mt-1 text-lg">
-                                        <i class="fa-solid fa-map fa-lg mt-2"></i>
-                                        <p class="inline font-semibold ml-1"> Secteur d'activité :
-                                        <p class="inline">
-                                            <?php echo $saad['nom'] ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
