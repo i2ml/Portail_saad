@@ -28,8 +28,7 @@ class SaadModel extends Model
             ->get() : $builder
             ->select('*')
             ->get();
-        $result = $query->getResultArray();
-        return $result;
+        return $query->getResultArray();
     }
 
     /**

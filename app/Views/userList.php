@@ -74,7 +74,7 @@
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <form action="<?= esc(base_url()) ?>/PersonController/saadLink/<?= esc($user['id'], 'url'); ?>">
+                                    <form action="<?= esc(base_url()) ?>/SaadListController/saadLink/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Lier des SAAD
                                         </button>
