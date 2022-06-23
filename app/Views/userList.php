@@ -44,14 +44,14 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <?php } else { ?>
                                     <?php if ($user['accountType'] === SUPER_ADMIN) { ?>
-                                    <form action="<?= esc(base_url()) ?>/AdminController/userDowngrade/<?= esc($user['id'], 'url'); ?>">
+                                    <form action="<?= esc(base_url()) ?>/PersonController/userDowngrade/<?= esc($user['id'], 'url'); ?>">
                                 <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                   <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                   <button class="relative font-semibold">Administrateur</button>
                                 </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <form action="<?= esc(base_url()) ?>/AdminController/userDowngrade/<?= esc($user['id'], 'url'); ?>">
+                                    <form action="<?= esc(base_url()) ?>/PersonController/userDowngrade/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Rétrograder
                                         </button>
@@ -64,7 +64,7 @@
                                             </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <form action="<?= esc(base_url()) ?>/AdminController/userUpgrade/<?= esc($user['id'], 'url'); ?>">
+                                    <form action="<?= esc(base_url()) ?>/PersonController/userUpgrade/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Promouvoir
                                         </button>
@@ -74,7 +74,7 @@
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <form action="<?= esc(base_url()) ?>/AdminController/saadLink/<?= esc($user['id'], 'url'); ?>">
+                                    <form action="<?= esc(base_url()) ?>/PersonController/saadLink/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Lier des SAAD
                                         </button>
@@ -83,7 +83,7 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                     <?php
                                     if ($user['id'] !== session()->get('id') && $user['accountType'] !== SUPER_ADMIN) { ?>
-                                        <form action="<?= esc(base_url()) ?>/AdminController/userDelete/<?= esc($user['id'], 'url'); ?>"
+                                        <form action="<?= esc(base_url()) ?>/PersonController/userDelete/<?= esc($user['id'], 'url'); ?>"
                                               onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
                                             <button type="button" class="inline-block text-gray-500 hover:text-red-700">
                                                 <i class="fa-solid fa-trash fa-2xl"></i>

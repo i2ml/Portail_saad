@@ -6,7 +6,7 @@
             <?php foreach ($saads as $saad) { ?>
             <article class="card border grid grid-cols-6 mt-5">
                 <img
-                        class="col" src="<?php echo site_url('/images/logosaads/') . $saad['image']; ?>">
+                        class="col" src="<?php echo site_url('/images/logosaads/') . $saad['image']; ?>" alt="logo du saad">
                 <div class="col">
                     <h3 class="text-blue-header-btn text-2xl m-5">
                         <?php echo $saad['nom'] ?>
@@ -29,7 +29,7 @@
                     <?php } ?>
                 </div>
                 <div class="col">
-                    <form action="<?= esc(base_url()) ?>/AdminController/createSaad/<?= esc($saad['id'], 'url'); ?>">
+                    <form action="<?= esc(base_url()) ?>/PersonController/createSaad/<?= esc($saad['id'], 'url'); ?>">
                         <button class="blue-button"> Modifier</button>
                     </form>
                 </div>
@@ -37,7 +37,7 @@
                 if (session()->get('accountType') === SUPER_ADMIN) {
                     ?>
                     <div class="col">
-                        <form action="<?= esc(base_url()) ?>/AdminController/saadDelete/<?= esc($saad['id'], 'url'); ?>"
+                        <form action="<?= esc(base_url()) ?>/PersonController/saadDelete/<?= esc($saad['id'], 'url'); ?>"
                               onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
                             <button class="blue-button"> Supprimer</button>
                         </form>

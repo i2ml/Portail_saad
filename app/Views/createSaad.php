@@ -2,10 +2,10 @@
 
 
     <?php if($saad) { ?>
-    <form action="<?php echo base_url(); ?>/AdminController/storeSaad/<?php echo $saad['id'] ?>" class="half-a-border-on-top" enctype="multipart/form-data" method="post">
+    <form action="<?php echo base_url(); ?>/SaadController/storeSaad/<?php echo $saad['id'] ?>" class="half-a-border-on-top" enctype="multipart/form-data" method="post">
         <h2 class="title pt-5">Modifier <?php echo $saad['nom'] ?> </h2>
     <?php } else { ?>
-    <form action="<?php echo base_url(); ?>/AdminController/storeSaad" class="half-a-border-on-top" enctype="multipart/form-data" method="post">
+    <form action="<?php echo base_url(); ?>/SaadController/storeSaad" class="half-a-border-on-top" enctype="multipart/form-data" method="post">
         <h2 class="title pt-5">Créer un SAAD</h2>
     <?php } ?>
 
