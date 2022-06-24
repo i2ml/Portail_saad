@@ -77,8 +77,6 @@ class PersonController extends \CodeIgniter\Controller
             'users' => $model->getPersonnes(),
         ];
 
-        $session = session();
-
         echo view('header');
         echo view('userList', $data);
         echo view('footer');
@@ -96,7 +94,6 @@ class PersonController extends \CodeIgniter\Controller
         $model = new PersonneModel();
 
         $model->deleteLine($id);
-        unset($data);
         return redirect()->to('userList');
     }
 

@@ -52,7 +52,6 @@ class PersonneModel extends Model
      */
     public function deleteLine($id)
     {
-
         $this->where("id", $id)
             ->delete();
     }

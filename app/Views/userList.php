@@ -98,7 +98,7 @@
                                     if ($user['id'] !== session()->get('id') && $user['accountType'] !== SUPER_ADMIN) { ?>
                                         <form action="<?= esc(base_url()) ?>/PersonController/userDelete/<?= esc($user['id'], 'url'); ?>"
                                               onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
-                                            <button type="button" class="inline-block text-gray-500 hover:text-red-700">
+                                            <button class="inline-block text-gray-500 hover:text-red-700">
                                                 <i class="fa-solid fa-trash fa-2xl"></i>
                                             </button>
                                         </form>
