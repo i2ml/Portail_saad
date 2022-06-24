@@ -77,6 +77,7 @@ class PersonneModel extends Model
     }
 
     /**
+     * Permet de changer le mdp de la personne dont le mail est passé en parametre
      * @param $email
      * @param $password
      * @throws ReflectionException
@@ -87,8 +88,9 @@ class PersonneModel extends Model
     }
 
     /**
+     * Retourne l'id de la personne dont le mail est passé en param
      * @param $email
-     * @return mixed
+     * @return mixed l'id de la personne
      */
     private function getPersonnesIdFromEmail($email)
     {
