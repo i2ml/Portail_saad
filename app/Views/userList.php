@@ -18,7 +18,7 @@
                                 <i class="fa-solid fa-user-cog fa-lg"></i> Attribuer des saads :
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 uppercase tracking-wider">
-                                <i class="fa-solid fa-user-cog fa-lg"></i> Réinitialiser le mot de passe :
+                                <i class="fa-solid fa-arrow-rotate-right fa-lg"></i> Réinitialiser le mot de passe :
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 tracking-wider"></th>
                         </tr>
