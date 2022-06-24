@@ -131,3 +131,14 @@ database.default.DBPrefix =
 #--------------------------------------------------------------------
 
 # curlrequest.shareOptions = true
+
+#--------------------------------------------------------------------
+# EMAIL
+#--------------------------------------------------------------------
+
+email.SMTPHost = 'host';
+email.SMTPUser = 'user';
+email.SMTPPass = 'password';
+email.SMTPPort = '465';
+email.SMTPCrypto = 'ssl';
+email.priority = '3';
