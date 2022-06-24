@@ -41,6 +41,10 @@ $routes->match(['get', 'post'],'disconnect', 'PersonController::disconnect', ['f
 
 $routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
 
+//Envoyer un email
+$routes->match(['get', 'post'],'PersonController/sendEmailTest', 'PersonController::sendEmailTest', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'],'PersonController/resetPassword/(:segment)', 'PersonController::resetPassword/$1', ['filter' => ['authGuard','superAdminGuard']]);
+
 //Supprimer saad
 $routes->match(['get', 'post'],'SaadController/saadDelete/(:segment)', 'SaadController::saadDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
 

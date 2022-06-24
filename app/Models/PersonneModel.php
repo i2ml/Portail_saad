@@ -76,4 +76,24 @@ class PersonneModel extends Model
     {
         $this->update($id, ['accountType' => SAAD_MANAGER]);
     }
+
+    /**
+     * @param $email
+     * @param $password
+     * @throws ReflectionException
+     */
+    public function changePassword($email, $password){
+        $id = $this->getPersonnesIdFromEmail($email);
+        $this->update($id, ['motdepasse'=>$password]);
+    }
+
+    /**
+     * @param $email
+     * @return mixed
+     */
+    private function getPersonnesIdFromEmail($email)
+    {
+        $user = $this->where('mail',$email)->first();
+        return $user['id'];
+    }
 }

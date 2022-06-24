@@ -141,5 +141,51 @@ class PersonController extends \CodeIgniter\Controller
         return redirect()->to('userList');
     }
 
+    public function sendEmailTest(){
+        $email = \Config\Services::email();
+
+        $email->setFrom('contact@dometlien.fr', 'Test');
+        $email->setTo('gabriel.amphoux@i2ml.fr');
+
+        $email->setSubject('Yo bg v2');
+        $email->setMessage('ça test ça test encore et encore');
+
+        if($email->send()){
+            echo "ça a fonctionné";
+        } else {
+            echo $email->printDebugger();
+            echo "nop";
+        }
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function resetPassword($mailUser){
+        $email = \Config\Services::email();
+
+        $email->setFrom('contact@dometlien.fr', 'Ne pas répondre');
+        $email->setTo($mailUser);
+
+        $email->setSubject('Réinitialisation du mot de passe');
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*_";
+        $password = substr( str_shuffle( $chars ), 0, 8 );
+        $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : '.$password;
+        $email->setMessage($message);
+        $password = password_hash($password, PASSWORD_BCRYPT);
+
+        $model = new PersonneModel();
+        $model->changePassword($mailUser, $password);
+
+        if($email->send()){
+            echo "ça a fonctionné";
+            return redirect()->to('userList');
+        } else {
+            echo $email->printDebugger();
+            echo "nop";
+            return redirect()->to('userList');
+        }
+    }
+
 
 }

@@ -17,6 +17,9 @@
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 uppercase tracking-wider">
                                 <i class="fa-solid fa-user-cog fa-lg"></i> Attribuer des saads :
                             </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 uppercase tracking-wider">
+                                <i class="fa-solid fa-user-cog fa-lg"></i> Réinitialiser le mot de passe :
+                            </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 tracking-wider"></th>
                         </tr>
                         </thead>
@@ -80,6 +83,16 @@
                                         </button>
                                     </form>
                                 </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <?php
+                                    if ($user['id'] !== session()->get('id') && $user['accountType'] !== SUPER_ADMIN) { ?>
+                                        <form action="<?= esc(base_url()) ?>/PersonController/resetPassword/<?= esc($user['mail'], 'url'); ?>">
+                                            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                                Réinitialiser le mot de passe
+                                            </button>
+                                        </form>
+                                    <?php } ?>
+                                </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                     <?php
                                     if ($user['id'] !== session()->get('id') && $user['accountType'] !== SUPER_ADMIN) { ?>
@@ -106,3 +119,4 @@
 
     <?php } ?>
 </div>
+
