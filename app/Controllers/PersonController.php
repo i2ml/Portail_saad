@@ -138,24 +138,10 @@ class PersonController extends \CodeIgniter\Controller
         return redirect()->to('userList');
     }
 
-    public function sendEmailTest(){
-        $email = \Config\Services::email();
-
-        $email->setFrom('contact@dometlien.fr', 'Test');
-        $email->setTo('gabriel.amphoux@i2ml.fr');
-
-        $email->setSubject('Yo bg v2');
-        $email->setMessage('ça test ça test encore et encore');
-
-        if($email->send()){
-            echo "ça a fonctionné";
-        } else {
-            echo $email->printDebugger();
-            echo "nop";
-        }
-    }
-
     /**
+     * Permet de modifier le mot de passe de l'utilisateur dont le mail est passé en parametre
+     * @param $mailUser
+     * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */
     public function resetPassword($mailUser){
@@ -180,7 +166,7 @@ class PersonController extends \CodeIgniter\Controller
         } else {
             echo $email->printDebugger();
             echo "nop";
-            // return redirect()->to('userList');
+            return redirect()->to('userList');
         }
     }
 
