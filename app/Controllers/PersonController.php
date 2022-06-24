@@ -180,7 +180,7 @@ class PersonController extends \CodeIgniter\Controller
         } else {
             echo $email->printDebugger();
             echo "nop";
-            return redirect()->to('userList');
+            // return redirect()->to('userList');
         }
     }
 
