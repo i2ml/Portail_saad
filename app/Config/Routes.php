@@ -73,6 +73,10 @@ $routes->match(['get', 'post'],'createUser', 'PersonController::createUser', ['f
 //Modifier user
 $routes->match(['get', 'post'],'PersonController/upgradeUser/(:segment)', 'PersonController::userDowngrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
 $routes->match(['get', 'post'],'PersonController/downgradeUser/(:segment)', 'PersonController::userUpgrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'],'PersonController/changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'],'changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'],'PersonController/changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'],'changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
 
 /*
  * --------------------------------------------------------------------

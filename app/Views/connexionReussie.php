@@ -87,7 +87,7 @@
         <i class="fa-solid fa-gear fa-xl"></i> Paramètres :
     </h3>
     <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 xl:gap-7 md:gap-3 gap-1">
-        <a href="TODO">
+        <a href="changePassword">
             <div class="menu-card">
                 <i class="fa-solid fa-lock fa-2xl text-blue-header-btn"></i>
                 <p class="mt-5">Changer de mot de passe</p>

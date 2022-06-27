@@ -170,5 +170,51 @@ class PersonController extends \CodeIgniter\Controller
         }
     }
 
+    /**
+     * Charge les composants de la page changer de mot de passe si rien n'est passé en param
+     * @param $user c'est l'id de l'utilisateur dont on modifie le mot de passe
+     * @throws \ReflectionException
+     */
+    public function changePassword($user = false)
+    {
+        if(!$user) {
+            $id = session()->get('id');
+
+            $data = [
+                'idUser' => $id,
+            ];
+
+            echo view('header');
+            echo view('changePassword', $data);
+            echo view('footer');
+        }
+        else {
+            helper(['form']);
+            $rules = [
+                'password' => 'required|min_length[4]|max_length[50]',
+                'confirmpassword' => 'matches[password]'
+            ];
+
+            if ($this->validate($rules)) {
+                $userModel = new PersonneModel();
+
+                $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+
+
+                $userModel->changePasswordWithId($user, $password);
+
+                return redirect()->to('/connexionReussie');
+            }
+
+            $session = session();
+            $data['idUser'] = $session->get('id');
+            $data['validation'] = $this->validator;
+            $data['title'] = 'Admin';
+            echo view('header');
+            echo view('changePassword', $data);
+            echo view('footer');
+
+        }
+    }
 
 }
