@@ -54,9 +54,9 @@
         </div>
     <?php } else { ?>
 
-        <h3>Aucun utilisateur n'a été trouvé</h3>
+        <h3>Aucun SAAD n'a été trouvé</h3>
 
-        Il n'existe aucun utilisateur dans la base de données.
+        Il n'existe aucun SAAD dans la base de données.
 
     <?php } ?>
 </div>
@@ -93,7 +93,7 @@
                     <?php } ?>
                 </div>
                 <div class="col">
-                    <form action="<?= esc(base_url()) ?>/PersonController/createSaad/<?= esc($saad['id'], 'url'); ?>">
+                    <form action="<?= esc(base_url()) ?>/SaadController/createSaad/<?= esc($saad['id'], 'url'); ?>">
                         <button class="blue-button"> Modifier</button>
                     </form>
                 </div>
@@ -101,7 +101,7 @@
                 if (session()->get('accountType') === SUPER_ADMIN) {
                     ?>
                     <div class="col">
-                        <form action="<?= esc(base_url()) ?>/PersonController/saadDelete/<?= esc($saad['id'], 'url'); ?>"
+                        <form action="<?= esc(base_url()) ?>/SaadController/saadDelete/<?= esc($saad['id'], 'url'); ?>"
                               onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
                             <button class="blue-button"> Supprimer</button>
                         </form>
