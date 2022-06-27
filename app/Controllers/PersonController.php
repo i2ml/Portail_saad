@@ -171,7 +171,8 @@ class PersonController extends \CodeIgniter\Controller
     }
 
     /**
-     * Charge les composants de la page changer de mot de passe
+     * Charge les composants de la page changer de mot de passe si rien n'est passé en param
+     * @param $user c'est l'id de l'utilisateur dont on modifie le mot de passe
      * @throws \ReflectionException
      */
     public function changePassword($user = false)
