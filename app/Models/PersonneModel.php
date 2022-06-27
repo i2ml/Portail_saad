@@ -88,6 +88,16 @@ class PersonneModel extends Model
     }
 
     /**
+     * Permet de changer le mdp de la personne dont l'id est passé en parametre
+     * @param $id
+     * @param $password
+     * @throws ReflectionException
+     */
+    public function changePasswordWithId($id, $password){
+        $this->update($id, ['motdepasse'=>$password]);
+    }
+
+    /**
      * Retourne l'id de la personne dont le mail est passé en param
      * @param $email
      * @return mixed l'id de la personne
