@@ -70,6 +70,7 @@ class SaadController extends Controller
         $data['profil'] = $session->get('nom');
         $data['title'] = 'Admin';
         $model = new SaadModel();
+        $data['success'] = null;
         $data['saad'] = $id;
 
         if ($id) {
@@ -126,14 +127,20 @@ class SaadController extends Controller
 
             if ($id) {
                 $model->modifSaads($id, $data);
+                $data['success'] = true;
             } else {
                 $model->save($data);
+                $data['success'] = true;
             }
 
             return redirect()->to('/connexionReussie');
         }
 
         $session = session();
+        $data['success'] = false;
+            if ($this->request->getMethod() !== 'post') {
+                $data['success'] = null;
+            }
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
