@@ -1,4 +1,40 @@
-<h1 class="title">Les services d'aides à domicile dans votre secteur</h1>
+<h1 class="title">Sélectionnez les services d'aide à domicile à lier à l'utilisateur :</h1>
+
+<?php
+
+use App\Models\PersonneModel;
+use App\Models\SaadModel;
+
+/**
+ * @var PersonneModel $user
+ * @var SaadModel[] $saads
+ * @var SaadModel[] $currentSaadList
+ */
+?>
+<div class="container mx-auto">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2 first-letter:capitalize"> <?php echo $user['nom'] . ' ' . $user['prenom'] ?></div>
+            <?php if ($user['mail']) { ?>
+                <i class="fa-solid fa-envelope fa-lg mt-2"></i>
+                <p class="inline ml-1"> E-mail :
+                    <a class="link"
+                       href="mailto:<?php echo $user['mail'] ?>">
+                        <?php echo $user['mail'] ?> </a>
+                </p>
+            <?php } ?>
+        </div>
+        <?php
+        if (!empty($currentSaadList) && is_array($currentSaadList)) { ?>
+        <div class="px-6 pt-4 pb-2">
+            <?php foreach ($currentSaadList as $userSaad) { ?>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><?php echo $userSaad['nom'] ?></span>
+            <?php } ?>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+
 <div class="container mx-auto px-4 sm:px-8">
     <?php if (!empty($saads) && is_array($saads)) { ?>
         <div class="py-8">
@@ -25,7 +61,7 @@
                                     <div class="flex">
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap capitalize">
-                                                <?php echo $saad['nom']?>
+                                                <?php echo $saad['nom'] ?>
                                             </p>
                                             <p class="text-gray-600 whitespace-no-wrap text-sm"><?php echo $saad['mail'] ?></p>
                                         </div>
@@ -34,7 +70,7 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <form action="<?= esc(base_url()) ?>/SaadListController/saadLink/<?= esc($saad['id'], 'url'); ?>">
                                         <p class="text-gray-900 whitespace-no-wrap capitalize">
-                                            <?php echo $saad['nom']?>
+                                            <?php echo $saad['nom'] ?>
                                         </p>
                                     </form>
                                 </td>
@@ -66,11 +102,13 @@
 
     <div class="grid grid-cols-1">
         <section class="all-saads">
+            <?php foreach ($saads
 
-            <?php foreach ($saads as $saad) { ?>
+            as $saad) { ?>
             <article class="card border grid grid-cols-6 mt-5">
                 <img
-                        class="col" src="<?php echo site_url('/images/logosaads/') . $saad['image']; ?>" alt="logo du saad">
+                        class="col" src="<?php echo site_url('/images/logosaads/') . $saad['image']; ?>"
+                        alt="logo du saad">
                 <div class="col">
                     <h3 class="text-blue-header-btn text-2xl m-5">
                         <?php echo $saad['nom'] ?>

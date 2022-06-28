@@ -45,7 +45,7 @@ class SaadModel extends Model
 
     /**
      * Cette fonction permet de supprimer le saad dont l'id est passé en param
-     * @param $id l'id du saad à supprimer
+     * @param $id number L'id du saad à supprimer
      */
     public function deleteLine($id)
     {
@@ -80,5 +80,15 @@ class SaadModel extends Model
 
         unlink($path);
 
+    }
+
+    /**
+     * Cette fonction récupère les saads dont l'id est présent dans la liste passée en paramètre
+     * @param array|null $getSaadIdsFromPersonId
+     * @return array
+     */
+    public function getSaadsByIds(?array $getSaadIdsFromPersonId): array
+    {
+        return $this->whereIn('id', $getSaadIdsFromPersonId)->findAll();
     }
 }
