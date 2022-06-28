@@ -139,35 +139,28 @@ class PersonController extends \CodeIgniter\Controller
     }
 
     /**
-     * Permet de modifier le mot de passe de l'utilisateur dont le mail est passé en parametre
+     * Permet de modifier le mot de passe de l'utilisateur dont le mail est passé en paramètre
      * @param $mailUser
      * @return \CodeIgniter\HTTP\RedirectResponse|void
      * @throws \ReflectionException
      */
-    public function resetPassword($mailUser){
+    public function resetPassword($mailUser)
+    {
         $email = \Config\Services::email();
 
         $email->setFrom('contact@dometlien.fr', 'Ne pas répondre');
         $email->setTo($mailUser);
 
         $email->setSubject('Réinitialisation du mot de passe');
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*_";
-        $password = substr( str_shuffle( $chars ), 0, 8 );
-        $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : '.$password;
+        $password = substr(md5(uniqid()), 0, 8);
+        $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : ' . $password;
         $email->setMessage($message);
         $password = password_hash($password, PASSWORD_BCRYPT);
 
         $model = new PersonneModel();
         $model->changePassword($mailUser, $password);
 
-        if($email->send()){
-            echo "ça a fonctionné";
-            return redirect()->to('userList');
-        } else {
-            echo $email->printDebugger();
-            echo "nop";
-            return redirect()->to('userList');
-        }
+        return redirect()->to('userList');
     }
 
     /**
@@ -177,7 +170,7 @@ class PersonController extends \CodeIgniter\Controller
      */
     public function changePassword($user = false)
     {
-        if(!$user) {
+        if (!$user) {
             $id = session()->get('id');
 
             $data = [
@@ -187,8 +180,7 @@ class PersonController extends \CodeIgniter\Controller
             echo view('header');
             echo view('changePassword', $data);
             echo view('footer');
-        }
-        else {
+        } else {
             helper(['form']);
             $rules = [
                 'password' => 'required|min_length[4]|max_length[50]',
