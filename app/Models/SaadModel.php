@@ -14,21 +14,22 @@ class SaadModel extends Model
 
 
     /**
-     * Récupère toutes les saads si aucun id n'est passé en paramètre, sinon récupère la saad correspondant à l'id passée en paramètre
-     * @param false $id - id de la saad à récupérer
-     * @return array|object|null - Retourne un tableau contenant les saads si aucun id n'est passé en paramètre, sinon retourne la saad correspondant à l'id passée en paramètre
+     * Récupère toutes les saads 
+     * @return array|null - Retourne un tableau contenant les saads
      */
-    public function getSaads($id = false)
+    public function getSaads()
     {
-        $db = db_connect();
-        $builder = $db->table('saads');
-        $query = $id ? $builder
-            ->select('*')
-            ->where('id', $id)
-            ->get() : $builder
-            ->select('*')
-            ->get();
-        return $query->getResultArray();
+        return $this->findAll();
+    }
+
+    /**
+     * récupère la saad correspondant à l'id passée en paramètre
+     * @param false $id - id de la saad à récupérer
+     * @return object|null - Retourne la saad correspondant à l'id passée en paramètre
+     */
+    public function getSaadbyid($id)
+    {
+        return $this->where('id', $id)->first();
     }
 
     /**
