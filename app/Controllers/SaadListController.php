@@ -6,6 +6,7 @@ use App\Models\PersonneModel;
 use App\Models\SaadListModel;
 use App\Models\SaadModel;
 use CodeIgniter\Controller;
+use ReflectionException;
 
 /**
  * SaadListController
@@ -34,8 +35,14 @@ class SaadListController extends Controller
             $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
         }
 
+
         //on récupère les saads de l'utilisateur sélectionné
-        $userSaads = $saadModel->getSaadsByIds($saadListModel->getPersonIdsFromSaadId($idPersonne));
+        $saadUser = $saadListModel->getSaadIdsFromPersonId($idPersonne);
+        $userSaads = [];
+        if ($saadUser) {
+            $userSaads = $saadModel->getSaadsByIds($saadUser);
+        }
+
 
         $data = [
             'saads' => $saads,
@@ -45,6 +52,33 @@ class SaadListController extends Controller
         echo view('header');
         echo view('saadLink', $data);
         echo view('footer');
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function editSaadLink($idPersonne)
+    {
+
+        $saadArray = $this->request->getVar('saad');
+        $saadListModel = new SaadListModel();
+        $saadListModel->deleteAllLinks($idPersonne);
+        if (!empty($saadArray)) {
+            foreach ($saadArray as $saad) {
+                $saadListModel->save(['idPersonne' => $idPersonne, 'idSaad' => $saad]);
+            }
+        }
+        return redirect()->to('saadListController/saadLink/' . $idPersonne);
+    }
+
+    /** Supprime les liens entre une personne et les saads
+     * @param $idPersonne number - L'id de la personne dont on veut supprimer les liens
+     */
+    public function deleteAllLinks($idPersonne)
+    {
+        $saadListModel = new SaadListModel();
+        $saadListModel->deleteAllLinks($idPersonne);
+        return redirect()->to('saadListController/saadLink/' . $idPersonne);
     }
 
 

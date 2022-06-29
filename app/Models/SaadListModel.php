@@ -44,4 +44,12 @@ class SaadListModel extends Model
         return array_column($list, 'idPersonne');
     }
 
+    /**
+     * @param $idPersonne number - L'id de la personne dont on veut supprimer les liens avec les saads
+     */
+    public function deleteAllLinks($idPersonne)
+    {
+        $this->where('idPersonne', $idPersonne)->delete();
+    }
+
 }
