@@ -20,6 +20,7 @@ class PersonController extends \CodeIgniter\Controller
         $session = session();
         $data['profil'] = $session->get('nom');
         $data['title'] = 'Admin';
+        $data['success'] = null;
         echo view('header');
         echo view('createUser', $data);
         echo view('footer');
@@ -52,11 +53,16 @@ class PersonController extends \CodeIgniter\Controller
             ];
 
             $userModel->save($data);
+            $data['success'] = true;
 
             return redirect()->to('/connexionReussie');
         }
 
         $session = session();
+        $data['success'] = false;
+            if ($this->request->getMethod() !== 'post') {
+                $data['success'] = null;
+            }
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';

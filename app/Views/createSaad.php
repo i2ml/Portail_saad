@@ -6,17 +6,17 @@
             if ($success) {
                 ?>
                 <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Votre message a bien été envoyé !</h4>
-                    <p>Merci pour votre message, nous vous souhaitons une bonne fin de journée.</p>
+                    <h4 class="alert-heading">Le service d'AAD a bien créé !</h4>
+                    <p>Nous vous souhaitons une bonne fin de journée.</p>
                 </div>
                 <?php
             } else {
                 if (isset($success)) {
                     ?>
                     <div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading">Votre message n'a pas été envoyé !</h4>
-                        <p>Une erreur s'est produite lors de l'envoi de votre message. Veuillez vérifier les information
-                            saisies dans le formulaire de contact.</p>
+                        <h4 class="alert-heading">Le service n'a pas pu être enregistré !</h4>
+                        <p>Une erreur s'est produite lors de l'enregistrement. Veuillez vérifier les information
+                            saisies dans le formulaire de création.</p>
                         
                     </div>
                     <?php
@@ -149,11 +149,7 @@
     </form>
 
 
-    <?php if (isset($validation)) : ?>
-        <div>
-            <?= $validation->listErrors() ?>
-        </div>
-    <?php endif; ?>
+    
 </div>
 </div>
 </div>
