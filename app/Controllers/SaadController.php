@@ -74,7 +74,7 @@ class SaadController extends Controller
         $data['saad'] = $id;
 
         if ($id) {
-            $data['saad'] = $model->getSaads($id);
+            $data['saad'] = $model->getSaadbyid($id);
         }
 
         echo view('header');
@@ -145,7 +145,7 @@ class SaadController extends Controller
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
         if ($id) {
-            $data['saad'] = $model->getSaads($id);
+            $data['saad'] = $model->getSaadbyid($id);
         } else {
             $data['saad'] = $id;
         }
