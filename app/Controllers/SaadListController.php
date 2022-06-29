@@ -55,6 +55,7 @@ class SaadListController extends Controller
     }
 
     /**
+     * Permet de lier un ou plusieurs saads à une personne
      * @throws ReflectionException
      */
     public function editSaadLink($idPersonne)
