@@ -40,8 +40,9 @@ use App\Models\SaadModel;
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                    <form method="POST" id="linkForm"></form>
-                    <table class="min-w-full leading-normal">
+                    <form method="POST" id="linkForm"
+                          action="<?= esc(base_url()) ?>/SaadListController/editSaadLink/<?= esc($user['id'], 'url'); ?>"></form>
+                    <table class=" min-w-full leading-normal">
                         <thead>
                         <tr>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-700 uppercase tracking-wider">
@@ -70,7 +71,10 @@ use App\Models\SaadModel;
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap capitalize">
-                                        <?php echo $saad['nom'] ?>
+                                        <?php
+                                        foreach ($saad['noms'] as $nom) {
+                                            echo $nom . ' ';
+                                        } ?>
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -91,7 +95,7 @@ use App\Models\SaadModel;
                                             <div class="relative">
                                                 <input id="toogle<?php echo $saad['id'] ?>" type="checkbox"
                                                        form="linkForm" class="sr-only"
-                                                    <?php echo !$isLinked ?: "checked" ?> name="saad[]"/>
+                                                    <?php echo !$isLinked ?: "checked" ?> name="saad[]" value="<?php echo $saad['id'] ?>"/>
                                                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                                                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                                             </div>
@@ -116,10 +120,14 @@ use App\Models\SaadModel;
 
     <?php } ?>
     <div class="flex flex-wrap justify-center">
-        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow sm:mr-16 sm:mt-0 mx-8 mt-8">
-            Tout décocher
-        </button>
-        <button class="bg-blue-200 hover:bg-blue-100 text-blue-900 font-semibold py-2 px-4 border border-blue-400 rounded shadow sm:ml-16 sm:mt-0 mx-8 mt-8">
+        <form action="<?= esc(base_url()) ?>/SaadListController/deleteAllLinks/<?= esc($user['id'], 'url'); ?>">
+            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow sm:mr-16 sm:mt-0 mx-8 mt-8"
+                    type="submit">
+                Supprimer tous les liens
+            </button>
+        </form>
+        <button class="bg-blue-200 hover:bg-blue-100 text-blue-900 font-semibold py-2 px-4 border border-blue-400 rounded shadow sm:ml-16 sm:mt-0 mx-8 mt-8"
+                form="linkForm" type="submit">
             Envoyer la modification
         </button>
     </div>
