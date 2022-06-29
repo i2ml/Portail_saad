@@ -52,5 +52,33 @@ class SaadModel extends Model
 
         $this->where("id", $id)
             ->delete();
+
+    }
+
+    /**
+     * cette fonction permet de récupérer le nom de l'image du saad par son ID
+     * @param $id
+     * @return mixed
+     */
+    public function getImageById($id){
+
+        $saad = $this->where('id',$id)->first();
+        return $saad['image'];
+    }
+
+    /**
+     * Cette fonction permet de supprimer l'image du saad voulu du serveur
+     * @param $id
+     * @return void
+     */
+    public function deleteImage($id){
+
+        $this->where("id",$id);
+        $image = $this->getImageById($id);
+        $path = getcwd()."\images\logosaads\\".$image;
+
+
+        unlink($path);
+
     }
 }

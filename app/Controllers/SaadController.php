@@ -54,7 +54,10 @@ class SaadController extends Controller
 
         $model = new SaadModel();
 
+        $model->deleteImage($id);
         $model->deleteLine($id);
+
+
         unset($data);
         return redirect()->to('saadsList');
     }
