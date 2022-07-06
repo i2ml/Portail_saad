@@ -19,31 +19,13 @@
             <a href="createUser">
                 <div class="menu-card">
                     <i class="fa-solid fa-plus fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Créer un gestionnaire de Saad</p>
+                    <p class="mt-5">Créer un utilisateur</p>
                 </div>
             </a>
             <a href="userList">
                 <div class="menu-card">
-                    <i class="fa-solid fa-trash fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Supprimer un gestionnaire de Saad</p>
-                </div>
-            </a>
-            <a href="userList">
-                <div class="menu-card">
-                    <i class="fa-solid fa-medal fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Promouvoir un gestionnaire de Saad au rang d'administrateur</p>
-                </div>
-            </a>
-            <a href="userList">
-                <div class="menu-card">
-                    <i class="fa-solid fa-arrow-trend-down fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Rétrograder un administrateur au rang de gestionnaire de Saad</p>
-                </div>
-            </a>
-            <a href="userList">
-                <div class="menu-card">
-                    <i class="fa-solid fa-link fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Attribuer des SAAD</p>
+                    <i class="fa-solid fa-pen fa-2xl text-blue-header-btn"></i>
+                    <p class="mt-5">Gérer les utilisateurs</p>
                 </div>
             </a>
         </div>
@@ -68,7 +50,7 @@
         <a href="saadsList">
             <div class="menu-card">
                 <i class="fa-solid fa-pen fa-2xl text-blue-header-btn"></i>
-                <p class="mt-5">Modifier un SAAD</p>
+                <p class="mt-5">Gérer les saads qui me sont attribués</p>
             </div>
         </a>
         <?php
@@ -77,8 +59,8 @@
             ?>
             <a href="saadsList">
                 <div class="menu-card">
-                    <i class="fa-solid fa-trash fa-2xl text-blue-header-btn"></i>
-                    <p class="mt-5">Supprimer un SAAD</p>
+                    <i class="fa-solid fa-admin fa-2xl text-blue-header-btn"></i>
+                    <p class="mt-5">Gérer tous les saads</p>
                 </div>
             </a>
         <?php } ?>
