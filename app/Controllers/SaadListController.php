@@ -46,9 +46,10 @@ class SaadListController extends Controller
 
         $data = [
             'saads' => $saads,
-            'user' => $personneModel->getPersonnes($idPersonne),
+            'user' => $personneModel->getPersonnebyid($idPersonne),
             'currentSaadList' => $userSaads,
         ];
+
         echo view('header');
         echo view('saadLink', $data);
         echo view('footer');

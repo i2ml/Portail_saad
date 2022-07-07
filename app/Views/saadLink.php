@@ -71,10 +71,7 @@ use App\Models\SaadModel;
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap capitalize">
-                                        <?php
-                                        foreach ($saad['noms'] as $nom) {
-                                            echo $nom . ' ';
-                                        } ?>
+                                        <?php echo implode(' / ', $saad['noms']) ?>
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -95,7 +92,8 @@ use App\Models\SaadModel;
                                             <div class="relative">
                                                 <input id="toogle<?php echo $saad['id'] ?>" type="checkbox"
                                                        form="linkForm" class="sr-only"
-                                                    <?php echo !$isLinked ?: "checked" ?> name="saad[]" value="<?php echo $saad['id'] ?>"/>
+                                                    <?php echo !$isLinked ?: "checked" ?> name="saad[]"
+                                                       value="<?php echo $saad['id'] ?>"/>
                                                 <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
                                                 <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
                                             </div>

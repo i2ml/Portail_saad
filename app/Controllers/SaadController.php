@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\PersonneModel;
+use App\Models\SaadListModel;
 use App\Models\SaadModel;
 use CodeIgniter\Controller;
 
@@ -34,9 +36,20 @@ class SaadController extends Controller
     public function saadsList()
     {
         $model = new SaadModel();
+        $saadListModel = new SaadListModel();
+        $personneModel = new PersonneModel();
 
+        $saads = $model->getSaads();
+        foreach ($saads as $key => $saad) {
+            // on récupère la liste des personnes liées à ce saad sous forme de tableau d'id
+
+            $ids = $saadListModel->getPersonIdsFromSaadId($saad['id']);
+            $saads[$key]['idsGerants'] = $ids;
+            //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
+            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
+        }
         $data = [
-            'saads' => $model->getSaads(),
+            'saads' => $saads,
         ];
 
         echo view('header');

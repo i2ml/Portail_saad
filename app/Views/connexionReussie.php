@@ -24,7 +24,7 @@
             </a>
             <a href="userList">
                 <div class="menu-card">
-                    <i class="fa-solid fa-pen fa-2xl text-blue-header-btn"></i>
+                    <i class="fa-solid fa-address-book fa-2xl text-blue-header-btn"></i>
                     <p class="mt-5">Gérer les utilisateurs</p>
                 </div>
             </a>
@@ -49,7 +49,7 @@
         <?php } ?>
         <a href="saadsList">
             <div class="menu-card">
-                <i class="fa-solid fa-pen fa-2xl text-blue-header-btn"></i>
+                <i class="fa-solid fa-anchor fa-2xl text-blue-header-btn"></i>
                 <p class="mt-5">Gérer les saads qui me sont attribués</p>
             </div>
         </a>
@@ -59,7 +59,7 @@
             ?>
             <a href="saadsList">
                 <div class="menu-card">
-                    <i class="fa-solid fa-admin fa-2xl text-blue-header-btn"></i>
+                    <i class="fa-solid fa-list-check fa-2xl text-blue-header-btn"></i>
                     <p class="mt-5">Gérer tous les saads</p>
                 </div>
             </a>
