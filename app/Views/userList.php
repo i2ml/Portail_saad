@@ -36,7 +36,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="py-5 border-b border-gray-200 bg-white text-sm">
                                     <?php
                                     if ($user['id'] === session()->get('id')) { ?>
                                     <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -53,7 +53,7 @@
                   <button class="relative font-semibold">Administrateur</button>
                                 </span>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="py-5 border-b border-gray-200 bg-white text-sm">
                                     <form action="<?= esc(base_url()) ?>/PersonController/userDowngrade/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Rétrograder
@@ -66,7 +66,7 @@
                                             <button class="relative font-semibold">Gestionnaire de SAAD</button>
                                             </span>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="py-5 border-b border-gray-200 bg-white text-sm">
                                     <form action="<?= esc(base_url()) ?>/PersonController/userUpgrade/<?= esc($user['id'], 'url'); ?>">
                                         <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                             Promouvoir
