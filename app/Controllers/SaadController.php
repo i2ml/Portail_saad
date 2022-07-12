@@ -95,10 +95,10 @@ class SaadController extends Controller
         helper(['form']);
         $rules = [
             'nom' => 'required|max_length[100]',
-            'tel' => 'max_length[100]',
+            'tel' => 'max_length[100]|regex_match[/^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/]',
             'mail' => 'max_length[100]|valid_email',
             'site' => 'max_length[150]',
-            'adresse' => 'max_length[300]',
+            'adresse' => "max_length[300]|regex_match[/^[a-zA-Z0-9\s,'-]*$/]",
             'idCategorie' => 'required',
             'image' => [
                 'rules' => 'uploaded[image]'
