@@ -14,23 +14,40 @@ class PersonneModel extends Model
     protected $allowedFields = ['id', 'nom', 'prenom', 'mail', 'motdepasse', 'idSaadList', 'accountType'];
 
     /**
-     * Cette fonction permet de récupérer l'ensemble des personnes présentent en bdd
+     * Cette fonction permet de récupérer l'ensemble des personnes présentent en bdd sans leurs mots de pass
      * @return array|null soit toutes les personnes de la bdd
      */
     public function getPersonnes()
     {
-        return $this->findAll();
+        return $this->
+            select('id, nom, prenom, mail, accountType')
+            ->get()
+            ->getResultArray();
+        
+    }
+
+    /**
+     * Cette fonction permet de récupérer le mdp de la personne correpondant à l'id passée en parametre
+     * @param $id l'identifiant de la personne demandée
+     * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
+     */
+    public function getPass($id)
+    {
+        return $this->where('id', $id)->first();
     }
 
     /**
      * Cette fonction permet de récupérer une personne en bdd identifiée par son id $id en param
      * @param $id l'identifiant de la personne demandée
-     * @return object|null  la ligne de la bdd correspondant à l'id passée en param
+     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
      */
 
     public function getPersonnebyid($id)
     {
-        return $this->where('id', $id)->first();
+        return $this->
+            select('id, nom, prenom, mail, accountType')
+            ->where('id', $id)
+            ->first();
     }
 
     /**
