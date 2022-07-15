@@ -19,8 +19,8 @@ class PersonneModel extends Model
      */
     public function getPersonnes()
     {
-        return $this->
-            select('id, nom, prenom, mail, accountType')
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
             ->get()
             ->getResultArray();
         
@@ -31,9 +31,31 @@ class PersonneModel extends Model
      * @param $id l'identifiant de la personne demandée
      * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
      */
-    public function getPass($id)
+    public function checkPass($mail, $varp)
     {
-        return $this->where('id', $id)->first();
+        $chk = $this->where('mail', $mail)->first();
+
+        if ($chk) {
+            $pass = $chk['motdepasse'];
+            $authenticatePassword = password_verify($varp, $pass);
+            return $authenticatePassword;
+            
+        } else {
+            return False;
+        }            
+    }
+
+    /**
+     * Cette fonction permet de récupérer une personne en bdd identifiée par son mail $mail en param
+     * @param $mail l'identifiant de la personne demandée
+     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
+     */
+    public function getPersonnebymail($mail)
+    {
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
+            ->where('mail', $mail)
+            ->first();
     }
 
     /**
@@ -41,11 +63,10 @@ class PersonneModel extends Model
      * @param $id l'identifiant de la personne demandée
      * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
      */
-
     public function getPersonnebyid($id)
     {
-        return $this->
-            select('id, nom, prenom, mail, accountType')
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
             ->where('id', $id)
             ->first();
     }
