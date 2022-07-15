@@ -31,7 +31,7 @@ class PersonneModel extends Model
      * @param $id l'identifiant de la personne demandée
      * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
      */
-    public function checkPass($mail, $varp)
+    public function checkPass($mail, $varp): bool
     {
         $chk = $this->where('mail', $mail)->first();
 
