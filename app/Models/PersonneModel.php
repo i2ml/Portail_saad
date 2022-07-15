@@ -27,7 +27,7 @@ class PersonneModel extends Model
     }
 
     /**
-     * Cette fonction permet de récupérer le mdp de la personne correpondant à l'id passée en parametre
+     * Cette fonction permet de vérifier le mdp correspondant aux identifiants passés en param
      * @param $id l'identifiant de la personne demandée
      * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
      */
