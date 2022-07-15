@@ -45,20 +45,16 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
         $mail = $this->request->getVar('mail');
         $motdepasse = $this->request->getVar('motdepasse');
 
-        $data = $personneModel->where('mail', $mail)->first();
-
         $messageErrorConnexion = 'Compte introuvable, la combinaison mot de passe/adresse email n\'est pas reconnue';
 
-        if ($data) {
-            $pass = $data['motdepasse'];
-            $authenticatePassword = password_verify($motdepasse, $pass);
-            if ($authenticatePassword) {
+            if ($personneModel->checkPass($mail, $motdepasse)) {
+                $data= $personneModel->getPersonnebymail($mail);
                 $ses_data = [
                     'id' => $data['id'],
                     'nom' => $data['nom'],
                     'mail' => $data['mail'],
                     'isLoggedIn' => TRUE,
-                    'accountType'=>$data['accountType']
+                    'accountType' => $data['accountType']
                 ];
 
                 $session->set($ses_data);
@@ -66,9 +62,6 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
             }
             $session->setFlashdata('msg', $messageErrorConnexion);
             return redirect()->to('/connexion');
-        }
-        $session->setFlashdata('msg', $messageErrorConnexion);
-        return redirect()->to('/connexion');
 
     }
 }
