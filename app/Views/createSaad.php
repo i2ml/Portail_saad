@@ -137,16 +137,38 @@
         Catégorie
       </label>
         <select class="form-select bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mx-5 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="idCategorie" name="idCategorie">
-            <option value="1"> CPOM 1 </option>
-            <option value="2"> CPOM 2 </option>
-            <option value="3"> Hors CPOM</option>
+            <option value="1" <?php if($saad){
+                                      if ($saad['idCategorie'] == "1"){
+                                        echo "selected";}
+                                      } 
+                                      else{if (set_value('idCategorie') == "1"){
+                                        echo "selected";}
+                                      }?>> CPOM 1 </option>
+            <option value="2" <?php if($saad){
+                                      if ($saad['idCategorie'] == "2") {
+                                        echo "selected";}
+                                      }
+                                      else {if (set_value('idCategorie') == "2"){
+                                        echo "selected";}
+                                      }?>> CPOM 2 </option>
+            <option value="3" <?php if($saad){
+                                      if ($saad['idCategorie'] == "3"){
+                                        echo "selected";}
+                                      }
+                                      else {if (set_value('idCategorie') == "3"){
+                                        echo "selected";}}?>> Hors CPOM</option>
         </select></div>
 
 
         <div><label class="block uppercase tracking-wide text-gray-700 text-xs font-bold ml-5 mb-2" for="image">
         Choisir une image </label> <?php if($saad) {
             echo "(Si vous ne changez pas d'image, nous garderons l'ancienne.)";
-        }?> <input name="image" type="file" class="mx-5" /></div></div>
+        }?> <input name="image" type="file" class="mx-5" />
+
+          <?php if (isset($errors['image'])) { ?>
+        <p class="text-red-500 text-xs italic invalid-feedback">Sélectionnez une image de maximum 100ko et 1024x768px</p><?php
+                           } ?>
+        </div></div>
 
         <p class="text-2xl font-semibold text-blue-header-btn mb-3"> Public cible : </p>
         <div class="flex items-center justify-center">
