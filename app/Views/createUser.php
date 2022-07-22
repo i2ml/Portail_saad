@@ -44,7 +44,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white form-control <?php if (isset($errors['nom'])) {
                                    echo("is-invalid border-red-500");
-                                } ?>" id="grid-first-name" name="nom" type="text" placeholder="Pierre" value="<?php if (!$success) { echo set_value('nom');
+                                } ?>" id="grid-first-name" name="nom" type="text" placeholder="Brunel" value="<?php if (!$success) { echo set_value('nom');
                                 } ?>">
       <?php if (isset($errors['nom'])) { ?>
         <p class="text-red-500 text-xs italic invalid-feedback">Le champs Nom doit être remplis</p><?php
@@ -59,7 +59,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 form-control <?php if (isset($errors['prenom'])) {
                                    echo("is-invalid border-red-500");
-                               } ?>" value="<?php if (!$success) { echo set_value('prenom'); } ?>" name="prenom" id="grid-prenom" type="text" placeholder="Brunel">
+                               } ?>" value="<?php if (!$success) { echo set_value('prenom'); } ?>" name="prenom" id="grid-prenom" type="text" placeholder="Pierre">
             <?php if (isset($errors['prenom'])) { ?> 
                 <p class="text-red-500 text-xs italic invalid-feedback">Le champs Prénom doit être remplis</p><?php
                            } ?>
