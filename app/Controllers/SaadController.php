@@ -1,6 +1,9 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\CiblerModel;
+use App\Models\PathologieModel;
+use App\Models\PublicModel;
 use App\Models\SaadModel;
 use CodeIgniter\Controller;
 
@@ -68,6 +71,10 @@ class SaadController extends Controller
         $data = [];
         $session = session();
         $data['profil'] = $session->get('nom');
+        $publicModel = new PublicModel();
+        $data['publics'] = $publicModel->getPublics();
+        $pathologieModel = new PathologieModel();
+        $data['pathologies'] = $pathologieModel->getPathologies();
         $data['title'] = 'Admin';
         $model = new SaadModel();
         $data['saad'] = $id;
@@ -106,6 +113,7 @@ class SaadController extends Controller
         ];
 
         $model = new SaadModel();
+        $ciblerModel = new CiblerModel();
         if ($this->validate($rules)) {
 
             $data = [
@@ -118,6 +126,10 @@ class SaadController extends Controller
                 'idCategorie' => $this->request->getVar('idCategorie'),
             ];
 
+            $public = $this->request->getPost('public[]');
+            //$pathologie = $this->request->getPost('pathologie[]');
+
+
             if ($this->request->getFile('image')->getName() != "") {
                 $data = $data + ['image' => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
@@ -127,7 +139,9 @@ class SaadController extends Controller
             if ($id) {
                 $model->modifSaads($id, $data);
             } else {
-                $model->save($data);
+                $id = $model->saveSaad($data);
+
+                $ciblerModel->saveAll($public, $id);
             }
 
             return redirect()->to('/connexionReussie');
@@ -137,6 +151,10 @@ class SaadController extends Controller
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
+        $publicModel = new PublicModel();
+        $data['publics'] = $publicModel->getPublics();
+        $pathologieModel = new PathologieModel();
+        $data['pathologies'] = $pathologieModel->getPathologies();
         if ($id) {
             $data['saad'] = $model->getSaads($id);
         } else {

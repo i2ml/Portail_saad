@@ -49,6 +49,32 @@
             echo "(Si vous ne changez pas d'image, nous garderons l'ancienne.)";
         }?> <input name="image" type="file" />
 
+        <div>
+            <p> Public cible : </p>
+            <select name="public[]" multiple="multiple">
+                <?php
+                foreach ($publics as $public){
+                    ?>
+                    <option value="<?php echo $public['id'] ?>"> <?php echo $public['nom'] ?>
+                <?php
+                }
+                ?>
+            </select>
+        </div>
+
+        <p> Pathologies prise en charge : </p>
+        <div class="flex items-center justify-center">
+            <div class="grid grid-cols-3 gap-1 text-left">
+            <?php
+            foreach ($pathologies as $pathologie){
+                ?>
+                <div> <input type="checkbox" name="pathologie" value="<?php echo $pathologie['id'] ?>"> <?php echo $pathologie['nom'] ?> </div>
+                <?php
+            }
+            ?>
+            </div>
+        </div>
+
         <div class="text-center mb-5 mt-10">
             <button type="submit" class="blue-button"> Valider </button>
         </div>

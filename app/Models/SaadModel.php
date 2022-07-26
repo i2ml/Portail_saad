@@ -52,4 +52,23 @@ class SaadModel extends Model
         $this->where("id", $id)
             ->delete();
     }
+
+    public function getImgById($id)
+    {
+        $saad = $this->where("id, $id")->first();
+        return $saad['image'];
+    }
+
+    public function saveSaad($data)
+    {
+        if (empty($data)) {
+            return true;
+        }
+        if ($this->shouldUpdate($data)) {
+            $response = $this->update($this->getIdValue($data), $data);
+        } else {
+            $response = $this->insert($data, true);
+        }
+        return $response;
+    }
 }
