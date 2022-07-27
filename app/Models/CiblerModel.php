@@ -10,10 +10,6 @@ class CiblerModel extends Model
 
     protected $allowedFields=['idSaad','idPublic'];
 
-    public function getPathologies(){
-        return $this->findAll();
-    }
-
     public function saveAll($allIDPublic, $idSaad){
         foreach ($allIDPublic as $idPublic){
             $this->insert(

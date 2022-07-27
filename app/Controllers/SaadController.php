@@ -5,6 +5,7 @@ use App\Models\CiblerModel;
 use App\Models\PathologieModel;
 use App\Models\PublicModel;
 use App\Models\SaadModel;
+use App\Models\SpecialiserModel;
 use CodeIgniter\Controller;
 
 /**
@@ -109,11 +110,14 @@ class SaadController extends Controller
                     . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                     . '|max_size[image,100]'
                     . '|max_dims[image,1024,768]',
-            ]
+            ],
+            'pathologie' => 'required',
+            'public' => 'required'
         ];
 
         $model = new SaadModel();
         $ciblerModel = new CiblerModel();
+        $specialiserModel = new SpecialiserModel();
         if ($this->validate($rules)) {
 
             $data = [
@@ -127,7 +131,7 @@ class SaadController extends Controller
             ];
 
             $public = $this->request->getPost('public[]');
-            //$pathologie = $this->request->getPost('pathologie[]');
+            $pathologie = $this->request->getPost('pathologie[]');
 
 
             if ($this->request->getFile('image')->getName() != "") {
@@ -140,7 +144,7 @@ class SaadController extends Controller
                 $model->modifSaads($id, $data);
             } else {
                 $id = $model->saveSaad($data);
-
+                $specialiserModel->saveAll($pathologie, $id);
                 $ciblerModel->saveAll($public, $id);
             }
 
