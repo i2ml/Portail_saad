@@ -28,4 +28,33 @@ class CiblerModel extends Model
             );
         }
     }
+
+    /**
+     * Supprime tous les liens entre une saad et ses publics
+     * @param $idSaad
+     */
+    public function deleteAll($idSaad){
+        $this->where('idSaad', $idSaad)->delete();
+    }
+
+    /**
+     * Retourne l'identifiant de tous les publics cibles du saad dont l'id est passé en parametre
+     * @param $id
+     * @return array
+     */
+    public function getPublicsIdByIdSaad($id){
+        $list = $this->where("idSaad", $id)->findAll();
+        return array_column($list, 'idPublic');
+    }
+
+    /**
+     * Modifie les liens entre saad et ses publics
+     * @param $public
+     * @param $id
+     * @throws \ReflectionException
+     */
+    public function modifCibler($public, $id){
+        $this->deleteAll($id);
+        $this->saveAll($public, $id);
+    }
 }

@@ -28,4 +28,33 @@ class SpecialiserModel extends Model
             );
         }
     }
+
+    /**
+     * Supprime tous les liens entre une saad et ses pathologies
+     * @param $idSaad
+     */
+    public function deleteAll($idSaad){
+        $this->where('idSaad', $idSaad)->delete();
+    }
+
+    /**
+     * Retourne l'identifiant de toutes les pathologies cibles du saad dont l'id est passé en parametre
+     * @param $id
+     * @return array
+     */
+    public function getPathologiesIdByIdSaad($id){
+        $list = $this->where("idSaad", $id)->findAll();
+        return array_column($list, 'idPathologie');
+    }
+
+    /**
+     * Modifie les liens entre saad et ses pathologies
+     * @param $pathologie
+     * @param $id
+     * @throws \ReflectionException
+     */
+    public function modifSpecialiser($pathologie, $id){
+        $this->deleteAll($id);
+        $this->saveAll($pathologie, $id);
+    }
 }
