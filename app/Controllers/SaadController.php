@@ -1,9 +1,13 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\CiblerModel;
+use App\Models\PathologieModel;
+use App\Models\PublicModel;
 use App\Models\PersonneModel;
 use App\Models\SaadListModel;
 use App\Models\SaadModel;
+use App\Models\SpecialiserModel;
 use CodeIgniter\Controller;
 
 /**
@@ -84,6 +88,10 @@ class SaadController extends Controller
         $data = [];
         $session = session();
         $data['profil'] = $session->get('nom');
+        $publicModel = new PublicModel();
+        $data['publics'] = $publicModel->getPublics();
+        $pathologieModel = new PathologieModel();
+        $data['pathologies'] = $pathologieModel->getPathologies();
         $data['title'] = 'Admin';
         $model = new SaadModel();
         $data['success'] = null;
@@ -119,10 +127,14 @@ class SaadController extends Controller
                     . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                     . '|max_size[image,100]'
                     . '|max_dims[image,1024,768]',
-            ]
+            ],
+            'pathologie' => 'required',
+            'public' => 'required'
         ];
 
         $model = new SaadModel();
+        $ciblerModel = new CiblerModel();
+        $specialiserModel = new SpecialiserModel();
         if ($this->validate($rules)) {
 
             $data = [
@@ -135,6 +147,10 @@ class SaadController extends Controller
                 'idCategorie' => $this->request->getVar('idCategorie'),
             ];
 
+            $public = $this->request->getPost('public[]');
+            $pathologie = $this->request->getPost('pathologie[]');
+
+
             if ($this->request->getFile('image')->getName() != "") {
                 $data = $data + ['image' => $this->request->getFile('image')->getName()];
                 $file = $this->request->getFile('image');
@@ -145,8 +161,9 @@ class SaadController extends Controller
                 $model->modifSaads($id, $data);
                 $data['success'] = true;
             } else {
-                $model->save($data);
-                $data['success'] = true;
+                $id = $model->saveSaad($data);
+                $specialiserModel->saveAll($pathologie, $id);
+                $ciblerModel->saveAll($public, $id);
             }
 
             return redirect()->to('/connexionReussie');
@@ -160,6 +177,10 @@ class SaadController extends Controller
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
+        $publicModel = new PublicModel();
+        $data['publics'] = $publicModel->getPublics();
+        $pathologieModel = new PathologieModel();
+        $data['pathologies'] = $pathologieModel->getPathologies();
         if ($id) {
             $data['saad'] = $model->getSaadbyid($id);
         } else {

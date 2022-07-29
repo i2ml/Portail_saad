@@ -119,5 +119,25 @@ class SaadsSeeder extends Seeder
             'idPersonne' => 1,
             ];
         $this->db->table('saad_list')->insert($listesaad);
+        $public = [
+            'id' => 1,
+            'nom' => 'PA',
+        ];
+        $this->db->table('public')->insert($public);
+        $pathologie = [
+            'id' => 1,
+            'nom' => 'Cancer',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $cibler = [
+            'idSaad' => 1,
+            'idPublic' => 1,
+        ];
+        $this->db->table('cibler')->insert($cibler);
+        $specialiser = [
+            'idSaad' => 1,
+            'idPathologie' => 1,
+        ];
+        $this->db->table('specialiser')->insert($specialiser);
     }
 }

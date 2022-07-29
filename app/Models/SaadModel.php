@@ -91,4 +91,34 @@ class SaadModel extends Model
     {
         return $this->whereIn('id', $getSaadIdsFromPersonId)->findAll();
     }
+
+    /**
+     * Fonction permettant de récupérer une image grace a l'id d'un saad
+     * @param $id
+     * @return mixed
+     */
+    public function getImgById($id)
+    {
+        $saad = $this->where("id, $id")->first();
+        return $saad['image'];
+    }
+
+    /**
+     * redefinition de la fonction save pour retourner l'identifiant de la saad que l'on enregistre
+     * @param $data
+     * @return bool|\CodeIgniter\Database\BaseResult|int|object|string
+     * @throws \ReflectionException
+     */
+    public function saveSaad($data)
+    {
+        if (empty($data)) {
+            return true;
+        }
+        if ($this->shouldUpdate($data)) {
+            $response = $this->update($this->getIdValue($data), $data);
+        } else {
+            $response = $this->insert($data, true);
+        }
+        return $response;
+    }
 }

@@ -152,7 +152,33 @@
             echo "(Si vous ne changez pas d'image, nous garderons l'ancienne.)";
         }?> <input name="image" type="file" class="mx-5" /></div></div>
 
-        <div class="text-center m-auto mb-5 mt-10">
+        <p class="text-2xl font-semibold text-blue-header-btn mb-3"> Public cible : </p>
+        <div class="flex items-center justify-center">
+            <div class="grid grid-cols-3 gap-1 text-left">
+                <?php
+                foreach ($publics as $public){
+                    ?>
+                    <div> <input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"> <?php echo $public['nom'] ?> </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+
+        <p class="text-2xl font-semibold text-yellow-header-title mb-3 mt-5"> Pathologies prise en charge : </p>
+        <div class="flex items-center justify-center">
+            <div class="grid grid-cols-3 gap-1 text-left">
+            <?php
+            foreach ($pathologies as $pathologie){
+                ?>
+                <div class="mr-5"> <input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"> <?php echo $pathologie['nom'] ?> </div>
+                <?php
+            }
+            ?>
+            </div>
+        </div>
+
+        <div class="text-center mb-5 mt-10">
             <button type="submit" class="blue-button"> Valider </button>
         </div>
     
