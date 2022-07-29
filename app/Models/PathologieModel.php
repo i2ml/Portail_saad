@@ -12,6 +12,10 @@ class PathologieModel extends Model
 
     protected $allowedFields=['id','nom'];
 
+    /**
+     * Fonction retournant un tableau contenant toutes les pathologies
+     * @return array
+     */
     public function getPathologies(){
         return $this->findAll();
     }

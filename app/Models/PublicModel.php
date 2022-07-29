@@ -12,6 +12,10 @@ class PublicModel extends Model
 
     protected $allowedFields=['id','nom'];
 
+    /**
+     * Fonction permettant de récupérer un tableau contenant tous les publics existants
+     * @return array
+     */
     public function getPublics(){
         return $this->findAll();
     }
