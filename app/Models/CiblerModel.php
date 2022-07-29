@@ -47,6 +47,11 @@ class CiblerModel extends Model
         return array_column($list, 'idPublic');
     }
 
+    public function getSaadsIdByIdPublic($idPublic){
+        $list = $this->whereIn("idPublic", $idPublic)->findAll();
+        return array_column($list, 'idSaad');
+    }
+
     /**
      * Modifie les liens entre saad et ses publics
      * @param $public
