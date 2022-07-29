@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('saads', 'SaadController::index');
+$routes->match(['get', 'post'], 'filter', 'SaadController::filter');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
 $routes->match(['get', 'post'],'userList', 'PersonController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);

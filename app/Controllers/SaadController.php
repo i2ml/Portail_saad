@@ -22,11 +22,56 @@ class SaadController extends Controller
     public function index()
     {
         $model = new SaadModel();
+        $modelPublic = new PublicModel();
+        $modelPathologie = new PathologieModel();
 
         $data = [
             'saads' => $model->getSaads(),
+            'publics' => $modelPublic->getPublics(),
+            'pathologies' => $modelPathologie->getPathologies(),
+            'title' => 'Liste des Saads',
+            'idFiltrer' => $model->getAllSaadsId(),
+        ];
+
+        echo view('header', $data);
+        echo view('saads', $data);
+        echo view('footer', $data);
+    }
+
+    public function filter()
+    {
+        $model = new SaadModel();
+        $modelPublic = new PublicModel();
+        $modelPathologie = new PathologieModel();
+        $modelCibler = new CiblerModel();
+        $modelSpecialiser = new SpecialiserModel();
+
+        $data = [
+            'saads' => $model->getSaads(),
+            'publics' => $modelPublic->getPublics(),
+            'pathologies' => $modelPathologie->getPathologies(),
             'title' => 'Liste des Saads',
         ];
+
+        $publicFilter = $this->request->getPost('public[]');
+        $pathologieFilter = $this->request->getPost('pathologie[]');
+
+        //Union tab : +
+        //Intersec tab :  array_intersect(array $array, array ...$arrays): array
+        $idSaadFiltrePathologie = $model->getAllSaadsId();
+        $idSaadFiltrePublic = $model->getAllSaadsId();
+
+        if(is_array($publicFilter)) {
+            $idSaadFiltrePublic = $modelCibler->getSaadsIdByIdPublic($publicFilter);
+        }
+        if(is_array($pathologieFilter)) {
+            $idSaadFiltrePathologie = $modelSpecialiser->getSaadsIdByIdPathologie($pathologieFilter);
+        }
+
+        $data['pathologieSelectionnee'] = $pathologieFilter;
+        $data['publicSelectionne'] = $publicFilter;
+
+        $data['idFiltrer'] = array_intersect($idSaadFiltrePublic, $idSaadFiltrePathologie);
 
         echo view('header', $data);
         echo view('saads', $data);

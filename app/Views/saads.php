@@ -1,9 +1,44 @@
+<form action="<?= esc(base_url()) ?>/filter" method="post">
+    <p>Filtre par pathologie </p>
+
+    <?php
+    foreach ($pathologies as $pathologie){
+        ?>
+        <div class="mr-5"> <input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"
+                <?php
+                if(isset($pathologieSelectionnee) && in_array($pathologie['id'], $pathologieSelectionnee)){
+                    echo "checked";
+                }
+                ?>>
+            <?php echo $pathologie['nom'] ?> </div>
+        <?php
+    }
+    ?>
+
+    <p>Filtre par public </p>
+
+    <?php
+    foreach ($publics as $public){
+        ?>
+        <div class="mr-5"> <input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"<?php
+            if(isset($publicSelectionne) && in_array($public['id'], $publicSelectionne)){
+                echo "checked";
+            }
+            ?>>
+            <?php echo $public['nom'] ?> </div>
+        <?php
+    }
+    ?>
+    <button type="submit" class="blue-button"> Filtrer </button>
+
+</form>
+
 <div class="container mx-auto px-4 sm:px-8">
     <h2 class="title">Les services d'aides à domicile dans votre secteur</h2>
     <div class="container grid md:grid-cols-2 grid-cols-1 gap-6 p-8">
         <?php
         foreach ($saads as $saad) {
-            if ($saad['idCategorie'] != 3) { ?>
+            if (in_array($saad['id'], $idFiltrer) && $saad['idCategorie'] != 3) { ?>
                 <div class="">
                     <div class="grid min-w-full shadow-md rounded-lg overflow-hidden p-2">
                         <img class="col" src="<?php echo site_url('/images/logosaads/') . $saad['image']; ?>"

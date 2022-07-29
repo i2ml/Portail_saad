@@ -29,6 +29,11 @@ class SpecialiserModel extends Model
         }
     }
 
+    public function getSaadsIdByIdPathologie($idPathologie){
+        $list = $this->whereIn("idPathologie", $idPathologie)->findAll();
+        return array_column($list, 'idSaad');
+    }
+
     /**
      * Supprime tous les liens entre une saad et ses pathologies
      * @param $idSaad

@@ -121,4 +121,9 @@ class SaadModel extends Model
         }
         return $response;
     }
+
+    public function getAllSaadsId(){
+        $list = $this->findAll();
+        return array_column($list, 'id');
+    }
 }
