@@ -14,21 +14,22 @@ class SaadModel extends Model
 
 
     /**
-     * Récupère toutes les saads si aucun id n'est passé en paramètre, sinon récupère la saad correspondant à l'id passée en paramètre
-     * @param false $id - id de la saad à récupérer
-     * @return array|object|null - Retourne un tableau contenant les saads si aucun id n'est passé en paramètre, sinon retourne la saad correspondant à l'id passée en paramètre
+     * Récupère toutes les saads 
+     * @return array|null - Retourne un tableau contenant les saads
      */
-    public function getSaads($id = false)
+    public function getSaads()
     {
-        $db = db_connect();
-        $builder = $db->table('saads');
-        $query = $id ? $builder
-            ->select('*')
-            ->where('id', $id)
-            ->get() : $builder
-            ->select('*')
-            ->get();
-        return $query->getResultArray();
+        return $this->findAll();
+    }
+
+    /**
+     * récupère la saad correspondant à l'id passée en paramètre
+     * @param false $id - id de la saad à récupérer
+     * @return object|null - Retourne la saad correspondant à l'id passée en paramètre
+     */
+    public function getSaadbyid($id)
+    {
+        return $this->where('id', $id)->first();
     }
 
     /**
@@ -44,13 +45,51 @@ class SaadModel extends Model
 
     /**
      * Cette fonction permet de supprimer le saad dont l'id est passé en param
-     * @param $id l'id du saad à supprimer
+     * @param $id number L'id du saad à supprimer
      */
     public function deleteLine($id)
     {
 
         $this->where("id", $id)
             ->delete();
+
+    }
+
+    /**
+     * cette fonction permet de récupérer le nom de l'image du saad par son ID
+     * @param $id
+     * @return mixed
+     */
+    public function getImageById($id){
+
+        $saad = $this->where('id',$id)->first();
+        return $saad['image'];
+    }
+
+    /**
+     * Cette fonction permet de supprimer l'image du saad voulu du serveur
+     * @param $id
+     * @return void
+     */
+    public function deleteImage($id){
+
+        $this->where("id",$id);
+        $image = $this->getImageById($id);
+        $path = getcwd()."\images\logosaads\\".$image;
+
+
+        unlink($path);
+
+    }
+
+    /**
+     * Cette fonction récupère les saads dont l'id est présent dans la liste passée en paramètre
+     * @param array|null $getSaadIdsFromPersonId
+     * @return array
+     */
+    public function getSaadsByIds(?array $getSaadIdsFromPersonId): array
+    {
+        return $this->whereIn('id', $getSaadIdsFromPersonId)->findAll();
     }
 
     public function getImgById($id)

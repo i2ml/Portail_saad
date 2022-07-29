@@ -22,19 +22,34 @@ class SaadListModel extends Model
     }
 
     /**
-     * Cette fonction permet de récupérer la liste des id de personnes qui sont liés à un saad
-     * @param $id number du saad que l'on veut récupérer
+     * Cette fonction permet de récupérer la liste des id des saads liés à une personne
+     * @param $id number L'id de la personne dont on veut récupérer la liste des saads
      * @return array|object|null
      */
-    public function getPersonnes($id): array
+    public function getSaadIdsFromPersonId($id): array
     {
-        $saadlist = $this->where('idSaad', $id)->findAll();
-        //on récupère les id de personnes
-        $idPersonnes = [];
-        foreach ($saadlist as $saad) {
-            $idPersonnes[] = $saad['idPersonne'];
-        }
-        return $idPersonnes;
+        $list = $this->where('idPersonne', $id)->findAll();
+        return array_column($list, 'idSaad');
+
+    }
+
+    /**
+     * Cette fonction permet de récupérer la liste des id de personnes qui sont liés à un saad
+     * @param $id number - L'id du saad dont on veut récupérer la liste des personnes
+     * @return array|null
+     */
+    public function getPersonIdsFromSaadId($id): array
+    {
+        $list = $this->where('idSaad', $id)->findAll();
+        return array_column($list, 'idPersonne');
+    }
+
+    /**
+     * @param $idPersonne number - L'id de la personne dont on veut supprimer les liens avec les saads
+     */
+    public function deleteAllLinks($idPersonne)
+    {
+        $this->where('idPersonne', $idPersonne)->delete();
     }
 
 }

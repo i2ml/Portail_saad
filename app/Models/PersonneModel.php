@@ -14,16 +14,61 @@ class PersonneModel extends Model
     protected $allowedFields = ['id', 'nom', 'prenom', 'mail', 'motdepasse', 'idSaadList', 'accountType'];
 
     /**
-     * Cette fonction permet de récupérer une personne ou l'ensemble des personnes présentent en bdd
-     * @param false $id l'id de la personne que l'on cherche
-     * @return array|object|null soit toutes les personnes de la bdd soit la personne avec l'id passer en param
+     * Cette fonction permet de récupérer l'ensemble des personnes présentent en bdd sans leurs mots de pass
+     * @return array|null soit toutes les personnes de la bdd
      */
-    public function getPersonnes($id = false)
+    public function getPersonnes()
     {
-        if ($id) {
-            return $this->where('id', $id)->first();
-        }
-        return $this->findAll();
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
+            ->get()
+            ->getResultArray();
+        
+    }
+
+    /**
+     * Cette fonction permet de vérifier le mdp correspondant aux identifiants passés en param
+     * @param $id l'identifiant de la personne demandée
+     * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
+     */
+    public function checkPass($mail, $varp): bool
+    {
+        $chk = $this->where('mail', $mail)->first();
+
+        if ($chk) {
+            $pass = $chk['motdepasse'];
+            $authenticatePassword = password_verify($varp, $pass);
+            return $authenticatePassword;
+            
+        } else {
+            return False;
+        }            
+    }
+
+    /**
+     * Cette fonction permet de récupérer une personne en bdd identifiée par son mail $mail en param
+     * @param $mail l'identifiant de la personne demandée
+     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
+     */
+    public function getPersonnebymail($mail)
+    {
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
+            ->where('mail', $mail)
+            ->first();
+    }
+
+    /**
+     * Cette fonction permet de récupérer une personne en bdd identifiée par son id $id en param
+     * @param $id l'identifiant de la personne demandée
+     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
+     */
+    public function getPersonnebyid($id)
+    {
+        return $this
+            ->select('id, nom, prenom, mail, accountType')
+            ->where('id', $id)
+            ->first();
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\PersonneModel;
+use CodeIgniter\HTTP\RedirectResponse;
 use Faker\Provider\Person;
+use ReflectionException;
 
 /**
  * Cette classe est le controller des utilisateurs
@@ -20,6 +22,7 @@ class PersonController extends \CodeIgniter\Controller
         $session = session();
         $data['profil'] = $session->get('nom');
         $data['title'] = 'Admin';
+        $data['success'] = null;
         echo view('header');
         echo view('createUser', $data);
         echo view('footer');
@@ -27,8 +30,8 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
-     * @return \CodeIgniter\HTTP\RedirectResponse|void
-     * @throws \ReflectionException
+     * @return RedirectResponse|void
+     * @throws ReflectionException
      */
     public function store()
     {
@@ -52,11 +55,16 @@ class PersonController extends \CodeIgniter\Controller
             ];
 
             $userModel->save($data);
+            $data['success'] = true;
 
             return redirect()->to('/connexionReussie');
         }
 
         $session = session();
+        $data['success'] = false;
+            if ($this->request->getMethod() !== 'post') {
+                $data['success'] = null;
+            }
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
@@ -85,10 +93,10 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
-     * @param $id l'id de l'utilisateur à supprimer
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @param $id number - l'id de l'utilisateur à supprimer
+     * @return RedirectResponse
      */
-    public function userDelete($id)
+    public function userDelete($id): RedirectResponse
     {
 
         $model = new PersonneModel();
@@ -99,9 +107,9 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Cette fonction permet de se déconnecter
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @return RedirectResponse
      */
-    public function disconnect()
+    public function disconnect(): RedirectResponse
     {
         $session = session();
         $session->destroy();
@@ -111,10 +119,10 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en admin
-     * @param $id l'id de l'utilisateur à transformer
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @param $id number - l'id de l'utilisateur à transformer
+     * @return RedirectResponse
      */
-    public function userUpgrade($id)
+    public function userUpgrade($id): RedirectResponse
     {
 
         $model = new PersonneModel();
@@ -126,8 +134,8 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en gerant de saad
-     * @param $id l'id de l'utilisateur à transformer
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @param $id number - l'id de l'utilisateur à transformer
+     * @return RedirectResponse
      */
     public function userDowngrade($id)
     {
@@ -139,45 +147,38 @@ class PersonController extends \CodeIgniter\Controller
     }
 
     /**
-     * Permet de modifier le mot de passe de l'utilisateur dont le mail est passé en parametre
+     * Permet de modifier le mot de passe de l'utilisateur dont le mail est passé en paramètre
      * @param $mailUser
-     * @return \CodeIgniter\HTTP\RedirectResponse|void
-     * @throws \ReflectionException
+     * @return RedirectResponse
+     * @throws ReflectionException
      */
-    public function resetPassword($mailUser){
+    public function resetPassword($mailUser): RedirectResponse
+    {
         $email = \Config\Services::email();
 
         $email->setFrom('contact@dometlien.fr', 'Ne pas répondre');
         $email->setTo($mailUser);
 
         $email->setSubject('Réinitialisation du mot de passe');
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*_";
-        $password = substr( str_shuffle( $chars ), 0, 8 );
-        $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : '.$password;
+        $password = substr(password_hash(uniqid(), PASSWORD_BCRYPT), 0, 8);
+        $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : ' . $password;
         $email->setMessage($message);
         $password = password_hash($password, PASSWORD_BCRYPT);
 
         $model = new PersonneModel();
         $model->changePassword($mailUser, $password);
 
-        if($email->send()){
-            echo "ça a fonctionné";
-            return redirect()->to('userList');
-        } else {
-            echo $email->printDebugger();
-            echo "nop";
-            return redirect()->to('userList');
-        }
+        return redirect()->to('userList');
     }
 
     /**
      * Charge les composants de la page changer de mot de passe si rien n'est passé en param
-     * @param $user c'est l'id de l'utilisateur dont on modifie le mot de passe
-     * @throws \ReflectionException
+     * @param $user PersonneModel - c'est l'id de l'utilisateur dont on modifie le mot de passe
+     * @throws ReflectionException
      */
     public function changePassword($user = false)
     {
-        if(!$user) {
+        if (!$user) {
             $id = session()->get('id');
 
             $data = [
@@ -187,8 +188,7 @@ class PersonController extends \CodeIgniter\Controller
             echo view('header');
             echo view('changePassword', $data);
             echo view('footer');
-        }
-        else {
+        } else {
             helper(['form']);
             $rules = [
                 'password' => 'required|min_length[4]|max_length[50]',
