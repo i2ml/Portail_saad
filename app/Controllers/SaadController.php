@@ -98,7 +98,11 @@ class SaadController extends Controller
         $data['saad'] = $id;
 
         if ($id) {
+            $ciblerModel = New CiblerModel();
+            $specialiserModel = New SpecialiserModel();
             $data['saad'] = $model->getSaadbyid($id);
+            $data['publicsCible'] = $ciblerModel->getPublicsIdByIdSaad($id);
+            $data['pathologiesSpecialise'] = $specialiserModel->getPathologiesIdByIdSaad($id);
         }
 
         echo view('header');
@@ -122,8 +126,7 @@ class SaadController extends Controller
             'adresse' => "max_length[300]|regex_match[/^[a-zA-Z0-9\s,'-]*$/]",
             'idCategorie' => 'required',
             'image' => [
-                'rules' => 'uploaded[image]'
-                    . '|is_image[image]'
+                'rules' => 'is_image[image]'
                     . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                     . '|max_size[image,100]'
                     . '|max_dims[image,1024,768]',
@@ -159,6 +162,8 @@ class SaadController extends Controller
 
             if ($id) {
                 $model->modifSaads($id, $data);
+                $specialiserModel->modifSpecialiser($pathologie, $id);
+                $ciblerModel->modifCibler($public, $id);
                 $data['success'] = true;
             } else {
                 $id = $model->saveSaad($data);
@@ -182,7 +187,11 @@ class SaadController extends Controller
         $pathologieModel = new PathologieModel();
         $data['pathologies'] = $pathologieModel->getPathologies();
         if ($id) {
+            $ciblerModel = New CiblerModel();
+            $specialiserModel = New SpecialiserModel();
             $data['saad'] = $model->getSaadbyid($id);
+            $data['publicsCible'] = $ciblerModel->getPublicsIdByIdSaad($id);
+            $data['pathologiesSpecialise'] = $specialiserModel->getPathologiesIdByIdSaad($id);
         } else {
             $data['saad'] = $id;
         }

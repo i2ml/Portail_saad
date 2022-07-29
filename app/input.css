@@ -39,4 +39,8 @@
         transform: translateX(100%);
         background-color: #48bb78;
     }
+
+    formlabel {
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-bold;
+    }
 }
