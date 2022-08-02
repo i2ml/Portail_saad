@@ -1,41 +1,40 @@
-<form action="<?= esc(base_url()) ?>/filter" method="post">
-    <p>Filtre par pathologie </p>
+<h2 class="title">Les services d'aides à domicile dans votre secteur</h2>
+<div class="container mx-auto px-4 sm:px-8 flex flex-row">
+    <form class="basis-1/4 px-6 pt-4" action="<?= esc(base_url()) ?>/filter" method="post">
+        <p class="text-blue-header-btn font-semibold">Filtrer par pathologie </p>
 
-    <?php
-    foreach ($pathologies as $pathologie){
+        <?php
+        foreach ($pathologies as $pathologie){
+            ?>
+            <div class="ml-3"> <input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"
+                    <?php
+                    if(isset($pathologieSelectionnee) && in_array($pathologie['id'], $pathologieSelectionnee)){
+                        echo "checked";
+                    }
+                    ?>>
+                <?php echo $pathologie['nom'] ?> </div>
+            <?php
+        }
         ?>
-        <div class="mr-5"> <input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"
-                <?php
-                if(isset($pathologieSelectionnee) && in_array($pathologie['id'], $pathologieSelectionnee)){
+
+        <p class="text-blue-header-btn font-semibold">Filtrer par public </p>
+
+        <?php
+        foreach ($publics as $public){
+            ?>
+            <div class="ml-3"> <input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"<?php
+                if(isset($publicSelectionne) && in_array($public['id'], $publicSelectionne)){
                     echo "checked";
                 }
                 ?>>
-            <?php echo $pathologie['nom'] ?> </div>
-        <?php
-    }
-    ?>
-
-    <p>Filtre par public </p>
-
-    <?php
-    foreach ($publics as $public){
+                <?php echo $public['nom'] ?> </div>
+            <?php
+        }
         ?>
-        <div class="mr-5"> <input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"<?php
-            if(isset($publicSelectionne) && in_array($public['id'], $publicSelectionne)){
-                echo "checked";
-            }
-            ?>>
-            <?php echo $public['nom'] ?> </div>
-        <?php
-    }
-    ?>
-    <button type="submit" class="blue-button"> Filtrer </button>
+        <button type="submit" class="blue-button mt-5"> Filtrer </button>
 
-</form>
-
-<div class="container mx-auto px-4 sm:px-8">
-    <h2 class="title">Les services d'aides à domicile dans votre secteur</h2>
-    <div class="container grid md:grid-cols-2 grid-cols-1 gap-6 p-8">
+    </form>
+    <div class="container grid md:grid-cols-2 grid-cols-1 gap-6 p-8 basis-3/4">
         <?php
         foreach ($saads as $saad) {
             if (in_array($saad['id'], $idFiltrer) && $saad['idCategorie'] != 3) { ?>
