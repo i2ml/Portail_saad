@@ -122,6 +122,10 @@ class SaadModel extends Model
         return $response;
     }
 
+    /**
+     * Fonction permettant de récupérer tous les id de saads de la base de données
+     * @return array
+     */
     public function getAllSaadsId(){
         $list = $this->findAll();
         return array_column($list, 'id');

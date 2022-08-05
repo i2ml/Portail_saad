@@ -29,6 +29,11 @@ class SpecialiserModel extends Model
         }
     }
 
+    /**
+     * Retourne la liste des id de saads traitant la liste des pathologies passées en parametre
+     * @param $idPathologie
+     * @return array
+     */
     public function getSaadsIdByIdPathologie($idPathologie){
         $list = $this->whereIn("idPathologie", $idPathologie)->findAll();
         return array_column($list, 'idSaad');
