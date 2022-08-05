@@ -47,6 +47,11 @@ class CiblerModel extends Model
         return array_column($list, 'idPublic');
     }
 
+    /**
+     * Fonction permettant de récupérer tous les id saads traitant la liste de publics passés en paramteres
+     * @param $idPublic
+     * @return array
+     */
     public function getSaadsIdByIdPublic($idPublic){
         $list = $this->whereIn("idPublic", $idPublic)->findAll();
         return array_column($list, 'idSaad');

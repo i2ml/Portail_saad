@@ -38,6 +38,9 @@ class SaadController extends Controller
         echo view('footer', $data);
     }
 
+    /**
+     * Fonction permettant de filtrer les saads
+     */
     public function filter()
     {
         $model = new SaadModel();
