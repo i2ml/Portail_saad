@@ -50,6 +50,9 @@ class SaadListController extends Controller
             'currentSaadList' => $userSaads,
         ];
 
+        $sendMail = new MailController();
+        $sendMail->sendMail($personneModel->getPersonnebyid($idPersonne)['mail'],'Affectation de SAAD','Des changements ont eu lieu sur les SAAD que vous gérez, n\'hésitez pas à aller voir les modifications.');
+
         echo view('header');
         echo view('saadLink', $data);
         echo view('footer');

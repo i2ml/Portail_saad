@@ -129,6 +129,8 @@ class PersonController extends \CodeIgniter\Controller
 
         $model->upgrade($id);
         unset($data);
+        $sendMail = new MailController();
+        $sendMail->sendMail($model->getPersonnebyid($id)['mail'],'Promotion','Vous avez été promu en superadmin');
         return redirect()->to('userList');
     }
 
@@ -143,6 +145,8 @@ class PersonController extends \CodeIgniter\Controller
         $model = new PersonneModel();
         $model->downgrade($id);
         unset($data);
+        $sendMail = new MailController();
+        $sendMail->sendMail($model->getPersonnebyid($id)['mail'],'Rétrogradation','Vous avez été rétrogradé en gérant de SAAD');
         return redirect()->to('userList');
     }
 
