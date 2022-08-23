@@ -154,19 +154,15 @@ class PersonController extends \CodeIgniter\Controller
      */
     public function resetPassword($mailUser): RedirectResponse
     {
-        $email = \Config\Services::email();
-
-        $email->setFrom('contact@dometlien.fr', 'Ne pas répondre');
-        $email->setTo($mailUser);
-
-        $email->setSubject('Réinitialisation du mot de passe');
+        $subject = 'Réinitialisation du mot de passe';
         $password = substr(password_hash(uniqid(), PASSWORD_BCRYPT), 0, 8);
         $message = 'Votre mot de passe a été réinitialisé, voici le nouveau : ' . $password;
-        $email->setMessage($message);
         $password = password_hash($password, PASSWORD_BCRYPT);
 
         $model = new PersonneModel();
         $model->changePassword($mailUser, $password);
+        $sendMail = new MailController();
+        $sendMail->sendMail($mailUser,$subject,$message);
 
         return redirect()->to('userList');
     }
