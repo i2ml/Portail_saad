@@ -144,6 +144,8 @@ class SaadController extends Controller
         $model = new SaadModel();
         $data['success'] = null;
         $data['saad'] = $id;
+        $data['publicsCible'] = [];
+        $data['pathologiesSpecialise'] = [];
 
         if ($id) {
             $ciblerModel = New CiblerModel();
