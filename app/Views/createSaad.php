@@ -51,7 +51,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white form-control <?php if (isset($errors['nom'])) {
                                    echo("is-invalid border-red-500");
-                                } ?>" id="grid-nom" name="nom" type="text" placeholder="ex. Diminu'Tifs" value="<?php if($saad){echo $saad['nom'];} else echo set_value('nom'); ?>">
+                                } ?>" id="grid-nom" name="nom" type="text" placeholder="ex. Diminu'Tifs" value="<?php if(!isset($validation) && $saad){echo $saad['nom'];} else echo set_value('nom'); ?>">
       <?php if (isset($errors['nom'])) { ?>
         <p class="text-red-500 text-xs italic invalid-feedback">Le Nom de la structure doit être renseigné</p><?php
                            } ?>
@@ -65,7 +65,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 form-control <?php if (isset($errors['tel'])) {
                                    echo("is-invalid border-red-500");
-                               } ?>" value="<?php if($saad){echo $saad['tel'];} else echo set_value('tel'); ?>" name="tel" id="grid-tel" type="text" placeholder="ex. 0836656565">
+                               } ?>" value="<?php if(!isset($validation) && $saad){echo $saad['tel'];} else echo set_value('tel'); ?>" name="tel" id="grid-tel" type="text" placeholder="ex. 0836656565">
             <?php if (isset($errors['tel'])) { ?> 
                 <p class="text-red-500 text-xs italic invalid-feedback">Le numéro doit être valide</p><?php
                            } ?>
@@ -79,7 +79,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 form-control <?php if (isset($errors['mail'])) {
                                    echo("is-invalid border-red-500");
-                               } ?>" value="<?php if($saad){echo $saad['mail'];} else echo set_value('mail'); ?>" id="grid-email" type="email" name="mail" placeholder="example@example.fr">
+                               } ?>" value="<?php if(!isset($validation) && $saad){echo $saad['mail'];} else echo set_value('mail'); ?>" id="grid-email" type="email" name="mail" placeholder="example@example.fr">
       <?php if (isset($errors['mail'])) { ?> 
                 <p class="text-red-500 text-xs italic invalid-feedback">Renseignez une adresse mail valide</p><?php
                            } ?>
@@ -98,7 +98,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white form-control <?php if (isset($errors['site'])) {
                                    echo("is-invalid border-red-500");
-                                } ?>" id="grid-site" name="site" type="text" placeholder="ex. diminutifs.com" value="<?php if($saad){echo $saad['site'];} else echo set_value('site'); ?>">
+                                } ?>" id="grid-site" name="site" type="text" placeholder="ex. diminutifs.com" value="<?php if(!isset($validation) && $saad){echo $saad['site'];} else echo set_value('site'); ?>">
       <?php if (isset($errors['site'])) { ?>
         <p class="text-red-500 text-xs italic invalid-feedback">L'URL renseignée est trop longue</p><?php
                            } ?>
@@ -112,7 +112,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 form-control <?php if (isset($errors['siret_siren'])) {
                                    echo("is-invalid border-red-500");
-                               } ?>" value="<?php if($saad){echo $saad['siret_siren'];} else echo set_value('siret_siren'); ?>" name="siret_siren" id="grid-siret_siren" type="text" placeholder="ex. 12345678900001">
+                               } ?>" value="<?php if(!isset($validation) && $saad){echo $saad['siret_siren'];} else echo set_value('siret_siren'); ?>" name="siret_siren" id="grid-siret_siren" type="text" placeholder="ex. 12345678900001">
 
     </div>
 
@@ -123,7 +123,7 @@
       </label>
       <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 form-control <?php if (isset($errors['adresse'])) {
                                    echo("is-invalid border-red-500");
-                               } ?>" value="<?php if($saad){echo $saad['adresse'];} else echo set_value('adresse'); ?>" id="grid-adresse" type="adresse" name="adresse" placeholder="ex. 3 rue des lilas">
+                               } ?>" value="<?php if(!isset($validation) && $saad){echo $saad['adresse'];} else echo set_value('adresse'); ?>" id="grid-adresse" type="adresse" name="adresse" placeholder="ex. 3 rue des lilas">
       <?php if (isset($errors['adresse'])) { ?> 
                 <p class="text-red-500 text-xs italic invalid-feedback">l'adresse renseignée est trop longue</p><?php
                            } ?>

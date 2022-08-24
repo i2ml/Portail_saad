@@ -248,6 +248,8 @@ class SaadController extends Controller
             $data['pathologiesSpecialise'] = $specialiserModel->getPathologiesIdByIdSaad($id);
         } else {
             $data['saad'] = $id;
+            $data['publicsCible'] = [];
+            $data['pathologiesSpecialise'] = [];
         }
         echo view('header');
         echo view('createSaad', $data);
