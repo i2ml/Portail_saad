@@ -94,7 +94,7 @@ class SaadController extends Controller
 
         $saads = $model->getSaads();
         $saads = $this->loadManagersInSaadListData($saads, $saadListModel, $personneModel);
-        $this->displaySaadList($saads, session()->get('accountType') === SUPER_ADMIN);
+        $this->displaySaadList($saads, false);
     }
 
     /**
@@ -112,7 +112,7 @@ class SaadController extends Controller
         $saads = $model->getSaadsByIds($saadsIds);
 
         $saads = $this->loadManagersInSaadListData($saads, $saadListModel, $personneModel);
-        $this->displaySaadList($saads, session()->get('accountType') === SUPER_ADMIN);
+        $this->displaySaadList($saads, true);
     }
 
     /**
@@ -256,13 +256,14 @@ class SaadController extends Controller
 
     /**
      * @param array $saads : liste des saads à afficher
-     * @param bool $isAdmin : true si l'utilisateur est un administrateur
+     * @param bool $mySaadList : true si on affiche la liste de saads de l'utilisateur
      */
-    private function displaySaadList(array $saads, bool $isAdmin): void
+    private function displaySaadList(array $saads, bool $mySaadList): void
     {
         $data = [
             'saads' => $saads,
-            'isAdmin' => $isAdmin,
+            'isAdmin' => session()->get('accountType') === SUPER_ADMIN,
+            'mySaadList' => $mySaadList,
         ];
 
         echo view('header');
