@@ -14,7 +14,7 @@ class SaadModel extends Model
 
 
     /**
-     * Récupère toutes les saads 
+     * Récupère toutes les saads
      * @return array|null - Retourne un tableau contenant les saads
      */
     public function getSaads()
@@ -60,9 +60,10 @@ class SaadModel extends Model
      * @param $id
      * @return mixed
      */
-    public function getImageById($id){
+    public function getImageById($id)
+    {
 
-        $saad = $this->where('id',$id)->first();
+        $saad = $this->where('id', $id)->first();
         return $saad['image'];
     }
 
@@ -71,11 +72,12 @@ class SaadModel extends Model
      * @param $id
      * @return void
      */
-    public function deleteImage($id){
+    public function deleteImage($id)
+    {
 
-        $this->where("id",$id);
+        $this->where("id", $id);
         $image = $this->getImageById($id);
-        $path = getcwd()."\images\logosaads\\".$image;
+        $path = getcwd() . "\images\logosaads\\" . $image;
 
 
         unlink($path);
@@ -84,12 +86,12 @@ class SaadModel extends Model
 
     /**
      * Cette fonction récupère les saads dont l'id est présent dans la liste passée en paramètre
-     * @param array|null $getSaadIdsFromPersonId
+     * @param array $ids - liste d'id de saads à récupérer
      * @return array
      */
-    public function getSaadsByIds(?array $getSaadIdsFromPersonId): array
+    public function getSaadsByIds(array $ids): array
     {
-        return $this->whereIn('id', $getSaadIdsFromPersonId)->findAll();
+        return $this->whereIn('id', $ids)->findAll();
     }
 
     /**

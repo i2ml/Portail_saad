@@ -23,6 +23,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'authGuard' => \App\Filters\AuthGuard::class,
         'superAdminGuard' => \App\Filters\SuperAdminGuard::class,
+        'ownedIdGuard' => \App\Filters\OwnedIdGuard::class,
     ];
 
     /**

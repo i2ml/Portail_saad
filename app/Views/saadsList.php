@@ -1,4 +1,4 @@
-<h1 class="title">Les services d'aides à domicile dans votre secteur</h1>
+<h1 class="title">Liste des services d'aide à domicile</h1>
 <div class="container mx-auto px-4 sm:px-8">
     <?php if (!empty($saads) && is_array($saads)) { ?>
         <div class="py-8">
@@ -47,12 +47,16 @@
                                                 Modifier
                                             </button>
                                         </form>
-                                        <form action="<?= esc(base_url()) ?>/SaadController/saadDelete/<?= esc($saad['id'], 'url'); ?>">
+                                        <?php
+                                        // check if the user is a super admin
+                                        if ($isAdmin) { ?>
+                                            <form action = "<?= esc(base_url()) ?>/SaadController/saadDelete/<?= esc($saad['id'], 'url'); ?>">
                                             <button class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
                                                     onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
                                                 Supprimer
                                             </button>
-                                        </form>
+                                            </form>
+                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>

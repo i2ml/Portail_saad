@@ -9,6 +9,7 @@ use App\Models\SaadListModel;
 use App\Models\SaadModel;
 use App\Models\SpecialiserModel;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RedirectResponse;
 
 /**
  * SaadController
@@ -92,29 +93,34 @@ class SaadController extends Controller
         $personneModel = new PersonneModel();
 
         $saads = $model->getSaads();
-        foreach ($saads as $key => $saad) {
-            // on récupère la liste des personnes liées à ce saad sous forme de tableau d'id
+        $saads = $this->loadManagersInSaadListData($saads, $saadListModel, $personneModel);
+        $this->displaySaadList($saads, session()->get('accountType') === SUPER_ADMIN);
+    }
 
-            $ids = $saadListModel->getPersonIdsFromSaadId($saad['id']);
-            $saads[$key]['idsGerants'] = $ids;
-            //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
-            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
-        }
-        $data = [
-            'saads' => $saads,
-        ];
+    /**
+     * Charge les composants de la page lister les saads d'un utilisateur
+     * @param number $id L'id de l'utilisateur dont on veut récupérer les saads
+     * @return void
+     */
+    public function mySaadsList($id)
+    {
+        $model = new SaadModel();
+        $saadListModel = new SaadListModel();
+        $personneModel = new PersonneModel();
 
-        echo view('header');
-        echo view('saadsList', $data);
-        echo view('footer');
+        $saadsIds = $saadListModel->getSaadIdsFromPersonId($id);
+        $saads = $model->getSaadsByIds($saadsIds);
+
+        $saads = $this->loadManagersInSaadListData($saads, $saadListModel, $personneModel);
+        $this->displaySaadList($saads, session()->get('accountType') === SUPER_ADMIN);
     }
 
     /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
-     * @param $id l'id de l'utilisateur à supprimer
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @param $id L'id de l'utilisateur à supprimer
+     * @return RedirectResponse
      */
-    public function saadDelete($id)
+    public function saadDelete($id): RedirectResponse
     {
 
         $model = new SaadModel();
@@ -162,7 +168,7 @@ class SaadController extends Controller
 
     /**
      * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
-     * @return \CodeIgniter\HTTP\RedirectResponse|void
+     * @return RedirectResponse|void
      * @throws \ReflectionException
      */
     public function storeSaad($id = false)
@@ -246,6 +252,40 @@ class SaadController extends Controller
         echo view('header');
         echo view('createSaad', $data);
         echo view('footer');
+    }
+
+    /**
+     * @param array $saads : liste des saads à afficher
+     * @param bool $isAdmin : true si l'utilisateur est un administrateur
+     */
+    private function displaySaadList(array $saads, bool $isAdmin): void
+    {
+        $data = [
+            'saads' => $saads,
+            'isAdmin' => $isAdmin,
+        ];
+
+        echo view('header');
+        echo view('saadsList', $data);
+        echo view('footer');
+    }
+
+    /**
+     * @param array $saads The list of saads that we need to search the manager
+     * @param SaadListModel $saadListModel The model that will search the saads
+     * @param PersonneModel $personneModel The model that will search the personnes
+     * @return array the saads with all information about their managers
+     */
+    private function loadManagersInSaadListData(array $saads, SaadListModel $saadListModel, PersonneModel $personneModel): array
+    {
+        foreach ($saads as $key => $saad) {
+            // on récupère la liste des personnes liées à ce saad sous forme de tableau d'id
+            $ids = $saadListModel->getPersonIdsFromSaadId($saad['id']);
+            $saads[$key]['idsGerants'] = $ids;
+            //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
+            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
+        }
+        return $saads;
     }
 
 }
