@@ -180,9 +180,7 @@ class SaadController extends Controller
                     . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                     . '|max_size[image,100]'
                     . '|max_dims[image,1024,768]',
-            ],
-            'pathologie' => 'required',
-            'public' => 'required'
+            ]
         ];
 
         $model = new SaadModel();
