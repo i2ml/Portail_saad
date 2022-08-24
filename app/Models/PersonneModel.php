@@ -73,8 +73,8 @@ class PersonneModel extends Model
 
     /**
      * Transforme un tableau d'id de personne en un tableau de nom et prénom
-     * @param $idPersonnes array tableau d'id de personne
-     * @return array de nom et prénom
+     * @param $idPersonnes array - tableau d'id de personne
+     * @return array - de nom et prénom
      */
     public function getPersonnesNameFromId(array $idPersonnes): array
     {
@@ -93,7 +93,7 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de supprimer la personne dont l'id est passé en param
-     * @param $id l'id de la personne à supprimer
+     * @param $id number - l'id de la personne à supprimer
      */
     public function deleteLine($id)
     {
@@ -103,7 +103,7 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de passer un gérant de saad administrateur
-     * @param $id number id du gérant que l'on veut upgrade
+     * @param $id number - id du gérant que l'on veut upgrade
      * @throws ReflectionException
      */
     public function upgrade($id)
@@ -113,7 +113,7 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de passer un admin en gérant de saad
-     * @param $id number l'admin que l'on veut downgrade
+     * @param $id number - l'admin que l'on veut downgrade
      * @throws ReflectionException
      */
     public function downgrade($id)
@@ -122,9 +122,9 @@ class PersonneModel extends Model
     }
 
     /**
-     * Permet de changer le mdp de la personne dont le mail est passé en parametre
-     * @param $email
-     * @param $password
+     * Permet de changer le mdp de la personne dont le mail est passé en paramètre
+     * @param $email string - le mail de la personne dont on veut changer le mdp
+     * @param $password string - le nouveau mdp
      * @throws ReflectionException
      */
     public function changePassword($email, $password){
@@ -133,9 +133,9 @@ class PersonneModel extends Model
     }
 
     /**
-     * Permet de changer le mdp de la personne dont l'id est passé en parametre
-     * @param $id
-     * @param $password
+     * Permet de changer le mdp de la personne dont l'id est passé en paramètre
+     * @param $id number - l'id de la personne dont on veut changer le mdp
+     * @param $password string - le nouveau mdp
      * @throws ReflectionException
      */
     public function changePasswordWithId($id, $password){
@@ -144,8 +144,8 @@ class PersonneModel extends Model
 
     /**
      * Retourne l'id de la personne dont le mail est passé en param
-     * @param $email
-     * @return mixed l'id de la personne
+     * @param $email string - le mail de la personne dont on veut récupérer l'id
+     * @return number - l'id de la personne
      */
     private function getPersonnesIdFromEmail($email)
     {

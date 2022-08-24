@@ -47,7 +47,7 @@
                 </div>
             </a>
         <?php } ?>
-        <a href="saadsList">
+        <a href="mySaadsList/<?= esc(session()->get('id'), 'url'); ?>">
             <div class="menu-card">
                 <i class="fa-solid fa-anchor fa-2xl text-blue-header-btn"></i>
                 <p class="mt-5">Gérer les saads qui me sont attribués</p>

@@ -37,10 +37,11 @@ $routes->match(['get', 'post'], 'filter', 'SaadController::filter');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
 $routes->match(['get', 'post'],'userList', 'PersonController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
 $routes->match(['get', 'post'],'disconnect', 'PersonController::disconnect', ['filter' => 'authGuard']);
 
 $routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
+
+$routes->match(['get', 'post'],'mySaadsList/(:segment)', 'SaadController::mySaadsList/$1', ['filter' =>  ['authGuard','ownedIdGuard:$1`']]);
 
 //Envoyer un email
 $routes->match(['get', 'post'],'PersonController/sendEmailTest', 'PersonController::sendEmailTest', ['filter' =>  ['authGuard','superAdminGuard']]);
