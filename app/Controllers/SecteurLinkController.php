@@ -34,12 +34,12 @@ class SecteurLinkController extends Controller
     public function secteurLink($idSaad)
     {
         // on récupère la liste des secteurs
-        $secteur = $this->secteurModel->getSecteur();
+        $secteurs = $this->secteurModel->getSecteurs();
 
-        foreach ($secteur as $key => $saad) {
+        foreach ($secteurs as $key => $saad) {
             // on récupère la liste des secteurs liés à ce saad sous forme de tableau d'id
             $ids = $this->agirModel->getSaadsIdsFromSecteurId($saad['id']);
-            $secteur[$key]['idsSaads'] = $ids;
+            $secteurs[$key]['idsSaads'] = $ids;
         }
 
         //on récupère les secteurs du saad sélectionné
@@ -51,7 +51,7 @@ class SecteurLinkController extends Controller
 
 
         $data = [
-            'secteur' => $secteur,
+            'secteurs' => $secteurs,
             'saad' => $this->saadModel->getSaadById($idSaad),
             'currentSecteurList' => $saadSecteurs,
         ];
@@ -75,7 +75,7 @@ class SecteurLinkController extends Controller
                 $this->agirModel->save(['idSaad' => $idSaad, 'idSecteur' => $secteur]);
             }
         }
-        return redirect()->to('saadListController/saadLink/' . $idSaad);
+        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad);
     }
 
     /** Supprime les liens entre une personne et les saads
@@ -84,7 +84,7 @@ class SecteurLinkController extends Controller
     public function deleteAllLinks($idPersonne): RedirectResponse
     {
         $this->agirModel->deleteAllLinks($idPersonne);
-        return redirect()->to('saadListController/saadLink/' . $idPersonne);
+        return redirect()->to('secteurLinkController/secteurLink/' . $idPersonne);
     }
 
 
