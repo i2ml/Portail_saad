@@ -65,7 +65,7 @@ if ($mySaadList) {
                                                 Modifier
                                             </button>
                                         </form>
-                                        <form action="<?= esc(base_url()) ?>/SaadController/linkSecteur/<?= esc($saad['id'], 'url'); ?>">
+                                        <form action="<?= esc(base_url()) ?>/SecteurLinkController/secteurLink/<?= esc($saad['id'], 'url'); ?>">
                                             <button class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                                                 Définir les secteurs d'action
                                             </button>

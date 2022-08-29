@@ -7,6 +7,7 @@ use App\Models\SaadModel;
 use App\Models\SecteurModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
+use ReflectionException;
 
 
 /**
@@ -19,7 +20,7 @@ class SecteurLinkController extends Controller
     private $saadModel;
     private $secteurModel;
 
-    public function _construct()
+    public function __construct()
     {
         $this->agirModel = new AgirModel();
         $this->saadModel = new SaadModel();
@@ -30,7 +31,7 @@ class SecteurLinkController extends Controller
      * Charge les composants de la page permettant de lier les secteurs
      * @param $idSaad l'id du saad dont on veut lier les secteurs
      */
-    public function linkSecteur($idSaad)
+    public function secteurLink($idSaad)
     {
         // on récupère la liste des secteurs
         $secteur = $this->secteurModel->getSecteur();
@@ -41,8 +42,13 @@ class SecteurLinkController extends Controller
             $secteur[$key]['idsSaads'] = $ids;
         }
 
-        //on récupère les secteurs de la saad sélectionné
-        $saadSecteurs[] = $this->secteurModel->getSecteurFromIds($secteur[$idSaad]['idsSaads']);
+        //on récupère les secteurs du saad sélectionné
+        $saadSecteur = $this->agirModel->getSecteursIdsFromSaadId($idSaad);
+        $saadSecteurs = [];
+        if ($saadSecteur) {
+            $saadSecteurs =$this->secteurModel->getSecteursByIds($saadSecteur);
+        }
+
 
         $data = [
             'secteur' => $secteur,
@@ -58,6 +64,7 @@ class SecteurLinkController extends Controller
     /**
      * Permet de lier un ou plusieurs secteurs à une personne
      * @param $idSaad L'id du saad dont on veut éditer les liens vers les secteurs
+     * @throws ReflectionException
      */
     public function editSecteurLink($idSaad): RedirectResponse
     {
