@@ -8,6 +8,7 @@ use App\Models\SaadModel;
 use App\Models\SecteurModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use ReflectionException;
 
 
@@ -34,11 +35,14 @@ class SecteurLinkController extends Controller
      * Charge les composants de la page permettant de lier les secteurs
      * @param $idSaad l'id du saad dont on veut lier les secteurs
      */
-    public function secteurLink($idSaad)
+    public function secteurLink($idSaad) : void
     {
         # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
-        if ($this->checkAuthentification($idSaad)) {
-            return redirect()->to('/connexionReussie');
+        if (!$this->saadListModel->isAuthenticatedOnSaad($idSaad, session()->get('id'))) {
+            echo view('header');
+            echo view('forbidden');
+            echo view('footer');
+            return;
         }
 
         // on récupère la liste des secteurs
@@ -77,8 +81,8 @@ class SecteurLinkController extends Controller
     public function editSecteurLink($idSaad): RedirectResponse
     {
         # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
-        if ($this->checkAuthentification($idSaad)) {
-            return redirect()->to('/connexion');
+        if (!$this->saadListModel->isAuthenticatedOnSaad($idSaad, session()->get('id'))) {
+            return redirect()->to('/forbidden');
         }
         $secteurArray = $this->request->getVar('secteur');
         $this->agirModel->deleteAllLinks($idSaad);
@@ -96,21 +100,11 @@ class SecteurLinkController extends Controller
     public function deleteAllLinks($idSaad): RedirectResponse
     {
         # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
-        if ($this->checkAuthentification($idSaad)) {
-            return redirect()->to('/connexion');
+        if (!$this->saadListModel->isAuthenticatedOnSaad($idSaad, session()->get('id'))) {
+            return redirect()->to('/forbidden');
         }
         $this->agirModel->deleteAllLinks($idSaad);
         return redirect()->to('secteurLinkController/secteurLink/' . $idSaad);
-    }
-
-    /**
-     * Vérifie que l'utilisateur connecté est bien celui qui a la gestion du saad
-     * @param $idSaad - L'id du saad pour lequel on veut vérifier les accès
-     * @return bool - true si l'utilisateur est bien celui qui a la gestion du saad, false sinon
-     */
-    private function checkAuthentification($idSaad): bool
-    {
-        return !$this->saadListModel->isSaadLinkedToUser($idSaad, session()->get('id')) && !(session()->get('accountType') === SUPER_ADMIN);
     }
 
 

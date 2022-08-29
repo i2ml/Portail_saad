@@ -22,7 +22,7 @@ class SuperAdminGuard implements FilterInterface
     {
         if (session()->get('accountType') !== SUPER_ADMIN) {
             return redirect()
-                ->to('/connexionReussie');
+                ->to('/forbidden');
         }
     }
 

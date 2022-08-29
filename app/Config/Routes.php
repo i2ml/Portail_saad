@@ -34,13 +34,16 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('saads', 'SaadController::index');
 $routes->match(['get', 'post'], 'filter', 'SaadController::filter');
+
+// Gestion des connexions
+$routes->get('forbidden', 'NouvelleConnexionController::forbidden');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
-$routes->match(['get', 'post'], 'userList', 'PersonController::userList', ['filter' => ['authGuard', 'superAdminGuard']]);
 $routes->match(['get', 'post'], 'disconnect', 'PersonController::disconnect', ['filter' => 'authGuard']);
 
+// Affichage de la liste des éléments (coté admin)
+$routes->match(['get', 'post'], 'userList', 'PersonController::userList', ['filter' => ['authGuard', 'superAdminGuard']]);
 $routes->match(['get', 'post'], 'saadsList', 'SaadController::saadsList', ['filter' => ['authGuard', 'superAdminGuard']]);
-
 $routes->match(['get', 'post'], 'mySaadsList/(:segment)', 'SaadController::mySaadsList/$1', ['filter' => ['authGuard', 'ownedIdGuard']]);
 
 //Envoyer un email

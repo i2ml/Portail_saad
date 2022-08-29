@@ -11,6 +11,7 @@ use App\Models\SaadModel;
 use App\Models\SpecialiserModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
+use ReflectionException;
 
 /**
  * SaadController
@@ -43,11 +44,11 @@ class SaadController extends Controller
     {
 
         $data = [
-            'saads' =>  $this->saadModel->getSaads(),
-            'publics' =>  $this->publicModel->getPublics(),
-            'pathologies' =>  $this->pathologieModel->getPathologies(),
+            'saads' => $this->saadModel->getSaads(),
+            'publics' => $this->publicModel->getPublics(),
+            'pathologies' => $this->pathologieModel->getPathologies(),
             'title' => 'Liste des Saads',
-            'idFiltrer' =>  $this->saadModel->getAllSaadsId(),
+            'idFiltrer' => $this->saadModel->getAllSaadsId(),
         ];
 
         echo view('header', $data);
@@ -147,13 +148,16 @@ class SaadController extends Controller
         $data['pathologiesSpecialise'] = [];
 
         if ($id) {
-
             $data['saad'] = $this->saadModel->getSaadById($id);
             $data['publicsCible'] = $this->ciblerModel->getPublicsIdByIdSaad($id);
             $data['pathologiesSpecialise'] = $this->specialiserModel->getPathologiesIdByIdSaad($id);
         }
-
         echo view('header');
+        if (!($id && $this->saadListModel->isAuthenticatedOnSaad($id, session()->get('id'))) && !(session()->get('accountType') === SUPER_ADMIN)) {
+            echo view('forbidden');
+            echo view('footer');
+            return;
+        }
         echo view('createSaad', $data);
         echo view('footer');
     }
@@ -161,10 +165,17 @@ class SaadController extends Controller
     /**
      * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un SAAD
      * @return RedirectResponse|void
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function storeSaad($id = false)
     {
+        //first we check if the user is authenticated on the saad
+        if (!($id && $this->saadListModel->isAuthenticatedOnSaad($id, session()->get('id'))) && !(session()->get('accountType') === SUPER_ADMIN)) {
+            echo view('header');
+            echo view('forbidden');
+            echo view('footer');
+            return;
+        }
         helper(['form']);
         $rules = $this->getSaadFormRules();
         //check if the rule are valid
@@ -190,12 +201,11 @@ class SaadController extends Controller
             return redirect()->to('/connexionReussie');
         }
 
-        $session = session();
         $data['success'] = false;
         if ($this->request->getMethod() !== 'post') {
             $data['success'] = null;
         }
-        $data['profil'] = $session->get('nom');
+        $data['profil'] = session()->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
         $data['publics'] = $this->publicModel->getPublics();
@@ -303,7 +313,7 @@ class SaadController extends Controller
      * @param array $data
      * @param $pathologie
      * @param $public
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function updateSaad($id, array $data, $pathologie, $public): void
     {

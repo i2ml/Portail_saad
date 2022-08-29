@@ -33,6 +33,14 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
         echo view('footer');
     }
 
+    public function forbidden()
+    {
+        $data['title'] = "Accès interdit";
+        echo view('header', $data);
+        echo view('forbidden');
+        echo view('footer');
+    }
+
     /*
      * Vérifie si le mail et le mot de passe sont corrects
      */

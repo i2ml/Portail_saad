@@ -24,7 +24,7 @@ class OwnedIdGuard implements FilterInterface
         $idUrl = preg_split("#/#", current_url() )[4];
         if (session()->get('id') !== $idUrl) {
             return redirect()
-                ->to('/connexionReussie');
+                ->to('/forbidden');
         }
     }
 

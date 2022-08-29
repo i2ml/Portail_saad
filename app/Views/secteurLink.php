@@ -13,7 +13,7 @@ use App\Models\SecteurModel;
  */
 ?>
 <div class="container mx-auto">
-    <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto">
+    <div class="max-w-sm mx-auto ">
         <div class="px-6 py-4">
             <div class="">
                 <div class="grid min-w-full shadow-md rounded-lg overflow-hidden p-2">
