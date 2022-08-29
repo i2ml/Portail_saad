@@ -76,7 +76,7 @@ class PersonneModel extends Model
      * @param $idPersonnes array - tableau d'id de personne
      * @return array - de nom et prénom
      */
-    public function getPersonnesNameFromId(array $idPersonnes): array
+    public function getPersonnesNameFromIds(array $idPersonnes): array
     {
         // check if $idPersonnes is an array and not empty
         if (!is_array($idPersonnes) || empty($idPersonnes)) {
