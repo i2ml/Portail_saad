@@ -148,7 +148,7 @@ class SaadController extends Controller
 
         if ($id) {
 
-            $data['saad'] = $this->saadModel->getSaadbyid($id);
+            $data['saad'] = $this->saadModel->getSaadById($id);
             $data['publicsCible'] = $this->ciblerModel->getPublicsIdByIdSaad($id);
             $data['pathologiesSpecialise'] = $this->specialiserModel->getPathologiesIdByIdSaad($id);
         }
@@ -201,7 +201,7 @@ class SaadController extends Controller
         $data['publics'] = $this->publicModel->getPublics();
         $data['pathologies'] = $this->pathologieModel->getPathologies();
         if ($id) {
-            $data['saad'] = $this->saadModel->getSaadbyid($id);
+            $data['saad'] = $this->saadModel->getSaadById($id);
             $data['publicsCible'] = $this->ciblerModel->getPublicsIdByIdSaad($id);
             $data['pathologiesSpecialise'] = $this->specialiserModel->getPathologiesIdByIdSaad($id);
         } else {
@@ -242,7 +242,7 @@ class SaadController extends Controller
             $ids = $this->saadListModel->getPersonIdsFromSaadId($saad['id']);
             $saads[$key]['idsGerants'] = $ids;
             //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
-            $saads[$key]['noms'] = $this->personneModel->getPersonnesNameFromId($ids);
+            $saads[$key]['noms'] = $this->personneModel->getPersonnesNameFromIds($ids);
         }
         return $saads;
     }
