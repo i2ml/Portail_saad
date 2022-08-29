@@ -15,7 +15,7 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de récupérer l'ensemble des personnes présentent en bdd sans leurs mots de pass
-     * @return array|null soit toutes les personnes de la bdd
+     * @return array|null Soit toutes les personnes de la bdd
      */
     public function getPersonnes()
     {
@@ -28,8 +28,9 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de vérifier le mdp correspondant aux identifiants passés en param
-     * @param $id l'identifiant de la personne demandée
-     * @return la ligne de l'utilisateur dont l'id est passée en param dont le champs mot de passe
+     * @param $mail string L'email de la personne
+     * @param $varp string Le mot de passe de la personne
+     * @return bool - Retourne true si le mdp correspond aux identifiants passés en param, false sinon
      */
     public function checkPass($mail, $varp): bool
     {
@@ -47,8 +48,8 @@ class PersonneModel extends Model
 
     /**
      * Cette fonction permet de récupérer une personne en bdd identifiée par son mail $mail en param
-     * @param $mail l'identifiant de la personne demandée
-     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
+     * @param $mail L'identifiant de la personne demandée
+     * @return object|null  La ligne de la bdd correspondant à l'id passée en param sans le mdp
      */
     public function getPersonnebymail($mail)
     {
@@ -61,7 +62,7 @@ class PersonneModel extends Model
     /**
      * Cette fonction permet de récupérer une personne en bdd identifiée par son id $id en param
      * @param $id l'identifiant de la personne demandée
-     * @return object|null  la ligne de la bdd correspondant à l'id passée en param sans le mdp
+     * @return object|null  La ligne de la bdd correspondant à l'id passée en param sans le mdp
      */
     public function getPersonnebyid($id)
     {

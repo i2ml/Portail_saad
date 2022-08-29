@@ -16,7 +16,7 @@ class SecteurModel extends Model
      * Cette fonction permet de récupérer l'ensemble des secteurs présentent en bdd
      * @return array
      */
-    public function getSecteur(): array
+    public function getSecteurs(): array
     {
         return $this->findAll();
     }

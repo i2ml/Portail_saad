@@ -87,10 +87,10 @@ use App\Models\SaadModel;
                                             }
                                         }
                                         ?>
-                                        <label for="toogle<?php echo $saad['id'] ?>"
+                                        <label for="toggle<?php echo $saad['id'] ?>"
                                                class="flex items-center cursor-pointer">
                                             <div class="relative">
-                                                <input id="toogle<?php echo $saad['id'] ?>" type="checkbox"
+                                                <input id="toggle<?php echo $saad['id'] ?>" type="checkbox"
                                                        form="linkForm" class="sr-only"
                                                     <?php echo !$isLinked ?: "checked" ?> name="saad[]"
                                                        value="<?php echo $saad['id'] ?>"/>
