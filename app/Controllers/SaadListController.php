@@ -85,6 +85,4 @@ class SaadListController extends Controller
         $saadListModel->deleteAllLinks($idPersonne);
         return redirect()->to('saadListController/saadLink/' . $idPersonne);
     }
-
-
 }

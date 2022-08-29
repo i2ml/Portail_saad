@@ -26,9 +26,9 @@ class SaadModel extends Model
     /**
      * Récupère la saad correspondant à l'id passée en paramètre
      * @param false $id - id de la saad à récupérer
-     * @return object|null - Retourne la saad correspondant à l'id passée en paramètre
+     * @return array|null - Retourne la saad correspondant à l'id passée en paramètre
      */
-    public function getSaadById($id): ?object
+    public function getSaadById($id): ?array
     {
         return $this->where('id', $id)->first();
     }

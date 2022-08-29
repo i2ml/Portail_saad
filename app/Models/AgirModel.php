@@ -17,7 +17,7 @@ class AgirModel extends Model
      * @param $id
      * @return array
      */
-    public function getSecteurIdsFromSaadId($id): array
+    public function getSecteursIdsFromSaadId($id): array
     {
         $list = $this->where("idSaad", $id)->findAll();
         return array_column($list, 'idSecteur');

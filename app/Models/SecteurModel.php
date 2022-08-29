@@ -22,11 +22,11 @@ class SecteurModel extends Model
     }
 
     /**
-     * Cette fonction permet de récupérer des secteurs à partir d'un tableau d'id de secteurs
+     * Cette fonction permet de récupérer des secteurs à partir d'une id de saad
      * @param array $ids
      * @return array Les secteurs correspondants aux ids passés en param
      */
-    public function getSecteurFromIds(array $ids): array
+    public function getSecteursByIds(array $ids): array
     {
         return $this->whereIn('id', $ids)->findAll();
     }
