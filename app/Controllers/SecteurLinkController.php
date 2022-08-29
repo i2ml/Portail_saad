@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AgirModel;
+use App\Models\SaadListModel;
 use App\Models\SaadModel;
 use App\Models\SecteurModel;
 use CodeIgniter\Controller;
@@ -19,12 +20,14 @@ class SecteurLinkController extends Controller
     private $agirModel;
     private $saadModel;
     private $secteurModel;
+    private $saadListModel;
 
     public function __construct()
     {
         $this->agirModel = new AgirModel();
         $this->saadModel = new SaadModel();
         $this->secteurModel = new SecteurModel();
+        $this->saadListModel = new SaadListModel();
     }
 
     /**
@@ -33,12 +36,17 @@ class SecteurLinkController extends Controller
      */
     public function secteurLink($idSaad)
     {
+        # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
+        if ($this->checkAuthentification($idSaad)) {
+            return redirect()->to('/connexionReussie');
+        }
+
         // on récupère la liste des secteurs
         $secteurs = $this->secteurModel->getSecteurs();
 
-        foreach ($secteurs as $key => $saad) {
+        foreach ($secteurs as $key => $secteur) {
             // on récupère la liste des secteurs liés à ce saad sous forme de tableau d'id
-            $ids = $this->agirModel->getSaadsIdsFromSecteurId($saad['id']);
+            $ids = $this->agirModel->getSaadsIdsFromSecteurId($secteur['id']);
             $secteurs[$key]['idsSaads'] = $ids;
         }
 
@@ -68,6 +76,10 @@ class SecteurLinkController extends Controller
      */
     public function editSecteurLink($idSaad): RedirectResponse
     {
+        # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
+        if ($this->checkAuthentification($idSaad)) {
+            return redirect()->to('/connexion');
+        }
         $secteurArray = $this->request->getVar('secteur');
         $this->agirModel->deleteAllLinks($idSaad);
         if (!empty($secteurArray)) {
@@ -79,12 +91,26 @@ class SecteurLinkController extends Controller
     }
 
     /** Supprime les liens entre une personne et les saads
-     * @param $idPersonne number - L'id de la personne dont on veut supprimer les liens
+     * @param $idSaad number - L'id de la personne dont on veut supprimer les liens
      */
-    public function deleteAllLinks($idPersonne): RedirectResponse
+    public function deleteAllLinks($idSaad): RedirectResponse
     {
-        $this->agirModel->deleteAllLinks($idPersonne);
-        return redirect()->to('secteurLinkController/secteurLink/' . $idPersonne);
+        # avant tout on doit vérifier que le saad est bien lié à l'utilisateur connecté (ou qu'il est super admin)
+        if ($this->checkAuthentification($idSaad)) {
+            return redirect()->to('/connexion');
+        }
+        $this->agirModel->deleteAllLinks($idSaad);
+        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad);
+    }
+
+    /**
+     * Vérifie que l'utilisateur connecté est bien celui qui a la gestion du saad
+     * @param $idSaad - L'id du saad pour lequel on veut vérifier les accès
+     * @return bool - true si l'utilisateur est bien celui qui a la gestion du saad, false sinon
+     */
+    private function checkAuthentification($idSaad): bool
+    {
+        return !$this->saadListModel->isSaadLinkedToUser($idSaad, session()->get('id')) && !(session()->get('accountType') === SUPER_ADMIN);
     }
 
 
