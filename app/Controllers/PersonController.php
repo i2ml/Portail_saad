@@ -121,6 +121,7 @@ class PersonController extends \CodeIgniter\Controller
      * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en admin
      * @param $id number - l'id de l'utilisateur à transformer
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function userUpgrade($id): RedirectResponse
     {
@@ -138,8 +139,9 @@ class PersonController extends \CodeIgniter\Controller
      * Cette fonction permet de transformer l'utilisateur dont l'identifiant est passé en paramètre en gerant de saad
      * @param $id number - l'id de l'utilisateur à transformer
      * @return RedirectResponse
+     * @throws ReflectionException
      */
-    public function userDowngrade($id)
+    public function userDowngrade($id): RedirectResponse
     {
 
         $model = new PersonneModel();
@@ -173,10 +175,11 @@ class PersonController extends \CodeIgniter\Controller
 
     /**
      * Charge les composants de la page changer de mot de passe si rien n'est passé en param
-     * @param $user PersonneModel - c'est l'id de l'utilisateur dont on modifie le mot de passe
+     * @param $user number - c'est l'id de l'utilisateur dont on modifie le mot de passe
+     * @return RedirectResponse|void
      * @throws ReflectionException
      */
-    public function changePassword($user = false)
+    public function changePassword($user = null)
     {
         if (!$user) {
             $id = session()->get('id');
@@ -184,10 +187,6 @@ class PersonController extends \CodeIgniter\Controller
             $data = [
                 'idUser' => $id,
             ];
-
-            echo view('header');
-            echo view('changePassword', $data);
-            echo view('footer');
         } else {
             helper(['form']);
             $rules = [
@@ -210,11 +209,10 @@ class PersonController extends \CodeIgniter\Controller
             $data['idUser'] = $session->get('id');
             $data['validation'] = $this->validator;
             $data['title'] = 'Admin';
-            echo view('header');
-            echo view('changePassword', $data);
-            echo view('footer');
 
         }
+        echo view('header');
+        echo view('changePassword', $data);
+        echo view('footer');
     }
-
 }
