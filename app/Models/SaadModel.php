@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use CodeIgniter\Model;
+use ReflectionException;
 
 /**
  * SaadModel
@@ -17,17 +18,17 @@ class SaadModel extends Model
      * Récupère toutes les saads
      * @return array|null - Retourne un tableau contenant les saads
      */
-    public function getSaads()
+    public function getSaads(): ?array
     {
         return $this->findAll();
     }
 
     /**
-     * récupère la saad correspondant à l'id passée en paramètre
+     * Récupère la saad correspondant à l'id passée en paramètre
      * @param false $id - id de la saad à récupérer
      * @return object|null - Retourne la saad correspondant à l'id passée en paramètre
      */
-    public function getSaadbyid($id)
+    public function getSaadById($id): ?object
     {
         return $this->where('id', $id)->first();
     }
@@ -36,7 +37,7 @@ class SaadModel extends Model
      * Cette fonction permet de modifier le saad dont l'id est passé en paramètre avec les données passées, elles aussi, en paramètre
      * @param $id - id de la saad à modifier
      * @param $data
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function modifSaads($id, $data)
     {
@@ -56,7 +57,7 @@ class SaadModel extends Model
     }
 
     /**
-     * cette fonction permet de récupérer le nom de l'image du saad par son ID
+     * Cette fonction permet de récupérer le nom de l'image du saad par son ID
      * @param $id
      * @return mixed
      */
@@ -109,7 +110,7 @@ class SaadModel extends Model
      * redefinition de la fonction save pour retourner l'identifiant de la saad que l'on enregistre
      * @param $data
      * @return bool|\CodeIgniter\Database\BaseResult|int|object|string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function saveSaad($data)
     {

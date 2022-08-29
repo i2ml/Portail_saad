@@ -42,17 +42,19 @@ class CiblerModel extends Model
      * @param $id
      * @return array
      */
-    public function getPublicsIdByIdSaad($id){
+    public function getPublicsIdByIdSaad($id): array
+    {
         $list = $this->where("idSaad", $id)->findAll();
         return array_column($list, 'idPublic');
     }
 
     /**
-     * Fonction permettant de récupérer tous les id saads traitant la liste de publics passés en paramteres
+     * Fonction permettant de récupérer tous les id saads traitant la liste de publics passés en paramètres
      * @param $idPublic
      * @return array
      */
-    public function getSaadsIdByIdPublic($idPublic){
+    public function getSaadsIdByIdPublic($idPublic): array
+    {
         $list = $this->whereIn("idPublic", $idPublic)->findAll();
         return array_column($list, 'idSaad');
     }

@@ -32,7 +32,7 @@ class SaadListController extends Controller
             $ids = $saadListModel->getPersonIdsFromSaadId($saad['id']);
             $saads[$key]['idsGerants'] = $ids;
             //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
-            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
+            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromIds($ids);
         }
 
 
