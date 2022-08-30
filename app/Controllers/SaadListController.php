@@ -16,7 +16,7 @@ class SaadListController extends Controller
 
     /**
      * Charge les composants de la page permettant de lier les saads
-     * @param $idPersonne l'id de la personne dont on veut lier les saads
+     * @param $idPersonne number - l'id de la personne dont on veut lier les saads
      */
     public function saadLink($idPersonne)
     {
@@ -48,6 +48,8 @@ class SaadListController extends Controller
             'saads' => $saads,
             'user' => $personneModel->getPersonnebyid($idPersonne),
             'currentSaadList' => $userSaads,
+            'notificationTitle' => session()->get('notificationTitle'),
+            'notificationMessage' => session()->get('notificationMessage'),
         ];
 
         $sendMail = new MailController();
@@ -73,7 +75,9 @@ class SaadListController extends Controller
                 $saadListModel->save(['idPersonne' => $idPersonne, 'idSaad' => $saad]);
             }
         }
-        return redirect()->to('saadListController/saadLink/' . $idPersonne);
+        return redirect()->to('saadListController/saadLink/' . $idPersonne)
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "La liste des SAAD liés à l'utilisateur a été mise à jour.");
     }
 
     /** Supprime les liens entre une personne et les saads
@@ -83,6 +87,8 @@ class SaadListController extends Controller
     {
         $saadListModel = new SaadListModel();
         $saadListModel->deleteAllLinks($idPersonne);
-        return redirect()->to('saadListController/saadLink/' . $idPersonne);
+        return redirect()->to('saadListController/saadLink/' . $idPersonne)
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Cet utilisateur n'est plus lié à aucun SAAD");
     }
 }

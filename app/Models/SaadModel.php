@@ -79,11 +79,12 @@ class SaadModel extends Model
 
         $this->where("id", $id);
         $image = $this->getImageById($id);
+        // we check if the image is not the default image
+        if ($image === 'default.png') {
+           return;
+        }
         $path = getcwd() . "\images\logosaads\\" . $image;
-
-
         unlink($path);
-
     }
 
     /**

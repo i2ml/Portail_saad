@@ -13,10 +13,11 @@
                 2022
             </p>
             <p class="text-white mt-10"><a class="link"
-                                     href="<?php echo site_url('/') ?>connexionReussie">
+                                           href="<?php echo site_url('/') ?>connexion">
                     Accéder à votre espace sécurisé </a></p>
         </div>
     </div>
 </div>
 </body>
+<script src="<?php echo site_url('/javascript/closeNotification.js') ?>"></script>
 </html>

@@ -50,7 +50,7 @@ class SaadController extends Controller
             'idFiltrer' => $this->saadModel->getAllSaadsId(),
         ];
 
-        // d'abord, on récupère l'entrée du champs "mainSearch" en méthode get
+        // d'abord, on récupère l'entrée du champ "mainSearch" en méthode get
         $mainSearch = $this->request->getGet('mainSearch');
 
         if ($mainSearch != null) {
@@ -60,7 +60,7 @@ class SaadController extends Controller
 
         //on récupère la selection du public par l'utilisateur
         $public = $this->request->getGet('publicCible');
-        var_dump($public);
+
         if ($public != null) {
             $filteredResults = $this->ciblerModel->getSaadsIdByIdPublic([$public]);
             $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
@@ -148,7 +148,9 @@ class SaadController extends Controller
         $this->saadModel->deleteLine($id);
 
         unset($data);
-        return redirect()->to('saadsList');
+        return redirect()->to('saadsList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Le SAAD a été supprimé de la base de données");
     }
 
     /**
@@ -219,7 +221,9 @@ class SaadController extends Controller
                 $this->ciblerModel->saveAll($public, $id);
             }
 
-            return redirect()->to('/connexionReussie');
+            return redirect()->to('/connexionReussie')
+                ->with('notificationTitle', 'Enregistrement effectué')
+                ->with('notificationMessage', 'Votre SAAD a bien été enregistré dans la base de données');
         }
 
         $data['success'] = false;
@@ -255,6 +259,8 @@ class SaadController extends Controller
             'saads' => $saads,
             'isAdmin' => session()->get('accountType') === SUPER_ADMIN,
             'mySaadList' => $mySaadList,
+            'notificationTitle' => session()->get('notificationTitle'),
+            'notificationMessage' => session()->get('notificationMessage'),
         ];
 
         echo view('header');
