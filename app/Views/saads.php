@@ -1,14 +1,21 @@
+<?php
+/**
+ * @var $pathologies array
+ * @var $saads array
+ * @var $publics array
+ * @var $idFiltrer array
+ */ ?>
 <h2 class="title">Les services d'aides à domicile dans votre secteur</h2>
 <div class="container mx-auto px-4 sm:px-8 flex flex-row">
     <form class="basis-1/4 px-6 pt-4" action="<?= esc(base_url()) ?>/filter" method="post">
         <p class="text-blue-header-btn font-semibold">Filtrer par pathologie </p>
 
         <?php
-        foreach ($pathologies as $pathologie){
+        foreach ($pathologies as $pathologie) {
             ?>
-            <div class="ml-3"> <input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"
+            <div class="ml-3"><input type="checkbox" name="pathologie[]" value="<?php echo $pathologie['id'] ?>"
                     <?php
-                    if(isset($pathologieSelectionnee) && in_array($pathologie['id'], $pathologieSelectionnee)){
+                    if (isset($pathologieSelectionnee) && in_array($pathologie['id'], $pathologieSelectionnee)) {
                         echo "checked";
                     }
                     ?>>
@@ -20,10 +27,10 @@
         <p class="text-blue-header-btn font-semibold">Filtrer par public </p>
 
         <?php
-        foreach ($publics as $public){
+        foreach ($publics as $public) {
             ?>
-            <div class="ml-3"> <input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"<?php
-                if(isset($publicSelectionne) && in_array($public['id'], $publicSelectionne)){
+            <div class="ml-3"><input type="checkbox" name="public[]" value="<?php echo $public['id'] ?>"<?php
+                if (isset($publicSelectionne) && in_array($public['id'], $publicSelectionne)) {
                     echo "checked";
                 }
                 ?>>
@@ -31,7 +38,7 @@
             <?php
         }
         ?>
-        <button type="submit" class="blue-button mt-5"> Filtrer </button>
+        <button type="submit" class="blue-button mt-5"> Filtrer</button>
 
     </form>
     <div class="container grid md:grid-cols-2 grid-cols-1 gap-6 p-8 basis-3/4">

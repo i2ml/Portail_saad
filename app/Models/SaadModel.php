@@ -1,5 +1,6 @@
 <?php namespace App\Models;
 
+use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Model;
 use ReflectionException;
 
@@ -107,9 +108,9 @@ class SaadModel extends Model
     }
 
     /**
-     * redefinition de la fonction save pour retourner l'identifiant de la saad que l'on enregistre
+     * Redéfinition de la fonction save pour retourner l'identifiant de la saad que l'on enregistre
      * @param $data
-     * @return bool|\CodeIgniter\Database\BaseResult|int|object|string
+     * @return bool|BaseResult|int|object|string
      * @throws ReflectionException
      */
     public function saveSaad($data)
@@ -129,8 +130,43 @@ class SaadModel extends Model
      * Fonction permettant de récupérer tous les id de saads de la base de données
      * @return array
      */
-    public function getAllSaadsId(){
+    public function getAllSaadsId(): array
+    {
         $list = $this->findAll();
         return array_column($list, 'id');
+    }
+
+    /**
+     * Fonction permettant de récupérer tous les id de saads de la base de données pour lesquels l'un des champs correspond à la chaine de caractère passée en paramètre
+     * @param $mainSearch string - chaine de caractère à rechercher dans les champs de la base de données
+     */
+    public function getSaadIdsFilteredByMainSearch($mainSearch): array
+    {
+        $list = $this->findAll();
+        $ids = array_column($list, 'id');
+        $filteredIds = [];
+        foreach ($ids as $id) {
+            $saad = $this->where('id', $id)->first();
+            $mainSearch = $this->stripAccents($mainSearch);
+            $nom = $this->stripAccents($saad['nom']);
+            if (stripos(trim(strtolower($nom)), trim(strtolower($mainSearch))) !== false) {
+                $filteredIds[] = $id;
+            }
+        }
+        return $filteredIds;
+    }
+
+    /**
+     * Supprime les accents d'une chaine de caractère
+     * @param $chaine
+     * @return string
+     */
+    private function stripAccents($chaine): string
+    {
+        return str_replace(
+            ['À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ'],
+            ['A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y'],
+            $chaine
+        );
     }
 }

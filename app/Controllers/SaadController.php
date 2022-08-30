@@ -42,7 +42,6 @@ class SaadController extends Controller
      */
     public function index()
     {
-
         $data = [
             'saads' => $this->saadModel->getSaads(),
             'publics' => $this->publicModel->getPublics(),
@@ -50,6 +49,14 @@ class SaadController extends Controller
             'title' => 'Liste des Saads',
             'idFiltrer' => $this->saadModel->getAllSaadsId(),
         ];
+
+        // d'abord, on récupère l'entrée du champs "mainSearch" en méthode get
+        $mainSearch = $this->request->getGet('mainSearch');
+
+        if($mainSearch != null){
+            $filteredResults = $this->saadModel->getSaadIdsFilteredByMainSearch($mainSearch);
+            $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
+        }
 
         echo view('header', $data);
         echo view('saads', $data);
@@ -69,21 +76,26 @@ class SaadController extends Controller
             'title' => 'Liste des Saads',
         ];
 
+        // d'abord on récupère la selection de l'utilisateur
         $publicFilter = $this->request->getPost('public[]');
         $pathologieFilter = $this->request->getPost('pathologie[]');
+
+        // on récupère toutes les ids de saads
         $idSaadFiltrePathologie = $this->saadModel->getAllSaadsId();
         $idSaadFiltrePublic = $this->saadModel->getAllSaadsId();
 
+        // si l'utilisateur a sélectionné un public, on filtre les saads en fonction du choix
         if (is_array($publicFilter)) {
             $idSaadFiltrePublic = $this->ciblerModel->getSaadsIdByIdPublic($publicFilter);
         }
+        // si l'utilisateur a sélectionné une pathologie, idem
         if (is_array($pathologieFilter)) {
             $idSaadFiltrePathologie = $this->specialiserModel->getSaadsIdByIdPathologie($pathologieFilter);
         }
 
+        //on charge les infos pour la vue
         $data['pathologieSelectionnee'] = $pathologieFilter;
         $data['publicSelectionne'] = $publicFilter;
-
         $data['idFiltrer'] = array_intersect($idSaadFiltrePublic, $idSaadFiltrePathologie);
 
         echo view('header', $data);
@@ -97,7 +109,6 @@ class SaadController extends Controller
      */
     public function saadsList()
     {
-
         $saads = $this->saadModel->getSaads();
         $saads = $this->loadManagersInSaadListData($saads);
         $this->displaySaadList($saads, false);
