@@ -53,10 +53,20 @@ class SaadController extends Controller
         // d'abord, on récupère l'entrée du champs "mainSearch" en méthode get
         $mainSearch = $this->request->getGet('mainSearch');
 
-        if($mainSearch != null){
+        if ($mainSearch != null) {
             $filteredResults = $this->saadModel->getSaadIdsFilteredByMainSearch($mainSearch);
             $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
         }
+
+        //on récupère la selection du public par l'utilisateur
+        $public = $this->request->getGet('publicCible');
+        var_dump($public);
+        if ($public != null) {
+            $filteredResults = $this->ciblerModel->getSaadsIdByIdPublic([$public]);
+            $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
+            $data['publicSelectionne'] = [$public];
+        }
+
 
         echo view('header', $data);
         echo view('saads', $data);
