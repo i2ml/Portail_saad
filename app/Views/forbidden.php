@@ -16,7 +16,13 @@
                 Malheureusement, Vous n'avez pas</h2>
             <h2 class="mr-8 ml-5 mb-3 text-4xl font-semibold mb-8"> l'autorisation d'accéder à cette page !</h2>
         </div>
-        <a href="<?php echo site_url('/') ?>connexionReussie"
+
+        <a href="<?php
+        if (session()->get('isLoggedIn')) {
+            echo site_url('/connexionReussie');
+        } else {
+            echo site_url('/connexion');
+        } ?>"
            class="mt-8 bg-whte mt-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             Retourner à l'accueil
         </a>
