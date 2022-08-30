@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\PersonneModel;
 use CodeIgniter\HTTP\RedirectResponse;
-use Faker\Provider\Person;
 use ReflectionException;
 
 /**
@@ -57,14 +56,16 @@ class PersonController extends \CodeIgniter\Controller
             $userModel->save($data);
             $data['success'] = true;
 
-            return redirect()->to('/connexionReussie');
+            return redirect()->to('/connexionReussie')
+                ->with('notificationTitle', 'Enregistrement effectué')
+                ->with('notificationMessage', 'Votre utilisateur a bien été enregistré dans la base de données');
         }
 
         $session = session();
         $data['success'] = false;
-            if ($this->request->getMethod() !== 'post') {
-                $data['success'] = null;
-            }
+        if ($this->request->getMethod() !== 'post') {
+            $data['success'] = null;
+        }
         $data['profil'] = $session->get('nom');
         $data['validation'] = $this->validator;
         $data['title'] = 'Admin';
@@ -80,10 +81,9 @@ class PersonController extends \CodeIgniter\Controller
     public function userList()
     {
         $model = new PersonneModel();
-
-        $data = [
-            'users' => $model->getPersonnes(),
-        ];
+        $data['notificationTitle'] = session()->get('notificationTitle');
+        $data['notificationMessage'] = session()->get('notificationMessage');
+        $data['users'] = $model->getPersonnes();
 
         echo view('header');
         echo view('userList', $data);
@@ -102,7 +102,9 @@ class PersonController extends \CodeIgniter\Controller
         $model = new PersonneModel();
 
         $model->deleteLine($id);
-        return redirect()->to('userList');
+        return redirect()->to('userList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "L'utilisateur a bien été supprimé de la base de données");
     }
 
     /**
@@ -111,9 +113,8 @@ class PersonController extends \CodeIgniter\Controller
      */
     public function disconnect(): RedirectResponse
     {
-        $session = session();
-        $session->destroy();
-        return redirect()->to('connexionReussie');
+        session()->destroy();
+        return redirect()->to('/');
     }
 
 
@@ -131,8 +132,10 @@ class PersonController extends \CodeIgniter\Controller
         $model->upgrade($id);
         unset($data);
         $sendMail = new MailController();
-        $sendMail->sendMail($model->getPersonnebyid($id)['mail'],'Promotion','Vous avez été promu en superadmin');
-        return redirect()->to('userList');
+        $sendMail->sendMail($model->getPersonnebyid($id)['mail'], 'Promotion', "Vous avez été promu au rang d'administrateur");
+        return redirect()->to('userList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "L'utilisateur a bien été promu administrateur");
     }
 
     /**
@@ -148,8 +151,10 @@ class PersonController extends \CodeIgniter\Controller
         $model->downgrade($id);
         unset($data);
         $sendMail = new MailController();
-        $sendMail->sendMail($model->getPersonnebyid($id)['mail'],'Rétrogradation','Vous avez été rétrogradé en gérant de SAAD');
-        return redirect()->to('userList');
+        $sendMail->sendMail($model->getPersonnebyid($id)['mail'], 'Rétrogradation', 'Vous avez été rétrogradé au rang de gérant de SAAD');
+        return redirect()->to('userList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "L'utilisateur a bien été rétrogradé au rang de gérant de SAAD");
     }
 
     /**
@@ -168,9 +173,11 @@ class PersonController extends \CodeIgniter\Controller
         $model = new PersonneModel();
         $model->changePassword($mailUser, $password);
         $sendMail = new MailController();
-        $sendMail->sendMail($mailUser,$subject,$message);
+        $sendMail->sendMail($mailUser, $subject, $message);
 
-        return redirect()->to('userList');
+        return redirect()->to('userList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Le mot de passe de l'utilisateur a été modifié et transmis par mail");
     }
 
     /**
@@ -202,7 +209,9 @@ class PersonController extends \CodeIgniter\Controller
 
                 $userModel->changePasswordWithId($user, $password);
 
-                return redirect()->to('/connexionReussie');
+                return redirect()->to('/connexionReussie')
+                    ->with('notificationTitle', "Enregistrement effectué")
+                    ->with('notificationMessage', "Votre mot de passe a bien été modifié");
             }
 
             $session = session();

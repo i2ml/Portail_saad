@@ -66,6 +66,8 @@ class SecteurLinkController extends Controller
             'secteurs' => $secteurs,
             'saad' => $this->saadModel->getSaadById($idSaad),
             'currentSecteurList' => $saadSecteurs,
+            'notificationTitle' => session()->get('notificationTitle'),
+            'notificationMessage' => session()->get('notificationMessage'),
         ];
 
         echo view('header');
@@ -91,7 +93,9 @@ class SecteurLinkController extends Controller
                 $this->agirModel->save(['idSaad' => $idSaad, 'idSecteur' => $secteur]);
             }
         }
-        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad);
+        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad)
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Les secteurs liés au SAAD ont bien été enregistrés");
     }
 
     /** Supprime les liens entre une personne et les saads
@@ -104,7 +108,9 @@ class SecteurLinkController extends Controller
             return redirect()->to('/forbidden');
         }
         $this->agirModel->deleteAllLinks($idSaad);
-        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad);
+        return redirect()->to('secteurLinkController/secteurLink/' . $idSaad)
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Le SAAD n'est plus associé à aucun secteur");
     }
 
 
