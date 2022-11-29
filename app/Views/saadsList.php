@@ -1,6 +1,52 @@
-<h1 class="title">Les services d'aides à domicile dans votre secteur</h1>
+<?php
+/**
+ * @var bool $isAdmin
+ * @var bool $mySaadList
+ * @var array $saads
+
+ * @var $notificationTitle string - le titre de la notification
+ * @var $notificationMessage string - le message de la notification
+ */
+
+if ($mySaadList) {
+    ?>
+    <h1 class="title">Liste de vos SAAD</h1>
+    <?php
+} else {
+    ?>
+    <h1 class="title">Liste de tous les SAAD</h1>
+    <?php
+}
+?>
+
+
 <div class="container mx-auto px-4 sm:px-8">
-    <?php if (!empty($saads) && is_array($saads)) { ?>
+    <?php if (isset($notificationTitle) and isset($notificationMessage)) {
+        ?>
+        <!--code for notification starts-->
+        <div role="alert"
+             class="sm:mr-6 xl:w-5/12 mx-auto absolute left-0 sm:left-auto right-0 sm:w-6/12 md:w-3/5 justify-between w-11/12 bg-white shadow-lg rounded flex sm:flex-row flex-col transition duration-150 ease-in-out"
+             id="notification">
+            <div
+                    class="sm:px-6 p-2 flex mt-4 sm:mt-0 ml-4 sm:ml-0 items-center justify-center bg-blue-header-btn sm:rounded-tl sm:rounded-bl w-12 h-12 sm:h-auto sm:w-auto text-white">
+                <img src="<?php echo site_url('/images/') ?>coloured_multiple_with_separator-svg1.svg"
+                     alt="check icon"/>
+            </div>
+            <div class="flex flex-col justify-center xl:-ml-4 pl-4 xl:pl-1 sm:w-3/5 pt-4 sm:pb-4 pb-2">
+                <h1 class="text-lg text-gray-800 font-semibold pb-1"><?php echo $notificationTitle ?></h1>
+                <p class="text-sm text-gray-600 font-normal"><?php echo $notificationMessage ?></p>
+            </div>
+            <div
+                    class="flex sm:flex-col sm:justify-center sm:border-l items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0">
+                <a href="javascript:void(0)" class="sm:pt-4 pb-4 flex sm:justify-center w-full cursor-pointer"
+                   onclick="closeModal()">
+                    <span class="sm:text-sm text-xs text-gray-800 cursor-pointer">Fermer</span>
+                </a>
+            </div>
+        </div>
+        <!--code for notification ends-->
+    <?php }
+    if (!empty($saads) && is_array($saads)) { ?>
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
@@ -47,12 +93,21 @@
                                                 Modifier
                                             </button>
                                         </form>
-                                        <form action="<?= esc(base_url()) ?>/SaadController/saadDelete/<?= esc($saad['id'], 'url'); ?>">
-                                            <button class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                                                    onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
-                                                Supprimer
+                                        <form action="<?= esc(base_url()) ?>/SecteurLinkController/secteurLink/<?= esc($saad['id'], 'url'); ?>">
+                                            <button class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                                Définir les secteurs d'action
                                             </button>
                                         </form>
+                                        <?php
+                                        // check if the user is a super admin
+                                        if ($isAdmin) { ?>
+                                            <form action="<?= esc(base_url()) ?>/SaadController/saadDelete/<?= esc($saad['id'], 'url'); ?>">
+                                                <button class="ml-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                                                        onclick="return confirm('Cette suppression est définitive, êtes vous certains de vouloir l\'effectuer ?')">
+                                                    Supprimer
+                                                </button>
+                                            </form>
+                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>

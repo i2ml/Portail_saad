@@ -52,4 +52,26 @@ class SaadListModel extends Model
         $this->where('idPersonne', $idPersonne)->delete();
     }
 
+    /**
+     * Cette fonction permet de vérifier si un saad est lié à un utilisateur
+     * @param $idSaad l'id du saad
+     * @param $idUser L'id de l'utilisateur
+     * @return bool True si le saad est lié à l'utilisateur, false sinon
+     */
+    public function isSaadLinkedToUser($idSaad, $idUser): bool
+    {
+        $list = $this->where('idSaad', $idSaad)->where('idPersonne', $idUser)->findAll();
+        return count($list) > 0;
+    }
+
+    /**
+     * Cette fonction permet de vérifier si un utilisateur est lié à un saad
+     * @param $idUser L'id de l'utilisateur
+     * @param $idSaad L'id du saad
+     * @return bool True si l'utilisateur est lié à le saad, false sinon
+     */
+    public function isAuthenticatedOnSaad($idSaad, $idUser): bool
+    {
+        return $this->isSaadLinkedToUser($idSaad, $idUser) || (session()->get('accountType') === SUPER_ADMIN);
+    }
 }

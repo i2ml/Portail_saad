@@ -32,53 +32,66 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('saads', 'SaadController::index');
+$routes->match(['get', 'post'], 'saads', 'SaadController::index');
+$routes->match(['get', 'post'], 'filter', 'SaadController::filter');
+
+// Gestion des connexions
+$routes->get('forbidden', 'NouvelleConnexionController::forbidden');
 $routes->get('connexion', 'NouvelleConnexionController::index');
 $routes->get('connexionReussie', 'NouvelleConnexionController::success', ['filter' => 'authGuard']);
-$routes->match(['get', 'post'],'userList', 'PersonController::userList', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'disconnect', 'PersonController::disconnect', ['filter' => 'authGuard']);
+$routes->match(['get', 'post'], 'disconnect', 'PersonController::disconnect', ['filter' => 'authGuard']);
 
-$routes->match(['get', 'post'],'saadsList', 'SaadController::saadsList', ['filter' =>  ['authGuard','superAdminGuard']]);
+// Affichage de la liste des éléments (coté admin)
+$routes->match(['get', 'post'], 'userList', 'PersonController::userList', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'saadsList', 'SaadController::saadsList', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'mySaadsList/(:segment)', 'SaadController::mySaadsList/$1', ['filter' => ['authGuard', 'ownedIdGuard']]);
 
 //Envoyer un email
-$routes->match(['get', 'post'],'PersonController/sendEmailTest', 'PersonController::sendEmailTest', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'PersonController/resetPassword/(:segment)', 'PersonController::resetPassword/$1', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/sendEmailTest', 'PersonController::sendEmailTest', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/resetPassword/(:segment)', 'PersonController::resetPassword/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
 
 //Supprimer saad
-$routes->match(['get', 'post'],'SaadController/saadDelete/(:segment)', 'SaadController::saadDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'SaadController/saadDelete/(:segment)', 'SaadController::saadDelete/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
 
 //lier des saads à des managers
-$routes->match(['get', 'post'],'SaadListController/saadLink/', 'SaadListController::saadLink', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get'],'SaadController/saadLink/(:segment)', 'SaadListController::saadLink/$1', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['post'],'SaadController/editSaadLink/(:segment)', 'SaadListController::editSaadLink/$1', ['filter' =>  ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'SaadController/deleteAllLinks/(:segment)', 'SaadListController::deleteAllLinks/$1', ['filter' =>  ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'SaadListController/saadLink/', 'SaadListController::saadLink', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get'], 'SaadListController/saadLink/(:segment)', 'SaadListController::saadLink/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['post'], 'SaadListController/editSaadLink/(:segment)', 'SaadListController::editSaadLink/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'SaadListController/deleteAllLinks/(:segment)', 'SaadListController::deleteAllLinks/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
+
+//lier des secteurs à des saads
+$routes->match(['get', 'post'], 'SecteurLinkController/secteurLink/', 'SecteurLinkController::secteurLink', ['filter' => ['authGuard']]);
+$routes->match(['get'], 'SecteurLinkController/secteurLink/(:segment)', 'SecteurLinkController::secteurLink/$1', ['filter' => ['authGuard']]);
+$routes->match(['post'], 'SecteurLinkController/editSaadLink/(:segment)', 'SecteurLinkController::editSecteurLink/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'SecteurLinkController/deleteAllLinks/(:segment)', 'SecteurLinkController::deleteAllLinks/$1', ['filter' => ['authGuard']]);
 
 //Créer saad
-$routes->match(['get', 'post'],'SaadController/storeSaad/', 'SaadController::storeSaad', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'createSaad', 'SaadController::createSaad', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'SaadController/storeSaad/', 'SaadController::storeSaad', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'createSaad', 'SaadController::createSaad', ['filter' => ['authGuard', 'superAdminGuard']]);
 
 //Modifier saad
-$routes->match(['get', 'post'],'SaadController/storeSaad/(:segment)', 'SaadController::storeSaad/$1', ['filter' => ['authGuard']]);
-$routes->match(['get', 'post'],'SaadController/createSaad/(:segment)', 'SaadController::createSaad/$1', ['filter' => ['authGuard']]);
-$routes->match(['get', 'post'],'createSaad/(:segment)', 'SaadController::createSaad', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'SaadController/storeSaad/(:segment)', 'SaadController::storeSaad/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'SaadController/createSaad/(:segment)', 'SaadController::createSaad/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'createSaad/(:segment)', 'SaadController::createSaad', ['filter' => ['authGuard']]);
 
 //Supprimer user
-$routes->match(['get', 'post'],'PersonController/userDelete/(:segment)', 'PersonController::userDelete/$1', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/userDelete/(:segment)', 'PersonController::userDelete/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
 
 //Créer user
-$routes->match(['get', 'post'],'PersonController/store/', 'PersonController::store', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'PersonController/createUser/', 'PersonController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'PersonController/createUser/(:any)', 'PersonController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'createUser', 'PersonController::createUser', ['filter' => ['authGuard','superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/store/', 'PersonController::store', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/createUser/', 'PersonController::createUser', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/createUser/(:any)', 'PersonController::createUser', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'createUser', 'PersonController::createUser', ['filter' => ['authGuard', 'superAdminGuard']]);
 
 //Modifier user
-$routes->match(['get', 'post'],'PersonController/upgradeUser/(:segment)', 'PersonController::userDowngrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'PersonController/downgradeUser/(:segment)', 'PersonController::userUpgrade/$1', ['filter' => ['authGuard','superAdminGuard']]);
-$routes->match(['get', 'post'],'PersonController/changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
-$routes->match(['get', 'post'],'changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
-$routes->match(['get', 'post'],'PersonController/changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
-$routes->match(['get', 'post'],'changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'PersonController/upgradeUser/(:segment)', 'PersonController::userDowngrade/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/downgradeUser/(:segment)', 'PersonController::userUpgrade/$1', ['filter' => ['authGuard', 'superAdminGuard']]);
+$routes->match(['get', 'post'], 'PersonController/changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'PersonController/changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
+$routes->match(['get', 'post'], 'changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
+
+//statiques
 $routes->get('(:any)', 'Pages::view/$1');
 
 /*

@@ -1,28 +1,112 @@
 <?php
+
 namespace App\Controllers;
 
+use App\Models\CiblerModel;
+use App\Models\PathologieModel;
 use App\Models\PersonneModel;
+use App\Models\PublicModel;
 use App\Models\SaadListModel;
 use App\Models\SaadModel;
+use App\Models\SpecialiserModel;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RedirectResponse;
+use ReflectionException;
 
 /**
  * SaadController
  */
 class SaadController extends Controller
 {
+    private $saadModel;
+    private $saadListModel;
+    private $personneModel;
+    private $publicModel;
+    private $pathologieModel;
+    private $ciblerModel;
+    private $specialiserModel;
+
+    public function __construct()
+    {
+        $this->saadModel = new SaadModel();
+        $this->saadListModel = new SaadListModel();
+        $this->personneModel = new PersonneModel();
+        $this->publicModel = new PublicModel();
+        $this->pathologieModel = new PathologieModel();
+        $this->ciblerModel = new CiblerModel();
+        $this->specialiserModel = new SpecialiserModel();
+    }
 
     /**
      * Chargeuse de la page de recherche
      */
     public function index()
     {
-        $model = new SaadModel();
+        $data = [
+            'saads' => $this->saadModel->getSaads(),
+            'publics' => $this->publicModel->getPublics(),
+            'pathologies' => $this->pathologieModel->getPathologies(),
+            'title' => 'Liste des Saads',
+            'idFiltrer' => $this->saadModel->getAllSaadsId(),
+        ];
+
+        // d'abord, on récupère l'entrée du champ "mainSearch" en méthode get
+        $mainSearch = $this->request->getGet('mainSearch');
+
+        if ($mainSearch != null) {
+            $filteredResults = $this->saadModel->getSaadIdsFilteredByMainSearch($mainSearch);
+            $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
+        }
+
+        //on récupère la selection du public par l'utilisateur
+        $public = $this->request->getGet('publicCible');
+
+        if ($public != null) {
+            $filteredResults = $this->ciblerModel->getSaadsIdByIdPublic([$public]);
+            $data['idFiltrer'] = array_intersect($filteredResults, $data['idFiltrer']);
+            $data['publicSelectionne'] = [$public];
+        }
+
+
+        echo view('header', $data);
+        echo view('saads', $data);
+        echo view('footer', $data);
+    }
+
+    /**
+     * Fonction permettant de filtrer les saads
+     */
+    public function filter()
+    {
 
         $data = [
-            'saads' => $model->getSaads(),
+            'saads' => $this->saadModel->getSaads(),
+            'publics' => $this->publicModel->getPublics(),
+            'pathologies' => $this->pathologieModel->getPathologies(),
             'title' => 'Liste des Saads',
         ];
+
+        // d'abord on récupère la selection de l'utilisateur
+        $publicFilter = $this->request->getPost('public[]');
+        $pathologieFilter = $this->request->getPost('pathologie[]');
+
+        // on récupère toutes les ids de saads
+        $idSaadFiltrePathologie = $this->saadModel->getAllSaadsId();
+        $idSaadFiltrePublic = $this->saadModel->getAllSaadsId();
+
+        // si l'utilisateur a sélectionné un public, on filtre les saads en fonction du choix
+        if (is_array($publicFilter)) {
+            $idSaadFiltrePublic = $this->ciblerModel->getSaadsIdByIdPublic($publicFilter);
+        }
+        // si l'utilisateur a sélectionné une pathologie, idem
+        if (is_array($pathologieFilter)) {
+            $idSaadFiltrePathologie = $this->specialiserModel->getSaadsIdByIdPathologie($pathologieFilter);
+        }
+
+        //on charge les infos pour la vue
+        $data['pathologieSelectionnee'] = $pathologieFilter;
+        $data['publicSelectionne'] = $publicFilter;
+        $data['idFiltrer'] = array_intersect($idSaadFiltrePublic, $idSaadFiltrePathologie);
 
         echo view('header', $data);
         echo view('saads', $data);
@@ -35,44 +119,38 @@ class SaadController extends Controller
      */
     public function saadsList()
     {
-        $model = new SaadModel();
-        $saadListModel = new SaadListModel();
-        $personneModel = new PersonneModel();
+        $saads = $this->saadModel->getSaads();
+        $saads = $this->loadManagersInSaadListData($saads);
+        $this->displaySaadList($saads, false);
+    }
 
-        $saads = $model->getSaads();
-        foreach ($saads as $key => $saad) {
-            // on récupère la liste des personnes liées à ce saad sous forme de tableau d'id
-
-            $ids = $saadListModel->getPersonIdsFromSaadId($saad['id']);
-            $saads[$key]['idsGerants'] = $ids;
-            //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
-            $saads[$key]['noms'] = $personneModel->getPersonnesNameFromId($ids);
-        }
-        $data = [
-            'saads' => $saads,
-        ];
-
-        echo view('header');
-        echo view('saadsList', $data);
-        echo view('footer');
+    /**
+     * Charge les composants de la page lister les saads d'un utilisateur
+     * @param number $id L'id de l'utilisateur dont on veut récupérer les saads
+     * @return void
+     */
+    public function mySaadsList($id)
+    {
+        $saadsIds = $this->saadListModel->getSaadIdsFromPersonId($id);
+        $saads = $this->saadModel->getSaadsByIds($saadsIds);
+        $saads = $this->loadManagersInSaadListData($saads);
+        $this->displaySaadList($saads, true);
     }
 
     /**
      * Cette fonction permet de supprimer un utilisateur dont l'identifiant est passé en paramètre
-     * @param $id l'id de l'utilisateur à supprimer
-     * @return \CodeIgniter\HTTP\RedirectResponse
+     * @param $id L'id de l'utilisateur à supprimer
+     * @return RedirectResponse
      */
-    public function saadDelete($id)
+    public function saadDelete($id): RedirectResponse
     {
-
-        $model = new SaadModel();
-
-        $model->deleteImage($id);
-        $model->deleteLine($id);
-
+        $this->saadModel->deleteImage($id);
+        $this->saadModel->deleteLine($id);
 
         unset($data);
-        return redirect()->to('saadsList');
+        return redirect()->to('saadsList')
+            ->with('notificationTitle', "Enregistrement effectué")
+            ->with('notificationMessage', "Le SAAD a été supprimé de la base de données");
     }
 
     /**
@@ -84,29 +162,134 @@ class SaadController extends Controller
         $data = [];
         $session = session();
         $data['profil'] = $session->get('nom');
+        $data['publics'] = $this->publicModel->getPublics();
+        $data['pathologies'] = $this->pathologieModel->getPathologies();
         $data['title'] = 'Admin';
-        $model = new SaadModel();
         $data['success'] = null;
         $data['saad'] = $id;
+        $data['publicsCible'] = [];
+        $data['pathologiesSpecialise'] = [];
 
         if ($id) {
-            $data['saad'] = $model->getSaadbyid($id);
+            $data['saad'] = $this->saadModel->getSaadById($id);
+            $data['publicsCible'] = $this->ciblerModel->getPublicsIdByIdSaad($id);
+            $data['pathologiesSpecialise'] = $this->specialiserModel->getPathologiesIdByIdSaad($id);
+        }
+        echo view('header');
+        if (!($id && $this->saadListModel->isAuthenticatedOnSaad($id, session()->get('id'))) && !(session()->get('accountType') === SUPER_ADMIN)) {
+            echo view('forbidden');
+            echo view('footer');
+            return;
+        }
+        echo view('createSaad', $data);
+        echo view('footer');
+    }
+
+    /**
+     * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un SAAD
+     * @return RedirectResponse|void
+     * @throws ReflectionException
+     */
+    public function storeSaad($id = false)
+    {
+        //first we check if the user is authenticated on the saad
+        if (!($id && $this->saadListModel->isAuthenticatedOnSaad($id, session()->get('id'))) && !(session()->get('accountType') === SUPER_ADMIN)) {
+            echo view('header');
+            echo view('forbidden');
+            echo view('footer');
+            return;
+        }
+        helper(['form']);
+        $rules = $this->getSaadFormRules();
+        //check if the rule are valid
+        if ($this->validate($rules)) {
+
+            $data = $this->createSaadFromFormInfo();
+            $public = $this->request->getPost('public[]');
+            $pathologie = $this->request->getPost('pathologie[]');
+
+            if ($this->request->getFile('image')->getName() != "") {
+                $data = $this->saveImageFromFormFile($data);
+            }
+
+            if ($id) { //check if the form is an update of an existing SAAD
+                $this->updateSaad($id, $data, $pathologie, $public);
+                $data['success'] = true;
+            } else {
+                $id = $this->saadModel->saveSaad($data);
+                $this->specialiserModel->saveAll($pathologie, $id);
+                $this->ciblerModel->saveAll($public, $id);
+            }
+
+            return redirect()->to('/connexionReussie')
+                ->with('notificationTitle', 'Enregistrement effectué')
+                ->with('notificationMessage', 'Votre SAAD a bien été enregistré dans la base de données');
         }
 
+        $data['success'] = false;
+        if ($this->request->getMethod() !== 'post') {
+            $data['success'] = null;
+        }
+        $data['profil'] = session()->get('nom');
+        $data['validation'] = $this->validator;
+        $data['title'] = 'Admin';
+        $data['publics'] = $this->publicModel->getPublics();
+        $data['pathologies'] = $this->pathologieModel->getPathologies();
+        if ($id) {
+            $data['saad'] = $this->saadModel->getSaadById($id);
+            $data['publicsCible'] = $this->ciblerModel->getPublicsIdByIdSaad($id);
+            $data['pathologiesSpecialise'] = $this->specialiserModel->getPathologiesIdByIdSaad($id);
+        } else {
+            $data['saad'] = $id;
+            $data['publicsCible'] = [];
+            $data['pathologiesSpecialise'] = [];
+        }
         echo view('header');
         echo view('createSaad', $data);
         echo view('footer');
     }
 
     /**
-     * Méthode appelée lorsque l'utilisateur a rentré les informations pour la creation d'un utilisateur
-     * @return \CodeIgniter\HTTP\RedirectResponse|void
-     * @throws \ReflectionException
+     * @param array $saads : liste des saads à afficher
+     * @param bool $mySaadList : true si on affiche la liste de saads de l'utilisateur
      */
-    public function storeSaad($id = false)
+    private function displaySaadList(array $saads, bool $mySaadList): void
     {
-        helper(['form']);
-        $rules = [
+        $data = [
+            'saads' => $saads,
+            'isAdmin' => session()->get('accountType') === SUPER_ADMIN,
+            'mySaadList' => $mySaadList,
+            'notificationTitle' => session()->get('notificationTitle'),
+            'notificationMessage' => session()->get('notificationMessage'),
+        ];
+
+        echo view('header');
+        echo view('saadsList', $data);
+        echo view('footer');
+    }
+
+    /**
+     * @param array $saads The list of saads that we need to search the manager
+     * @return array the saads with all information about their managers
+     */
+    private function loadManagersInSaadListData(array $saads): array
+    {
+        foreach ($saads as $key => $saad) {
+            // on récupère la liste des personnes liées à ce saad sous forme de tableau d'id
+            $ids = $this->saadListModel->getPersonIdsFromSaadId($saad['id']);
+            $saads[$key]['idsGerants'] = $ids;
+            //on récupère les noms des personnes liées à ce saad pour les afficher plus facilement
+            $saads[$key]['noms'] = $this->personneModel->getPersonnesNameFromIds($ids);
+        }
+        return $saads;
+    }
+
+    /**
+     * @return array
+     */
+    private function getSaadFormRules(): array
+    {
+        return [
             'nom' => 'required|max_length[100]',
             'tel' => 'max_length[100]|regex_match[/^((\+|00)33\s?|0)[1-9](\s?\d{2}){4}$/]',
             'mail' => 'max_length[100]|valid_email',
@@ -114,60 +297,56 @@ class SaadController extends Controller
             'adresse' => "max_length[300]|regex_match[/^[a-zA-Z0-9\s,'-]*$/]",
             'idCategorie' => 'required',
             'image' => [
-                'rules' => 'uploaded[image]'
-                    . '|is_image[image]'
+                'rules' => 'is_image[image]'
                     . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                     . '|max_size[image,100]'
                     . '|max_dims[image,1024,768]',
-            ]
+            ],
+            'pathologie' => 'required',
+            'public' => 'required'
         ];
+    }
 
-        $model = new SaadModel();
-        if ($this->validate($rules)) {
+    /**
+     * @return array
+     */
+    private function createSaadFromFormInfo(): array
+    {
+        return [
+            'nom' => $this->request->getVar('nom'),
+            'tel' => $this->request->getVar('tel'),
+            'mail' => $this->request->getVar('mail'),
+            'site' => $this->request->getVar('site'),
+            'siret_siren' => $this->request->getVar('siret_siren'),
+            'adresse' => $this->request->getVar('adresse'),
+            'idCategorie' => $this->request->getVar('idCategorie'),
+        ];
+    }
 
-            $data = [
-                'nom' => $this->request->getVar('nom'),
-                'tel' => $this->request->getVar('tel'),
-                'mail' => $this->request->getVar('mail'),
-                'site' => $this->request->getVar('site'),
-                'siret_siren' => $this->request->getVar('siret_siren'),
-                'adresse' => $this->request->getVar('adresse'),
-                'idCategorie' => $this->request->getVar('idCategorie'),
-            ];
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function saveImageFromFormFile(array $data): array
+    {
+        $data = $data + ['image' => $this->request->getFile('image')->getName()];
+        $file = $this->request->getFile('image');
+        $file->store('../../public/images/logosaads', $file->getName());
+        return $data;
+    }
 
-            if ($this->request->getFile('image')->getName() != "") {
-                $data = $data + ['image' => $this->request->getFile('image')->getName()];
-                $file = $this->request->getFile('image');
-                $file->store('../../public/images/logosaads', $file->getName());
-            }
-
-            if ($id) {
-                $model->modifSaads($id, $data);
-                $data['success'] = true;
-            } else {
-                $model->save($data);
-                $data['success'] = true;
-            }
-
-            return redirect()->to('/connexionReussie');
-        }
-
-        $session = session();
-        $data['success'] = false;
-            if ($this->request->getMethod() !== 'post') {
-                $data['success'] = null;
-            }
-        $data['profil'] = $session->get('nom');
-        $data['validation'] = $this->validator;
-        $data['title'] = 'Admin';
-        if ($id) {
-            $data['saad'] = $model->getSaadbyid($id);
-        } else {
-            $data['saad'] = $id;
-        }
-        echo view('header');
-        echo view('createSaad', $data);
-        echo view('footer');
+    /**
+     * @param $id
+     * @param array $data
+     * @param $pathologie
+     * @param $public
+     * @throws ReflectionException
+     */
+    private function updateSaad($id, array $data, $pathologie, $public): void
+    {
+        $this->saadModel->modifSaads($id, $data);
+        $this->specialiserModel->modifSpecialiser($pathologie, $id);
+        $this->ciblerModel->modifCibler($public, $id);
     }
 
 }

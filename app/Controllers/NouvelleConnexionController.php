@@ -15,6 +15,12 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
      */
     public function index()
     {
+        // si la personne est déjà connectée, on la redirige vers connexionReussie avec une notification
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/connexionReussie')
+                ->with('notificationTitle', 'Vous avez été reconnecté')
+                ->with('notificationMessage', 'Nous avons récupéré votre connexion');
+        }
         $data['title'] = "Connexion";
         helper(['form']);
         echo view('header', $data);
@@ -27,9 +33,21 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
      */
     public function success()
     {
-        $data['title'] = "Succès";
+        $data['notificationTitle'] = session()->get('notificationTitle');
+        $data['notificationMessage'] = session()->get('notificationMessage');
         echo view('header', $data);
         echo view('connexionReussie');
+        echo view('footer');
+    }
+
+    /**
+     * affiche la page 403
+     */
+    public function forbidden()
+    {
+        $data['title'] = "Accès interdit";
+        echo view('header', $data);
+        echo view('forbidden');
         echo view('footer');
     }
 
@@ -56,7 +74,6 @@ class NouvelleConnexionController extends \CodeIgniter\Controller
                     'isLoggedIn' => TRUE,
                     'accountType' => $data['accountType']
                 ];
-
                 $session->set($ses_data);
                 return redirect()->to('/connexionReussie');
             }

@@ -1,11 +1,25 @@
+<?php
+/**
+ * @var $publics array - contient la liste des publics ciblés disponibles en bdd
+ */
+?>
+
 <div class="half-a-border-on-top">
     <form action="<?php echo site_url('saads') ?>" class=" bg-grey-recherche pt-16 half-a-border-on-bottom">
         <div class="flex items-center justify-center">
-            <select class="form-select p-3 m-5 bg-white border">
-                <option> Qui êtes vous ?</option>
+            <select class="form-select p-3 m-5 bg-white border" name="publicCible">
+                <option disabled selected> Qui êtes vous ?</option>
+                <?php
+                //display one option for each public in the $publics array
+                foreach ($publics as $public) {
+                    ?>
+                    <option value="<?php echo $public['id'] ?>"><?php echo $public['nom'] ?></option>
+                    <?php
+                }
+                ?>
             </select>
             <div class="flex border-2 rounded mr-5">
-                <input type="text" class="px-4 py-2 w-80">
+                <input type="text" class="px-4 py-2 w-80" name="mainSearch">
                 <button class="flex items-center justify-center px-4 border-l">
                     <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 24 24">

@@ -1,24 +1,24 @@
 <!doctype html>
-<html>
+<html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
 
-	<title>Whoops!</title>
+    <title>oops !</title>
 
-	<style type="text/css">
-		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
-	</style>
+    <style type="text/css">
+        <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
+    </style>
 </head>
 <body>
 
-	<div class="container text-center">
+<div class="container text-center">
 
-		<h1 class="headline">Whoops!</h1>
+    <h1 class="headline">oops!</h1>
 
-		<p class="lead">We seem to have hit a snag. Please try again later...</p>
+    <p class="lead">Il semblerait qu'un problème soit survenu ! Réessayez plus tard...</p>
 
-	</div>
+</div>
 
 </body>
 

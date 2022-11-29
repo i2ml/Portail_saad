@@ -119,5 +119,65 @@ class SaadsSeeder extends Seeder
             'idPersonne' => 1,
             ];
         $this->db->table('saad_list')->insert($listesaad);
+        $public = [
+            'id' => 1,
+            'nom' => 'PA',
+        ];
+        $this->db->table('public')->insert($public);
+        $public = [
+            'id' => 2,
+            'nom' => 'PH',
+        ];
+        $this->db->table('public')->insert($public);
+        $public = [
+            'id' => 3,
+            'nom' => 'Aidant',
+        ];
+        $this->db->table('public')->insert($public);
+        $pathologie = [
+            'id' => 1,
+            'nom' => 'Cancer',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 2,
+            'nom' => 'Alzheimer',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 3,
+            'nom' => 'Troubles du comportement ',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 4,
+            'nom' => 'Parkinson',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 5,
+            'nom' => 'Accompagnement fin de vie ',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 6,
+            'nom' => 'Addictologie',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $pathologie = [
+            'id' => 7,
+            'nom' => 'Handicap psychique',
+        ];
+        $this->db->table('pathologie')->insert($pathologie);
+        $cibler = [
+            'idSaad' => 1,
+            'idPublic' => 1,
+        ];
+        $this->db->table('cibler')->insert($cibler);
+        $specialiser = [
+            'idSaad' => 1,
+            'idPathologie' => 1,
+        ];
+        $this->db->table('specialiser')->insert($specialiser);
     }
 }

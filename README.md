@@ -31,10 +31,14 @@ Modifiez le fichier `env` avec vos informations et faites en une copie que vous 
 Pour obtenir une base de donnée à jour, deux commandes sont importantes : 
 
 Effectuer toutes les migrations :
+```
 php spark migrate:refresh
+```
+
+Importer un jeu de test :
+```
+php spark db:seed SaadsSeeder
+```
 
 Doc sur les migrations :
 https://codeigniter4.github.io/userguide/dbmgmt/migration.html
-
-Importer un jeu de test :
-php spark db:seed SaadsSeeder
