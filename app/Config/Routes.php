@@ -91,6 +91,9 @@ $routes->match(['get', 'post'], 'changePassword', 'PersonController::changePassw
 $routes->match(['get', 'post'], 'PersonController/changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
 $routes->match(['get', 'post'], 'changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
 
+//statiques
+$routes->get('(:any)', 'Pages::view/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
