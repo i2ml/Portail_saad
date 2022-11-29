@@ -79,6 +79,7 @@ $routes->match(['get', 'post'],'PersonController/changePassword', 'PersonControl
 $routes->match(['get', 'post'],'changePassword', 'PersonController::changePassword', ['filter' => ['authGuard']]);
 $routes->match(['get', 'post'],'PersonController/changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
 $routes->match(['get', 'post'],'changePassword/(:segment)', 'PersonController::changePassword/$1', ['filter' => ['authGuard']]);
+$routes->get('(:any)', 'Pages::view/$1');
 
 /*
  * --------------------------------------------------------------------

@@ -12,9 +12,9 @@
 <div class="bg-image-header bg-center bg-no-repeat bg-cover">
     <img class="w-1/12 float-left ml-8" src="<?php echo site_url('/images/') ?>logo-gard.jpg" alt="logo du département du gard">
     <ul class="text-white flex text-center w-1/3 float-right mr-20 text-sm">
-        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2">Qui sommes-nous ?</li>
-        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2">Comment être aidé ?</li>
-        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2">Comment choisir ?</li>
+        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2"><a href="<?php echo site_url('/') ?>qui">Qui sommes-nous ?</a></li>
+        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2"><a href="https://www.gard.fr/au-quotidien/seniors-60-et.html">Comment être aidé ?</a></li>
+        <li class="rounded bg-blue-header-btn w-1/3 mx-1 my-auto p-2"><a href="<?php echo site_url('/') ?>choix">Comment choisir ?</a></li>
     </ul>
     <div class="clear-right">
         <a href="<?php echo site_url('/') ?>">
